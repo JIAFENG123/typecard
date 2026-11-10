@@ -1664,12 +1664,130 @@
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
     }
 
+    /* Highlight Marker inside Card Content */
+    mark.tc-mark, .card-content mark {
+      background: linear-gradient(180deg, transparent 52%, var(--accent-mark, rgba(194, 89, 63, 0.32)) 52%, var(--accent-mark, rgba(194, 89, 63, 0.32)) 92%, transparent 92%);
+      color: inherit;
+      padding: 0 2px;
+      border-radius: 2px;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+
+    /* Stage Floating HUD Bar */
+    .stage-hud {
+      position: absolute;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(18, 18, 22, 0.82);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 9999px;
+      padding: 5px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-secondary);
+      z-index: 30;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+      user-select: none;
+    }
+    .hud-sep {
+      width: 1px;
+      height: 12px;
+      background: rgba(255, 255, 255, 0.14);
+    }
+    .hud-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #f4f4f5;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .hud-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+    .hud-btn.active {
+      background: var(--accent, #c2593f);
+      border-color: transparent;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    /* Format Category Filter Tabs */
+    .filter-tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 9px;
+      flex-wrap: wrap;
+    }
+    .filter-pill {
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      color: var(--text-tertiary);
+      font-size: 10.5px;
+      font-weight: 500;
+      padding: 4px 8px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .filter-pill:hover {
+      color: var(--text-primary);
+      border-color: var(--border-hover);
+    }
+    .filter-pill.active {
+      background: #f4f4f5;
+      color: #09090b;
+      border-color: #f4f4f5;
+      font-weight: 600;
+    }
+
+    /* Custom Color Input Wrapper */
+    .color-picker-label {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 1.5px dashed rgba(255, 255, 255, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #e4e4e7;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.15s ease;
+      background: conic-gradient(from 0deg, #ef4444, #f59e0b, #10b981, #3b82f6, #8b5cf6, #ec4899, #ef4444);
+    }
+    .color-picker-label:hover {
+      transform: scale(1.15);
+      border-color: #ffffff;
+    }
+    .color-picker-label input[type="color"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
     /* Toast */
     .toast {
       position: fixed;
-      bottom: 22px;
+      top: 66px;
       left: 50%;
-      transform: translateX(-50%) translateY(14px);
+      transform: translateX(-50%) translateY(-10px);
       background: #18181b;
       border: 1px solid rgba(255, 255, 255, 0.18);
       color: #f4f4f5;
@@ -1704,11 +1822,19 @@
     </div>
 
     <div class="nav-right">
+      <button class="btn btn-secondary" id="btn-highlight" title="选中正文文字后点击标记荧光笔重点（或使用 ==重点== 语法）">
+        <span>🖍️ 标记重点</span>
+      </button>
+
+      <button class="btn btn-secondary" id="btn-reset-text" title="恢复当前格式模板的默认文案">
+        <span>↺ 默认文案</span>
+      </button>
+
       <button class="btn btn-magic" id="btn-random-quote" title="切换一条小红书精选爆款文案">
         <span>✨ 换一条爆款文案</span>
       </button>
 
-      <button class="btn btn-secondary" id="btn-copy" title="复制 2x 高清 PNG 到系统剪贴板">
+      <button class="btn btn-secondary" id="btn-copy" title="复制高清 PNG 到系统剪贴板">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
           <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
           <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
@@ -1737,12 +1863,25 @@
           <!-- Dynamic Content injected via JS -->
         </div>
       </div>
+
+      <!-- Floating HUD Bar on Stage -->
+      <div class="stage-hud" id="stage-hud">
+        <span id="hud-chars">字数: 68</span>
+        <span class="hud-sep"></span>
+        <span id="hud-res">1080×860 px</span>
+        <span class="hud-sep"></span>
+        <button class="hud-btn active" id="btn-scale-toggle" title="切换导出分辨率倍率 (2x 视网膜高清 / 3x 印刷级超清)">2x 高清</button>
+        <span class="hud-sep"></span>
+        <button class="hud-btn" id="btn-zoom-out" title="缩小画布预览">−</button>
+        <button class="hud-btn" id="btn-zoom-fit" title="点击自适应舞台高度 / 100%">100%</button>
+        <button class="hud-btn" id="btn-zoom-in" title="放大画布预览">+</button>
+      </div>
     </div>
 
     <!-- Inspector Sidebar -->
     <div class="sidebar">
       
-      <!-- 1. Formats Grid (18 Formats) -->
+      <!-- 1. Formats Grid (18 Formats + Category Filter) -->
       <div>
         <div class="group-label">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -1752,76 +1891,83 @@
           </svg>
           <span>美学格式 (18 种实体介质与流派)</span>
         </div>
+        <div class="filter-tabs" id="format-filters">
+          <button class="filter-pill active" data-cat="all">全部 (18)</button>
+          <button class="filter-pill" data-cat="print">纸质刊物</button>
+          <button class="filter-pill" data-cat="retro">复古拟物</button>
+          <button class="filter-pill" data-cat="avant">先锋极简</button>
+          <button class="filter-pill" data-cat="media">光影声像</button>
+        </div>
         <div class="style-grid">
-          <button class="style-card active" data-theme="newspaper">
+          <button class="style-card active" data-theme="newspaper" data-cat="print">
             <span class="style-name">📰 纽时大报</span>
             <span class="style-meta">Broadsheet Drop Cap</span>
           </button>
-          <button class="style-card" data-theme="magazine">
+          <button class="style-card" data-theme="magazine" data-cat="print">
             <span class="style-name">📖 顶级月刊</span>
             <span class="style-meta">Editorial Vogue</span>
           </button>
-          <button class="style-card" data-theme="coffee">
+          <button class="style-card" data-theme="coffee" data-cat="retro">
             <span class="style-name">☕ 咖啡豆卡</span>
             <span class="style-meta">Origin Tasting Card</span>
           </button>
-          <button class="style-card" data-theme="washi">
+          <button class="style-card" data-theme="washi" data-cat="print">
             <span class="style-name">📌 胶带便签</span>
             <span class="style-meta">Washi Tape Memo</span>
           </button>
-          <button class="style-card" data-theme="prescription">
+          <button class="style-card" data-theme="prescription" data-cat="retro">
             <span class="style-name">💊 精神处方</span>
             <span class="style-meta">Rx Creative Remedy</span>
           </button>
-          <button class="style-card" data-theme="calendar">
+          <button class="style-card" data-theme="calendar" data-cat="print">
             <span class="style-name">🗓️ 撕历金句</span>
             <span class="style-meta">365 Desk Tear-off</span>
           </button>
-          <button class="style-card" data-theme="cinema">
+          <button class="style-card" data-theme="cinema" data-cat="media">
             <span class="style-name">🎬 宽银幕台词</span>
             <span class="style-meta">16:9 Movie Subtitle</span>
           </button>
-          <button class="style-card" data-theme="bento">
+          <button class="style-card" data-theme="bento" data-cat="avant">
             <span class="style-name">⚡ 瑞士大字</span>
             <span class="style-meta">Swiss Bento Block</span>
           </button>
-          <button class="style-card" data-theme="cargo">
+          <button class="style-card" data-theme="cargo" data-cat="avant">
             <span class="style-name">📦 工业封签</span>
             <span class="style-meta">Hazard Stencil</span>
           </button>
-          <button class="style-card" data-theme="margiela">
+          <button class="style-card" data-theme="margiela" data-cat="avant">
             <span class="style-name">🧵 缝线白标</span>
             <span class="style-meta">Margiela Fabric</span>
           </button>
-          <button class="style-card" data-theme="airmail">
+          <button class="style-card" data-theme="airmail" data-cat="retro">
             <span class="style-name">✈️ 航空信封</span>
             <span class="style-meta">Par Avion Postcard</span>
           </button>
-          <button class="style-card" data-theme="polaroid">
+          <button class="style-card" data-theme="polaroid" data-cat="media">
             <span class="style-name">🎞️ 胶片拍立得</span>
             <span class="style-meta">Tri-X Film Frame</span>
           </button>
-          <button class="style-card" data-theme="receipt">
+          <button class="style-card" data-theme="receipt" data-cat="retro">
             <span class="style-name">🧾 热敏小票</span>
             <span class="style-meta">Thermal Receipt</span>
           </button>
-          <button class="style-card" data-theme="pantone">
+          <button class="style-card" data-theme="pantone" data-cat="avant">
             <span class="style-name">🎨 潘通色卡</span>
             <span class="style-meta">Pantone Swatch</span>
           </button>
-          <button class="style-card" data-theme="ticket">
+          <button class="style-card" data-theme="ticket" data-cat="retro">
             <span class="style-name">🎟️ 复古票根</span>
             <span class="style-meta">Cinema Stub</span>
           </button>
-          <button class="style-card" data-theme="eink">
+          <button class="style-card" data-theme="eink" data-cat="print">
             <span class="style-name">🏛️ 古典藏书票</span>
             <span class="style-meta">Ex Libris Folio</span>
           </button>
-          <button class="style-card" data-theme="vinyl">
+          <button class="style-card" data-theme="vinyl" data-cat="media">
             <span class="style-name">💿 黑胶内页</span>
             <span class="style-meta">Vinyl Liner Notes</span>
           </button>
-          <button class="style-card" data-theme="cassette">
+          <button class="style-card" data-theme="cassette" data-cat="media">
             <span class="style-name">📼 复古磁带</span>
             <span class="style-meta">Cassette Tape</span>
           </button>
@@ -1844,7 +1990,7 @@
         </div>
       </div>
 
-      <!-- 3. Typography Flavor -->
+      <!-- 3. Typography & Alignment -->
       <div>
         <div class="group-label">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -1852,13 +1998,35 @@
             <line x1="9" y1="20" x2="15" y2="20"></line>
             <line x1="12" y1="4" x2="12" y2="20"></line>
           </svg>
-          <span>字体调性 (TYPOGRAPHY)</span>
+          <span>字体调性与排版对齐 (TYPOGRAPHY)</span>
         </div>
-        <div class="seg-box">
+        <div class="seg-box" style="margin-bottom: 6px;">
           <button class="seg-item active" data-font="serif">宋体/文艺</button>
           <button class="seg-item" data-font="sans">黑体/现代</button>
           <button class="seg-item" data-font="mono">等宽/极客</button>
         </div>
+        <div class="seg-box">
+          <button class="seg-item active" data-align="left">左对齐</button>
+          <button class="seg-item" data-align="center">居中对齐</button>
+          <button class="seg-item" data-align="justify">两端对齐</button>
+        </div>
+      </div>
+
+      <!-- 3.5 Font Size & Line Height Sliders -->
+      <div class="slider-field">
+        <div class="slider-header">
+          <span>正文字号 (FONT SIZE)</span>
+          <span class="slider-val" id="val-fontsize">默认</span>
+        </div>
+        <input type="range" id="input-fontsize" min="12" max="22" step="0.5" value="15">
+      </div>
+
+      <div class="slider-field">
+        <div class="slider-header">
+          <span>正文行距 (LINE HEIGHT)</span>
+          <span class="slider-val" id="val-lineheight">1.80</span>
+        </div>
+        <input type="range" id="input-lineheight" min="1.4" max="2.2" step="0.05" value="1.8">
       </div>
 
       <!-- 4. Watermark / Social Handle -->
@@ -1873,13 +2041,13 @@
         <input type="text" id="input-watermark" class="custom-input" value="@我的小红书" placeholder="输入作者署名或小红书号" />
       </div>
 
-      <!-- 5. Mineral Palette -->
+      <!-- 5. Mineral Palette + Custom Color Picker -->
       <div>
         <div class="group-label">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <circle cx="12" cy="12" r="10"></circle>
           </svg>
-          <span>矿物色谱主调</span>
+          <span>矿物色谱主调 & 自定义取色</span>
         </div>
         <div class="color-swatches">
           <div class="color-dot active" style="background: #c2593f;" data-color="#c2593f" title="Terracotta / 陶土赭红"></div>
@@ -1889,6 +2057,9 @@
           <div class="color-dot" style="background: #e11d48;" data-color="#e11d48" title="Carmine / 胭脂深红"></div>
           <div class="color-dot" style="background: #475569;" data-color="#475569" title="Slate Gray / 莫兰迪板岩"></div>
           <div class="color-dot" style="background: #18181b;" data-color="#18181b" title="Obsidian / 曜石极黑"></div>
+          <label class="color-picker-label" title="自定义任意主题色">
+            <input type="color" id="input-custom-color" value="#c2593f" />
+          </label>
         </div>
       </div>
 
@@ -2363,6 +2534,104 @@
       });
     }
 
+    let userCustomHTML = null;
+    let curAlign = 'left';
+    let curFontSize = null; // null = theme default
+    let curLineHeight = null; // null = theme default
+    let exportScale = 2; // 2x or 3x
+    let stageZoom = 1; // 1 = 100%, or auto-fitted
+
+    // Load saved draft if present
+    try {
+      const savedDraft = localStorage.getItem('typecard_draft_v2');
+      if (savedDraft) {
+        const parsed = JSON.parse(savedDraft);
+        if (parsed.customHTML) userCustomHTML = parsed.customHTML;
+        if (parsed.watermark) {
+          curWatermark = parsed.watermark;
+          inputWatermark.value = curWatermark;
+        }
+      }
+    } catch (e) {}
+
+    function saveDraft() {
+      try {
+        localStorage.setItem('typecard_draft_v2', JSON.stringify({
+          customHTML: userCustomHTML,
+          watermark: curWatermark,
+          theme: curTheme
+        }));
+      } catch (e) {}
+    }
+
+    function applyTypographyOverrides() {
+      const contentEl = card.querySelector('.card-content');
+      if (!contentEl) return;
+      contentEl.style.textAlign = curAlign;
+      contentEl.style.fontSize = curFontSize ? `${curFontSize}px` : '';
+      contentEl.style.lineHeight = curLineHeight ? `${curLineHeight}` : '';
+      // Convert ==text== syntax into <mark class="tc-mark"> if typed
+      if (contentEl.innerHTML.includes('==')) {
+        const replaced = contentEl.innerHTML.replace(/==([^=]+)==/g, '<mark class="tc-mark">$1</mark>');
+        if (replaced !== contentEl.innerHTML) {
+          contentEl.innerHTML = replaced;
+        }
+      }
+      updateHUD();
+    }
+
+    function bindContentTracking() {
+      const contentEl = card.querySelector('.card-content');
+      if (!contentEl) return;
+      contentEl.addEventListener('input', () => {
+        if (contentEl.innerHTML.includes('==')) {
+          contentEl.innerHTML = contentEl.innerHTML.replace(/==([^=]+)==/g, '<mark class="tc-mark">$1</mark>');
+        }
+        userCustomHTML = contentEl.innerHTML;
+        saveDraft();
+        updateHUD();
+      });
+      card.querySelectorAll('.editable:not(.card-content)').forEach(el => {
+        el.addEventListener('input', () => updateHUD());
+      });
+    }
+
+    function updateHUD() {
+      const contentEl = card.querySelector('.card-content');
+      const txt = contentEl ? contentEl.innerText.replace(/\s+/g, '') : '';
+      const charsEl = document.getElementById('hud-chars');
+      if (charsEl) charsEl.textContent = `字数: ${txt.length}`;
+
+      const wall = stage.getAttribute('data-wall') || 'dots';
+      const isTransparent = (wall === 'none') && stage.style.background === 'transparent';
+      const pad = isTransparent ? 0 : (parseInt(document.getElementById('input-pad').value) || 40);
+      const cardW = Math.round(card.offsetWidth || 460);
+      const cardH = Math.round(card.offsetHeight || 380);
+      const outW = (cardW + pad * 2) * exportScale;
+      const outH = (cardH + pad * 2) * exportScale;
+      const resEl = document.getElementById('hud-res');
+      if (resEl) resEl.textContent = `${outW}×${outH} px`;
+    }
+
+    function applyStageZoom(zoomVal) {
+      stageZoom = Math.max(0.55, Math.min(1.35, zoomVal));
+      exportWrapper.style.transform = `scale(${stageZoom.toFixed(2)})`;
+      exportWrapper.style.transformOrigin = 'center center';
+      const fitBtn = document.getElementById('btn-zoom-fit');
+      if (fitBtn) fitBtn.textContent = `${Math.round(stageZoom * 100)}%`;
+    }
+
+    function autoFitStageIfNeeded() {
+      const stageH = stage.clientHeight || 700;
+      const wrapH = exportWrapper.offsetHeight || 480;
+      const availableH = stageH - 72; // Leave room for HUD bar
+      if (wrapH > availableH && availableH > 200) {
+        applyStageZoom(availableH / wrapH);
+      } else {
+        applyStageZoom(1);
+      }
+    }
+
     function setTheme(t) {
       curTheme = t;
       document.querySelectorAll('.style-card').forEach(b => {
@@ -2371,7 +2640,18 @@
       card.className = `theme-${t}`;
       card.innerHTML = `<div class="glare-overlay"></div>` + THEME_TEMPLATES[t];
       if (t === 'receipt') renderBarcode();
+      if (userCustomHTML !== null) {
+        const contentEl = card.querySelector('.card-content');
+        if (contentEl) contentEl.innerHTML = userCustomHTML;
+      }
       updateWatermarks();
+      applyTypographyOverrides();
+      bindContentTracking();
+      requestAnimationFrame(() => {
+        updateHUD();
+        autoFitStageIfNeeded();
+      });
+      saveDraft();
       showToast(`已应用格式：${t.toUpperCase()}`);
     }
 
@@ -2384,10 +2664,86 @@
     inputWatermark.addEventListener('input', (e) => {
       curWatermark = e.target.value.trim() || '@TypeCard';
       updateWatermarks();
+      saveDraft();
     });
 
     document.querySelectorAll('.style-card').forEach(b => {
       b.addEventListener('click', () => setTheme(b.dataset.theme));
+    });
+
+    // Category Filter Tabs
+    document.querySelectorAll('#format-filters .filter-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        document.querySelectorAll('#format-filters .filter-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        const cat = pill.dataset.cat;
+        document.querySelectorAll('.style-card').forEach(cardBtn => {
+          if (cat === 'all' || cardBtn.dataset.cat === cat) {
+            cardBtn.style.display = 'flex';
+          } else {
+            cardBtn.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Highlight Marker Button (🖍️ 标记重点)
+    document.getElementById('btn-highlight').addEventListener('click', () => {
+      const contentEl = card.querySelector('.card-content');
+      if (!contentEl) return;
+      const sel = window.getSelection();
+      if (sel && sel.rangeCount > 0 && !sel.isCollapsed && contentEl.contains(sel.anchorNode)) {
+        const range = sel.getRangeAt(0);
+        const parentMark = range.commonAncestorContainer.parentElement?.closest('mark.tc-mark');
+        if (parentMark) {
+          const textNode = document.createTextNode(parentMark.textContent);
+          parentMark.replaceWith(textNode);
+          showToast('已取消重点高亮');
+        } else {
+          const mark = document.createElement('mark');
+          mark.className = 'tc-mark';
+          try {
+            range.surroundContents(mark);
+          } catch (err) {
+            const frag = range.extractContents();
+            mark.appendChild(frag);
+            range.insertNode(mark);
+          }
+          sel.removeAllRanges();
+          showToast('🖍️ 已添加荧光笔重点高亮');
+        }
+      } else {
+        // If no text is selected, toggle highlight on the first sentence or last clause
+        const existingMark = contentEl.querySelector('mark.tc-mark');
+        if (existingMark) {
+          existingMark.replaceWith(document.createTextNode(existingMark.textContent));
+          showToast('已清除重点高亮（可刷选任意文字精准高亮）');
+        } else {
+          const raw = contentEl.innerText.trim();
+          const parts = raw.split(/([。！？\n])/);
+          if (parts.length >= 2) {
+            const firstSentence = parts[0] + (parts[1] || '');
+            const rest = parts.slice(2).join('');
+            contentEl.innerHTML = `<mark class="tc-mark">${firstSentence}</mark>${rest}`;
+            showToast('🖍️ 已高亮首句重点（也可鼠标选中任意字词点击高亮）');
+          }
+        }
+      }
+      userCustomHTML = contentEl.innerHTML;
+      saveDraft();
+      updateHUD();
+    });
+
+    // Reset to Template Default Text Button (↺ 默认文案)
+    document.getElementById('btn-reset-text').addEventListener('click', () => {
+      userCustomHTML = null;
+      curFontSize = null;
+      curLineHeight = null;
+      document.getElementById('val-fontsize').textContent = '默认';
+      document.getElementById('val-lineheight').textContent = '默认';
+      localStorage.removeItem('typecard_draft_v2');
+      setTheme(curTheme);
+      showToast('↺ 已恢复当前格式的默认文案与字号');
     });
 
     // Ratio Switch
@@ -2397,6 +2753,10 @@
         btn.classList.add('active');
         curRatio = btn.dataset.ratio;
         card.setAttribute('data-ratio', curRatio);
+        requestAnimationFrame(() => {
+          updateHUD();
+          autoFitStageIfNeeded();
+        });
         showToast(`已切换画幅：${curRatio === '3:4' ? '小红书 3:4' : (curRatio === '1:1' ? '方形 1:1' : '自适应 (紧凑贴合)')}`);
       });
     });
@@ -2408,8 +2768,56 @@
         btn.classList.add('active');
         curFont = btn.dataset.font;
         card.setAttribute('data-font', curFont);
+        updateHUD();
         showToast(`已切换字体：${curFont === 'serif' ? '宋体/文艺' : (curFont === 'sans' ? '黑体/现代' : '等宽/极客')}`);
       });
+    });
+
+    // Text Alignment Switch
+    document.querySelectorAll('.seg-item[data-align]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.seg-item[data-align]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        curAlign = btn.dataset.align;
+        applyTypographyOverrides();
+        showToast(`已切换对齐：${curAlign === 'center' ? '居中对齐' : (curAlign === 'justify' ? '两端对齐' : '左对齐')}`);
+      });
+    });
+
+    // Font Size & Line Height Sliders
+    const inputFontSize = document.getElementById('input-fontsize');
+    const valFontSize = document.getElementById('val-fontsize');
+    inputFontSize.addEventListener('input', (e) => {
+      curFontSize = parseFloat(e.target.value);
+      valFontSize.textContent = `${curFontSize} px`;
+      applyTypographyOverrides();
+      autoFitStageIfNeeded();
+    });
+
+    const inputLineHeight = document.getElementById('input-lineheight');
+    const valLineHeight = document.getElementById('val-lineheight');
+    inputLineHeight.addEventListener('input', (e) => {
+      curLineHeight = parseFloat(e.target.value);
+      valLineHeight.textContent = curLineHeight.toFixed(2);
+      applyTypographyOverrides();
+      autoFitStageIfNeeded();
+    });
+
+    // Stage HUD Zoom & Scale Controls
+    document.getElementById('btn-scale-toggle').addEventListener('click', (e) => {
+      exportScale = (exportScale === 2) ? 3 : 2;
+      e.target.textContent = exportScale === 3 ? '3x 超清' : '2x 高清';
+      updateHUD();
+      showToast(`已切换导出清晰度：${exportScale}x (${document.getElementById('hud-res').textContent})`);
+    });
+    document.getElementById('btn-zoom-out').addEventListener('click', () => applyStageZoom(stageZoom - 0.1));
+    document.getElementById('btn-zoom-in').addEventListener('click', () => applyStageZoom(stageZoom + 0.1));
+    document.getElementById('btn-zoom-fit').addEventListener('click', () => {
+      if (Math.abs(stageZoom - 1) > 0.03) {
+        applyStageZoom(1);
+      } else {
+        autoFitStageIfNeeded();
+      }
     });
 
     // Random Viral Quote
@@ -2419,34 +2827,64 @@
       const contentEl = card.querySelector('.card-content');
       if (contentEl) {
         contentEl.textContent = q.content;
+        userCustomHTML = contentEl.innerHTML;
+        saveDraft();
       }
       const titleEl = card.querySelector('.article-title, .mag-title, .coffee-title, .cargo-title');
       if (titleEl) {
         titleEl.textContent = q.title;
       }
+      updateHUD();
+      autoFitStageIfNeeded();
       showToast(`已填入爆款文案：${q.author}`);
     });
 
-    // Color Swatches
+    function hexToRgba(hex, alpha) {
+      const clean = hex.replace('#', '');
+      const num = parseInt(clean.length === 3 ? clean.split('').map(c => c + c).join('') : clean, 16);
+      const r = (num >> 16) & 255;
+      const g = (num >> 8) & 255;
+      const b = num & 255;
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    }
+
+    function applyAccentColor(hexColor, labelText) {
+      curPantone = hexColor;
+      const markColor = hexToRgba(curPantone, 0.32);
+      document.documentElement.style.setProperty('--pantone-color', curPantone);
+      document.documentElement.style.setProperty('--accent', curPantone);
+      document.documentElement.style.setProperty('--accent-mark', markColor);
+      card.style.setProperty('--accent', curPantone);
+      card.style.setProperty('--pantone-color', curPantone);
+      card.style.setProperty('--accent-mark', markColor);
+
+      const pCode = card.querySelector('.pantone-code');
+      const pName = card.querySelector('.pantone-name');
+      if (pCode) {
+        if (SWATCH_META[curPantone]) {
+          pCode.textContent = SWATCH_META[curPantone].code;
+          if (pName) pName.textContent = SWATCH_META[curPantone].name;
+        } else {
+          pCode.textContent = `PANTONE CUSTOM ${curPantone.toUpperCase()}`;
+          if (pName) pName.textContent = 'BESPOKE MINERAL TONE';
+        }
+      }
+      if (labelText) showToast(`已应用色彩：${labelText}`);
+    }
+
+    // Color Swatches & Custom Color Picker
     document.querySelectorAll('.color-dot').forEach(dot => {
       dot.addEventListener('click', () => {
         document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
         dot.classList.add('active');
-        curPantone = dot.dataset.color;
-        document.documentElement.style.setProperty('--pantone-color', curPantone);
-        document.documentElement.style.setProperty('--accent', curPantone);
-        card.style.setProperty('--accent', curPantone);
-        card.style.setProperty('--pantone-color', curPantone);
-
-        const pCode = card.querySelector('.pantone-code');
-        const pName = card.querySelector('.pantone-name');
-        if (pCode && SWATCH_META[curPantone]) {
-          pCode.textContent = SWATCH_META[curPantone].code;
-          pName.textContent = SWATCH_META[curPantone].name;
-        }
-
-        showToast(`已应用色彩：${dot.title.split('/')[0]}`);
+        document.getElementById('input-custom-color').value = dot.dataset.color;
+        applyAccentColor(dot.dataset.color, dot.title.split('/')[0]);
       });
+    });
+
+    document.getElementById('input-custom-color').addEventListener('input', (e) => {
+      document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+      applyAccentColor(e.target.value, e.target.value.toUpperCase());
     });
 
     // Wall Switch
@@ -2464,6 +2902,7 @@
           stage.setAttribute('data-wall', wall);
           exportWrapper.style.padding = document.getElementById('input-pad').value + 'px';
         }
+        updateHUD();
       });
     });
 
@@ -2473,6 +2912,8 @@
     inputWidth.addEventListener('input', (e) => {
       card.style.width = e.target.value + 'px';
       valWidth.textContent = e.target.value + ' px';
+      updateHUD();
+      autoFitStageIfNeeded();
     });
 
     const inputPad = document.getElementById('input-pad');
@@ -2480,7 +2921,11 @@
     inputPad.addEventListener('input', (e) => {
       exportWrapper.style.padding = e.target.value + 'px';
       valPad.textContent = e.target.value + ' px';
+      updateHUD();
+      autoFitStageIfNeeded();
     });
+
+    window.addEventListener('resize', () => autoFitStageIfNeeded());
 
     // Toast
     let toastTimeout = null;
@@ -2552,16 +2997,18 @@
     }
 
     async function renderToCanvas() {
-      const scale = 2; // Crisp 2x Retina
+      const scale = exportScale || 2; // 2x Retina or 3x Ultra-HD Print
       const wall = stage.getAttribute('data-wall') || 'dots';
-      const isTransparent = (wall === 'none');
+      const isTransparent = (wall === 'none') && stage.style.background === 'transparent';
       const pad = isTransparent ? 0 : (parseInt(document.getElementById('input-pad').value) || 40);
 
-      // 1. Temporarily clear 3D tilt to measure the true un-distorted DOM dimensions
+      // 1. Temporarily clear 3D tilt & stage zoom to measure true un-distorted DOM dimensions
       const prevTransform = card.style.transform;
       const prevTransition = card.style.transition;
+      const prevWrapTransform = exportWrapper.style.transform;
       card.style.transform = 'none';
       card.style.transition = 'none';
+      exportWrapper.style.transform = 'none';
       void card.offsetHeight;
 
       const cardRect = card.getBoundingClientRect();
@@ -2577,6 +3024,13 @@
           w: Math.round(r.width),
           h: Math.round(r.height)
         };
+      }
+
+      function getTxt(sel, fallback) {
+        const el = card.querySelector(sel);
+        if (!el) return fallback;
+        const t = el.innerText.trim();
+        return t || fallback;
       }
 
       const contentEl = card.querySelector('.card-content');
@@ -2598,7 +3052,7 @@
       const ctx = outCanvas.getContext('2d');
       ctx.scale(scale, scale);
 
-      // Helper text wrapping
+      // Helper plain text wrapping
       function wrapTextLines(context, text, maxWidth) {
         if (!text) return [];
         const clean = text.split(String.fromCharCode(13)).join('');
@@ -2625,6 +3079,133 @@
           }
         }
         return lines;
+      }
+
+      // Extract character array with highlight flag from DOM .card-content
+      function extractRichParagraphs(el) {
+        if (!el) return [];
+        const paras = [[]];
+        function walk(node, isMarked) {
+          if (node.nodeType === 3) {
+            const val = node.nodeValue.split(String.fromCharCode(13)).join('');
+            for (const ch of val) {
+              if (ch === String.fromCharCode(10)) {
+                paras.push([]);
+              } else {
+                paras[paras.length - 1].push({ ch, mark: isMarked });
+              }
+            }
+          } else if (node.nodeType === 1) {
+            const tag = node.tagName.toUpperCase();
+            if (tag === 'BR') {
+              paras.push([]);
+              return;
+            }
+            const nextMark = isMarked || tag === 'MARK' || node.classList.contains('tc-mark');
+            for (const child of node.childNodes) {
+              walk(child, nextMark);
+            }
+            if (tag === 'DIV' || tag === 'P') {
+              paras.push([]);
+            }
+          }
+        }
+        walk(el, false);
+        while (paras.length > 1 && paras[paras.length - 1].length === 0) {
+          paras.pop();
+        }
+        return paras;
+      }
+
+      // Draw rich body lines with <mark> highlight bars, alignment & optional Drop Cap
+      function drawRichBody(startX, startY, maxWidth, textColor, enableDropCap) {
+        const baseFont = `${cs && cs.fontStyle === 'italic' ? 'italic ' : ''}${cs ? cs.fontWeight : '400'} ${fontSize}px ${fontFam}`;
+        ctx.font = baseFont;
+        const paras = extractRichParagraphs(contentEl);
+        let curY = startY;
+        let dropCapChar = null;
+        let dropCapW = 0;
+
+        if (enableDropCap && paras.length > 0 && paras[0].length > 0 && curAlign !== 'center') {
+          dropCapChar = paras[0].shift();
+          ctx.save();
+          ctx.font = `bold 38px "Playfair Display", Georgia, serif`;
+          dropCapW = ctx.measureText(dropCapChar.ch).width + 8;
+          ctx.fillStyle = curPantone;
+          ctx.textAlign = 'left';
+          ctx.fillText(dropCapChar.ch, startX, startY + 26);
+          ctx.restore();
+          ctx.font = baseFont;
+        }
+
+        let globalLineIdx = 0;
+        for (const para of paras) {
+          if (para.length === 0) {
+            curY += lineHeight;
+            globalLineIdx++;
+            continue;
+          }
+          let lineItems = [];
+          let lineStr = '';
+          for (let i = 0; i < para.length; i++) {
+            const item = para[i];
+            const availW = (dropCapChar && globalLineIdx < 2) ? (maxWidth - dropCapW) : maxWidth;
+            const testStr = lineStr + item.ch;
+            if (ctx.measureText(testStr).width > availW && lineItems.length > 0) {
+              renderRichLine(lineItems, globalLineIdx, false, curY);
+              curY += lineHeight;
+              globalLineIdx++;
+              lineItems = [item];
+              lineStr = item.ch;
+            } else {
+              lineItems.push(item);
+              lineStr = testStr;
+            }
+          }
+          if (lineItems.length > 0) {
+            renderRichLine(lineItems, globalLineIdx, true, curY);
+            curY += lineHeight;
+            globalLineIdx++;
+          }
+        }
+
+        function renderRichLine(items, lIdx, isLastInPara, yPos) {
+          const lineOffsetX = (dropCapChar && lIdx < 2) ? (startX + dropCapW) : startX;
+          const availW = (dropCapChar && lIdx < 2) ? (maxWidth - dropCapW) : maxWidth;
+          const str = items.map(it => it.ch).join('');
+          const lineW = ctx.measureText(str).width;
+
+          let drawX = lineOffsetX;
+          let extraSpace = 0;
+          if (curAlign === 'center') {
+            drawX = lineOffsetX + (availW - lineW) / 2;
+          } else if (curAlign === 'justify' && !isLastInPara && items.length > 1 && lineW > availW * 0.72) {
+            extraSpace = (availW - lineW) / (items.length - 1);
+          }
+
+          // Pass 1: Draw seamless highlight marker bars
+          let cxPos = drawX;
+          for (let i = 0; i < items.length; i++) {
+            const chW = ctx.measureText(items[i].ch).width + (i < items.length - 1 ? extraSpace : 0);
+            if (items[i].mark) {
+              ctx.save();
+              ctx.fillStyle = hexToRgba(curPantone, 0.32);
+              ctx.fillRect(cxPos, yPos - fontSize * 0.46, chW, fontSize * 0.62);
+              ctx.restore();
+            }
+            cxPos += chW;
+          }
+
+          // Pass 2: Draw characters
+          ctx.fillStyle = textColor;
+          ctx.textAlign = 'left';
+          cxPos = drawX;
+          for (let i = 0; i < items.length; i++) {
+            ctx.fillText(items[i].ch, cxPos, yPos);
+            cxPos += ctx.measureText(items[i].ch).width + (i < items.length - 1 ? extraSpace : 0);
+          }
+        }
+        return curY;
       }
 
       // =======================================================================
@@ -2688,21 +3269,15 @@
         ctx.fill();
 
         // Pantone text
-        ctx.fillStyle = '#ffffff';
-        ctx.font = '500 15px -apple-system, sans-serif';
-        const pLines = wrapTextLines(ctx, contentText, cardW - 68);
-        let py = cy + 46;
-        for (const line of pLines) {
-          ctx.fillText(line, cx + 34, py);
-          py += 26;
-        }
+        drawRichBody(cx + 34, cy + 46, cardW - 68, '#ffffff', false);
 
-        ctx.fillStyle = '#18181b';
+        ctx.fillStyle = curPantone;
         ctx.font = 'bold 16px -apple-system, sans-serif';
-        ctx.fillText(SWATCH_META[curPantone]?.code || 'PANTONE 18-1442 TCX', cx + 34, cy + swatchH + 34);
+        ctx.textAlign = 'left';
+        ctx.fillText(getTxt('.pantone-code', SWATCH_META[curPantone]?.code || 'PANTONE 18-1442 TCX'), cx + 34, cy + swatchH + 34);
         ctx.fillStyle = '#71717a';
         ctx.font = '600 12px -apple-system, sans-serif';
-        ctx.fillText(SWATCH_META[curPantone]?.name || 'ROASTED TERRACOTTA', cx + 34, cy + swatchH + 54);
+        ctx.fillText(getTxt('.pantone-name', SWATCH_META[curPantone]?.name || 'ROASTED TERRACOTTA'), cx + 34, cy + swatchH + 54);
 
         ctx.textAlign = 'right';
         ctx.font = '10px "JetBrains Mono", monospace';
@@ -2710,6 +3285,7 @@
 
         card.style.transform = prevTransform;
         card.style.transition = prevTransition;
+        exportWrapper.style.transform = prevWrapTransform;
         ctx.restore();
         return outCanvas;
 
@@ -2847,11 +3423,11 @@
         }
         ctx.stroke();
 
-        // Authentic Washi Tape strip at top
+        // Authentic Washi Tape strip at top using curPantone
         ctx.save();
         ctx.translate(cx + cardW / 2, cy);
         ctx.rotate(-1.5 * Math.PI / 180);
-        ctx.fillStyle = 'rgba(180, 83, 9, 0.45)';
+        ctx.fillStyle = hexToRgba(curPantone, 0.55);
         ctx.fillRect(-65, -12, 130, 24);
         // Jagged torn ends
         ctx.fillStyle = '#fdfcf7';
@@ -2873,7 +3449,7 @@
         ctx.fill();
         ctx.shadowColor = 'transparent';
 
-        // Top hazard warning bar (45deg yellow & black stripes)
+        // Top hazard warning bar (45deg stripe)
         ctx.save();
         roundRect(ctx, cx, cy, cardW, 14, 4);
         ctx.clip();
@@ -2923,7 +3499,9 @@
         ctx.fillStyle = '#eab308';
         ctx.font = 'bold 9px "JetBrains Mono", monospace';
         ctx.textAlign = 'left';
-        ctx.fillText('TRI-X 400', cx + 28, cy + 34);
+        ctx.fillText('KODAK TRI-X 400', cx + 28, cy + 34);
+        ctx.textAlign = 'right';
+        ctx.fillText('EXP 24', cx + cardW - 28, cy + 34);
 
       } else {
         ctx.fillStyle = isDark ? '#18181b' : (curTheme === 'coffee' ? '#f5f0e6' : (curTheme === 'prescription' ? '#faf8f2' : (curTheme === 'eink' ? '#f8f6f0' : (curTheme === 'vinyl' ? '#141416' : (curTheme === 'cassette' ? '#1e1e24' : '#fbf9f4')))));
@@ -2937,13 +3515,13 @@
       if (curTheme !== 'airmail' && curTheme !== 'margiela') ctx.stroke();
 
       // =======================================================================
-      // 4. THEME-SPECIFIC HEADERS, BADGES & EMBELLISHMENTS
+      // 4. THEME-SPECIFIC HEADERS, BADGES & EMBELLISHMENTS (DYNAMIC FROM DOM)
       // =======================================================================
       if (curTheme === 'newspaper') {
         ctx.fillStyle = '#18181b';
         ctx.font = 'bold 20px "Playfair Display", Georgia, serif';
         ctx.textAlign = 'center';
-        ctx.fillText('The Daily Chronicle', cx + cardW / 2, cy + 38);
+        ctx.fillText(getTxt('.mast-title', 'The Daily Chronicle'), cx + cardW / 2, cy + 38);
 
         ctx.strokeStyle = '#1c1917';
         ctx.lineWidth = 2;
@@ -2961,40 +3539,39 @@
         ctx.fillStyle = '#18181b';
         ctx.font = 'bold 14px "Playfair Display", Georgia, serif';
         ctx.textAlign = 'left';
-        ctx.fillText('ON THE SUBTLETY OF THE UNSEEN', cx + 34, cy + 82);
+        ctx.fillText(getTxt('.article-title', 'ON THE SUBTLETY OF THE UNSEEN'), cx + 34, cy + 82);
 
       } else if (curTheme === 'magazine') {
         ctx.fillStyle = '#18181b';
-        ctx.font = '800 23px "Playfair Display", Georgia, serif';
+        ctx.font = '800 22px "Playfair Display", Georgia, serif';
         ctx.textAlign = 'left';
-        ctx.fillText('THE ESSAY', cx + 34, cy + 44);
+        ctx.fillText(getTxt('.mag-title', 'THE ESSAY'), cx + 34, cy + 44);
 
-        ctx.fillStyle = '#09090b';
-        roundRect(ctx, cx + cardW - 34 - 70, cy + 28, 70, 20, 10);
-        ctx.fill();
-        ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 9px "JetBrains Mono", monospace';
-        ctx.textAlign = 'center';
-        ctx.fillText('ISSUE 42', cx + cardW - 34 - 35, cy + 41);
+        ctx.fillStyle = curPantone;
+        ctx.font = 'bold 10px "JetBrains Mono", monospace';
+        ctx.textAlign = 'right';
+        ctx.fillText(getTxt('.mag-issue', 'ISSUE NO. 08 // VOL. 24'), cx + cardW - 34, cy + 44);
 
-        ctx.fillStyle = '#18181b';
-        ctx.font = '700 15px -apple-system, sans-serif';
+        ctx.strokeStyle = '#18181b';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(cx + 34, cy + 54); ctx.lineTo(cx + cardW - 34, cy + 54);
+        ctx.stroke();
+
+        ctx.fillStyle = curPantone;
+        ctx.font = '700 11px -apple-system, sans-serif';
         ctx.textAlign = 'left';
-        ctx.fillText('THE ARCHITECTURE OF SILENCE', cx + 34, cy + 74);
-
-        ctx.fillStyle = '#71717a';
-        ctx.font = '11px -apple-system, sans-serif';
-        ctx.fillText('Notes on Modern Restraint & Form', cx + 34, cy + 92);
+        ctx.fillText(getTxt('.mag-kicker', 'CRITIQUE & CONTEMPLATION'), cx + 34, cy + 74);
 
       } else if (curTheme === 'coffee') {
-        ctx.fillStyle = '#8c7851';
+        ctx.fillStyle = curPantone;
         ctx.font = 'bold 9.5px "JetBrains Mono", monospace';
         ctx.textAlign = 'left';
-        ctx.fillText('SINGLE ORIGIN ROAST', cx + 34, cy + 34);
+        ctx.fillText(getTxt('.origin-badge', 'SINGLE ORIGIN ROAST'), cx + 34, cy + 34);
 
         ctx.fillStyle = '#2d241e';
         ctx.font = '800 18px "Playfair Display", Georgia, serif';
-        ctx.fillText('ETHIOPIA YIRGACHEFFE', cx + 34, cy + 56);
+        ctx.fillText(getTxt('.coffee-title', 'ETHIOPIA YIRGACHEFFE'), cx + 34, cy + 56);
 
         ctx.fillStyle = '#78716c';
         ctx.font = '9.5px "JetBrains Mono", monospace';
@@ -3011,7 +3588,7 @@
         ctx.fillStyle = curPantone;
         ctx.font = 'bold 11px "JetBrains Mono", monospace';
         ctx.textAlign = 'left';
-        ctx.fillText('#今日灵感便签 // 01', cx + 34, cy + 34);
+        ctx.fillText(getTxt('.washi-badge', '#今日灵感便签 // 01'), cx + 34, cy + 34);
 
         ctx.fillStyle = '#78716c';
         ctx.textAlign = 'right';
@@ -3039,7 +3616,7 @@
         ctx.textAlign = 'left';
         ctx.fillText('PATIENT: 精神内耗患者', cx + 44, cy + 77);
         ctx.textAlign = 'right';
-        ctx.fillText('DOSAGE: 每日清晨', cx + cardW - 44, cy + 77);
+        ctx.fillText('DOSAGE: 每日清晨服用', cx + cardW - 44, cy + 77);
 
         // DR. VIBE APPROVED Circular Seal Stamp with -8deg tilt
         ctx.save();
@@ -3062,16 +3639,16 @@
         ctx.fillStyle = curPantone;
         ctx.font = 'bold 68px "Playfair Display", Georgia, serif';
         ctx.textAlign = 'left';
-        const todayDay = new Date().getDate();
-        ctx.fillText(todayDay < 10 ? '0' + todayDay : '' + todayDay, cx + 34, cy + 96);
+        const todayDay = getTxt('.cal-huge-day', String(new Date().getDate()));
+        ctx.fillText(todayDay.length === 1 ? '0' + todayDay : todayDay, cx + 34, cy + 96);
 
         ctx.fillStyle = '#18181b';
         ctx.font = 'bold 15px -apple-system, sans-serif';
         ctx.textAlign = 'right';
-        ctx.fillText('NOV · 霜降', cx + cardW - 34, cy + 54);
+        ctx.fillText(getTxt('.cal-month', 'NOV · 霜降'), cx + cardW - 34, cy + 54);
         ctx.fillStyle = '#71717a';
         ctx.font = '11px -apple-system, sans-serif';
-        ctx.fillText('SUNDAY · 宜停顿放空', cx + cardW - 34, cy + 76);
+        ctx.fillText(getTxt('.cal-lunar', 'SUNDAY · 宜停顿放空'), cx + cardW - 34, cy + 76);
 
         ctx.strokeStyle = '#e4e4e7';
         ctx.beginPath();
@@ -3087,7 +3664,7 @@
         ctx.textAlign = 'left';
         ctx.fillText('REC [01:42:19]', cx + 48, cy + 38);
         ctx.textAlign = 'right';
-        ctx.fillText('SCENE 48 // 宽银幕', cx + cardW - 34, cy + 38);
+        ctx.fillText(getTxt('.cinema-top .editable', 'SCENE 48 // 宽银幕电影'), cx + cardW - 34, cy + 38);
 
         // 16:9 Inner cinema letterbox outline
         ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
@@ -3096,15 +3673,17 @@
         ctx.stroke();
 
       } else if (curTheme === 'bento') {
-        ctx.fillStyle = '#ea580c';
-        roundRect(ctx, cx + 34, cy + 28, 88, 20, 3);
+        const bTag = getTxt('.bento-tag', 'STATEMENT');
+        ctx.font = 'bold 9.5px "JetBrains Mono", monospace';
+        const tagW = Math.max(76, ctx.measureText(bTag).width + 20);
+        ctx.fillStyle = curPantone;
+        roundRect(ctx, cx + 34, cy + 28, tagW, 20, 3);
         ctx.fill();
         ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 9.5px "JetBrains Mono", monospace';
         ctx.textAlign = 'center';
-        ctx.fillText('STATEMENT', cx + 78, cy + 42);
+        ctx.fillText(bTag, cx + 34 + tagW / 2, cy + 42);
 
-        ctx.fillStyle = '#ea580c';
+        ctx.fillStyle = curPantone;
         ctx.font = '800 28px "Playfair Display", Georgia, serif';
         ctx.textAlign = 'left';
         ctx.fillText('“', cx + 34, cy + 74);
@@ -3113,11 +3692,11 @@
         ctx.fillStyle = '#f59e0b';
         ctx.font = 'bold 10px "JetBrains Mono", monospace';
         ctx.textAlign = 'left';
-        ctx.fillText('HEAVY FREIGHT // STENCIL', cx + 34, cy + 40);
+        ctx.fillText(getTxt('.cargo-tag', 'HEAVY FREIGHT // STENCIL'), cx + 34, cy + 40);
 
         ctx.fillStyle = '#ffffff';
         ctx.font = 'bold 16px -apple-system, sans-serif';
-        ctx.fillText('CARGO: IDEAS & PROTOCOLS', cx + 34, cy + 62);
+        ctx.fillText(getTxt('.cargo-title', 'CARGO: IDEAS & PROTOCOLS'), cx + 34, cy + 62);
 
         // FRAGILE Badge
         ctx.strokeStyle = '#f59e0b';
@@ -3146,11 +3725,11 @@
         const pillH = 16;
         const pillX = cx + cardW / 2 - 44;
         const pillY = midY - 12;
-        ctx.strokeStyle = '#18181b';
+        ctx.strokeStyle = curPantone;
         ctx.lineWidth = 1.2;
         roundRect(ctx, pillX, pillY, pillW, pillH, 8);
         ctx.stroke();
-        ctx.fillStyle = '#18181b';
+        ctx.fillStyle = curPantone;
         ctx.font = 'bold 10.5px "JetBrains Mono", monospace';
         ctx.fillText('11', pillX + pillW / 2, midY - 1);
 
@@ -3195,17 +3774,17 @@
         ctx.fillStyle = curPantone;
         ctx.font = 'bold 13px "JetBrains Mono", monospace';
         ctx.textAlign = 'center';
-        ctx.fillText('TYPECARD // SPEC SHEET', cx + cardW / 2, cy + 36);
+        ctx.fillText(getTxt('.receipt-title', 'TYPECARD // SPEC SHEET'), cx + cardW / 2, cy + 36);
 
         // Meta row
         ctx.fillStyle = '#71717a';
         ctx.font = '9.5px "JetBrains Mono", monospace';
         ctx.textAlign = 'left';
-        ctx.fillText('DOC: #8492', cx + 34, cy + 54);
+        ctx.fillText(getTxt('.receipt-row span:first-child', 'DOC: #8492'), cx + 34, cy + 54);
         ctx.textAlign = 'center';
         ctx.fillText(new Date().toISOString().substring(0, 10), cx + cardW / 2, cy + 54);
         ctx.textAlign = 'right';
-        ctx.fillText('REV: 02', cx + cardW - 34, cy + 54);
+        ctx.fillText(getTxt('.receipt-row span:last-child', 'REV: 02'), cx + cardW - 34, cy + 54);
 
         // Dashed divider strictly BELOW text
         ctx.strokeStyle = curPantone;
@@ -3234,22 +3813,22 @@
         ctx.fillStyle = curPantone;
         ctx.font = '800 22px "JetBrains Mono", monospace';
         ctx.textAlign = 'left';
-        ctx.fillText('A-42', cx + 18, cy + 44);
+        ctx.fillText(getTxt('.stub-number', 'A-42'), cx + 18, cy + 44);
 
         ctx.font = 'bold 9px "JetBrains Mono", monospace';
         ctx.fillText('ADMIT ONE', cx + 18, cy + 60);
 
         ctx.fillStyle = '#78716c';
         ctx.font = '9.5px "JetBrains Mono", monospace';
-        ctx.fillText('CINEMA NOIR', cx + 18, cy + 92);
-        ctx.fillText('SEAT: 08-F', cx + 18, cy + 108);
-        ctx.fillText('ROW: 12', cx + 18, cy + 124);
+        ctx.fillText(getTxt('.stub-meta div:nth-child(1)', 'CINEMA NOIR'), cx + 18, cy + 92);
+        ctx.fillText(getTxt('.stub-meta div:nth-child(2)', 'SEAT: 08-F'), cx + 18, cy + 108);
+        ctx.fillText(getTxt('.stub-meta div:nth-child(3)', 'ROW: 12'), cx + 18, cy + 124);
 
         // Right Main Header
         ctx.fillStyle = curPantone;
         ctx.font = 'bold 11px "JetBrains Mono", monospace';
         ctx.textAlign = 'left';
-        ctx.fillText('PREMIERE TICKET', cx + 148, cy + 38);
+        ctx.fillText(getTxt('.ticket-type', 'PREMIERE TICKET'), cx + 148, cy + 38);
 
         ctx.fillStyle = '#78716c';
         ctx.textAlign = 'right';
@@ -3273,7 +3852,7 @@
         ctx.fillStyle = curPantone;
         ctx.font = 'bold 10px -apple-system, sans-serif';
         ctx.textAlign = 'left';
-        ctx.fillText('CHAPTER 04', cx + 34, cy + 34);
+        ctx.fillText(getTxt('.eink-tag', 'CHAPTER 04'), cx + 34, cy + 34);
 
         ctx.fillStyle = '#71717a';
         ctx.font = '11px "JetBrains Mono", monospace';
@@ -3295,7 +3874,7 @@
         ctx.fillStyle = '#a1a1aa';
         ctx.font = '11px "JetBrains Mono", monospace';
         ctx.textAlign = 'left';
-        ctx.fillText('SIDE A // 33⅓ RPM', cx + 34, cy + 34);
+        ctx.fillText(getTxt('.vinyl-head .editable', 'SIDE A // 33⅓ RPM'), cx + 34, cy + 34);
         ctx.textAlign = 'right';
         ctx.fillText('STEREO MASTER', cx + cardW - 34, cy + 34);
 
@@ -3332,88 +3911,78 @@
         ctx.fillText('ACOUSTIC SESSION IN B-FLAT', dx + 32, dy + 12);
 
       } else if (curTheme === 'cassette') {
-        ctx.fillStyle = '#18181b';
+        ctx.fillStyle = '#fbf8f0';
         roundRect(ctx, cx + 24, cy + 22, cardW - 48, cardH - 64, 4);
         ctx.fill();
 
         ctx.fillStyle = curPantone;
-        ctx.font = 'bold 11px "JetBrains Mono", monospace';
+        ctx.font = 'bold 13px "JetBrains Mono", monospace';
         ctx.textAlign = 'left';
-        ctx.fillText('SIDE A', cx + 38, cy + 42);
+        ctx.fillText(getTxt('.tape-side', 'SIDE A'), cx + 40, cy + 46);
 
-        ctx.fillStyle = '#a1a1aa';
+        ctx.fillStyle = '#78716c';
+        ctx.font = '10px "JetBrains Mono", monospace';
         ctx.textAlign = 'right';
-        ctx.fillText('TDK NORMAL BIAS 90', cx + cardW - 38, cy + 42);
+        ctx.fillText(getTxt('.tape-brand', 'TDK NORMAL BIAS 90'), cx + cardW - 40, cy + 46);
+
+        ctx.strokeStyle = curPantone;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(cx + 40, cy + 54); ctx.lineTo(cx + cardW - 40, cy + 54);
+        ctx.stroke();
+        ctx.lineWidth = 1;
 
         // Tape window at bottom
-        const twY = cy + cardH - 110;
-        ctx.fillStyle = '#09090b';
-        roundRect(ctx, cx + cardW / 2 - 80, twY, 160, 26, 3);
+        const twY = cy + cardH - 96;
+        ctx.fillStyle = '#18181b';
+        roundRect(ctx, cx + 40, twY, cardW - 80, 36, 4);
         ctx.fill();
 
-        ctx.strokeStyle = '#3f3f46';
-        ctx.beginPath(); ctx.arc(cx + cardW / 2 - 50, twY + 13, 7, 0, Math.PI * 2); ctx.stroke();
-        ctx.beginPath(); ctx.arc(cx + cardW / 2 + 50, twY + 13, 7, 0, Math.PI * 2); ctx.stroke();
+        ctx.strokeStyle = '#a1a1aa';
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.arc(cx + cardW / 2 - 65, twY + 18, 9, 0, Math.PI * 2); ctx.stroke();
+        ctx.beginPath(); ctx.arc(cx + cardW / 2 + 65, twY + 18, 9, 0, Math.PI * 2); ctx.stroke();
+        ctx.lineWidth = 1;
 
         ctx.fillStyle = '#71717a';
-        ctx.font = '9.5px "JetBrains Mono", monospace';
+        ctx.font = '10px "JetBrains Mono", monospace';
         ctx.textAlign = 'center';
-        ctx.fillText('[ 04:32 ]', cx + cardW / 2, twY + 17);
+        ctx.fillText('[ 04:32 ]', cx + cardW / 2, twY + 22);
       }
 
       // =======================================================================
-      // 5. DRAW MAIN BODY CONTENT
+      // 5. DRAW MAIN BODY CONTENT (WITH HIGHLIGHT MARKERS, ALIGNMENT & DROP CAP)
       // =======================================================================
-      ctx.textAlign = 'left';
-      ctx.font = `${cs && cs.fontStyle === 'italic' ? 'italic ' : ''}${cs ? cs.fontWeight : '400'} ${fontSize}px ${fontFam}`;
-      ctx.fillStyle = (curTheme === 'cinema') ? '#fde047' : ((curTheme === 'polaroid') ? '#f4f4f5' : (isDark ? '#e4e4e7' : '#27272a'));
+      const bodyColor = (curTheme === 'cinema') ? '#fde047' : ((curTheme === 'polaroid') ? '#f4f4f5' : ((curTheme === 'cassette') ? '#292524' : (isDark ? '#e4e4e7' : '#27272a')));
 
-      // Specific text placement by archetype
       if (curTheme === 'ticket') {
-        const tLines = wrapTextLines(ctx, contentText, cardW - 176);
-        let ty = cy + 74;
-        for (const line of tLines) {
-          ctx.fillText(line, cx + 148, ty);
-          ty += lineHeight;
-        }
+        drawRichBody(cx + 148, cy + 74, cardW - 176, bodyColor, false);
       } else if (curTheme === 'polaroid') {
-        const pLines = wrapTextLines(ctx, contentText, cardW - 68);
-        let py = cy + 60;
-        for (const line of pLines) {
-          ctx.fillText(line, cx + 34, py);
-          py += lineHeight;
-        }
-        // Handwritten cursive caption on white chin
-        ctx.fillStyle = '#52525b';
-        ctx.font = 'italic 13px Georgia, "Songti SC", serif';
+        drawRichBody(cx + 34, cy + 62, cardW - 68, bodyColor, false);
+        // Bottom white Polaroid frame caption
+        ctx.fillStyle = '#18181b';
+        ctx.font = 'bold 12px "JetBrains Mono", monospace';
         ctx.textAlign = 'left';
-        ctx.fillText('Moments in frame, 1984', cx + 34, cy + cardH - 32);
+        ctx.fillText(getTxt('.polaroid-foot .editable:first-child', 'SHADOWS & MEMORY'), cx + 24, cy + cardH - 36);
+        ctx.fillStyle = '#71717a';
+        ctx.font = '10.5px "JetBrains Mono", monospace';
+        ctx.textAlign = 'right';
+        ctx.fillText(curWatermark, cx + cardW - 24, cy + cardH - 36);
       } else if (curTheme === 'newspaper') {
-        // Broadsheet with Drop Cap
-        const npLines = wrapTextLines(ctx, contentText, contentRel.w);
-        let ny = cy + contentRel.y + fontSize;
-        for (const line of npLines) {
-          ctx.fillText(line, cx + contentRel.x, ny);
-          ny += lineHeight;
-        }
+        drawRichBody(cx + contentRel.x, cy + contentRel.y + fontSize, contentRel.w, bodyColor, true);
       } else {
-        const textLines = wrapTextLines(ctx, contentText, contentRel.w);
-        let lineY = cy + contentRel.y + fontSize;
-        for (const line of textLines) {
-          ctx.fillText(line, cx + contentRel.x, lineY);
-          lineY += lineHeight;
-        }
+        const endY = drawRichBody(cx + contentRel.x, cy + contentRel.y + fontSize, contentRel.w, bodyColor, false);
         if (curTheme === 'coffee') {
           const pills = ['JASMINE', 'BERGAMOT', 'PEACH', 'WILD HONEY'];
           let px = cx + 34;
           for (const p of pills) {
             ctx.fillStyle = 'rgba(140, 120, 81, 0.12)';
-            roundRect(ctx, px, lineY + 6, 68, 18, 9);
+            roundRect(ctx, px, endY + 4, 68, 18, 9);
             ctx.fill();
             ctx.fillStyle = '#8c7851';
             ctx.font = 'bold 8.5px "JetBrains Mono", monospace';
             ctx.textAlign = 'center';
-            ctx.fillText(p, px + 34, lineY + 18);
+            ctx.fillText(p, px + 34, endY + 16);
             px += 76;
           }
         }
@@ -3475,6 +4044,7 @@
       // Restore DOM state
       card.style.transform = prevTransform;
       card.style.transition = prevTransition;
+      exportWrapper.style.transform = prevWrapTransform;
       ctx.restore();
       return outCanvas;
     }
