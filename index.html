@@ -1474,6 +1474,363 @@
       color: #71717a;
     }
 
+    /* 19. BAUHAUS WEIMAR 1923 */
+    .theme-bauhaus {
+      background: #f5f1e6;
+      color: #18181b;
+      font-family: var(--font-sans);
+      padding: 34px 32px 26px 32px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+      border: 3px solid #18181b;
+      position: relative;
+      overflow: hidden;
+    }
+    .theme-bauhaus .bau-art-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 4px solid #18181b;
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+      position: relative;
+    }
+    .theme-bauhaus .bau-shapes {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .theme-bauhaus .bau-circle {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--accent, #c2593f);
+    }
+    .theme-bauhaus .bau-rect {
+      width: 22px;
+      height: 22px;
+      background: #1e3a8a;
+    }
+    .theme-bauhaus .bau-tri {
+      width: 0;
+      height: 0;
+      border-left: 12px solid transparent;
+      border-right: 12px solid transparent;
+      border-bottom: 22px solid #eab308;
+    }
+    .theme-bauhaus .bau-title {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #18181b;
+    }
+    .theme-bauhaus .bau-sub {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      color: #18181b;
+      border-left: 5px solid var(--accent, #c2593f);
+      padding-left: 10px;
+    }
+    .theme-bauhaus .card-content {
+      font-size: 14.5px;
+      line-height: 1.8;
+      color: #18181b;
+      margin-bottom: 22px;
+      white-space: pre-wrap;
+    }
+    .theme-bauhaus .bau-foot {
+      display: flex;
+      justify-content: space-between;
+      border-top: 2px solid #18181b;
+      padding-top: 10px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: #18181b;
+    }
+
+    /* 20. CYANOTYPE BLUEPRINT */
+    .theme-blueprint {
+      background: #0c2d57;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.12) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+      color: #e0f2fe;
+      font-family: var(--font-mono);
+      padding: 34px 32px 26px 32px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+      border: 2px solid rgba(255,255,255,0.55);
+      position: relative;
+    }
+    .theme-blueprint .bp-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px dashed rgba(255,255,255,0.45);
+      padding-bottom: 10px;
+      margin-bottom: 18px;
+      font-size: 10.5px;
+      color: #bae6fd;
+    }
+    .theme-blueprint .bp-dim {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #38bdf8;
+    }
+    .theme-blueprint .card-content {
+      font-size: 14px;
+      line-height: 1.85;
+      color: #f0f9ff;
+      margin-bottom: 24px;
+      white-space: pre-wrap;
+    }
+    .theme-blueprint .bp-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid rgba(255,255,255,0.45);
+      background: rgba(8, 33, 66, 0.75);
+      padding: 8px 12px;
+      font-size: 10px;
+      color: #bae6fd;
+    }
+
+    /* 21. FIRST CLASS BOARDING PASS */
+    .theme-boarding {
+      background: #fdfdfc;
+      color: #18181b;
+      font-family: var(--font-mono);
+      padding: 0;
+      border-radius: 8px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+      overflow: hidden;
+      border: 1px solid #e4e4e7;
+    }
+    .theme-boarding .bp-top-bar {
+      background: var(--accent, #c2593f);
+      color: #ffffff;
+      padding: 12px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+    }
+    .theme-boarding .bp-route-row {
+      padding: 20px 28px 14px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px dashed #d4d4d8;
+    }
+    .theme-boarding .bp-iata {
+      font-family: var(--font-sans);
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: #18181b;
+    }
+    .theme-boarding .bp-plane {
+      font-size: 16px;
+      color: var(--accent, #c2593f);
+      letter-spacing: 0.2em;
+    }
+    .theme-boarding .bp-body {
+      padding: 18px 28px 22px 28px;
+    }
+    .theme-boarding .card-content {
+      font-family: var(--font-serif);
+      font-size: 14.5px;
+      line-height: 1.8;
+      color: #27272a;
+      margin-bottom: 18px;
+      white-space: pre-wrap;
+    }
+    .theme-boarding .bp-Bottom {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid #f4f4f5;
+      padding-top: 10px;
+      font-size: 10px;
+      color: #71717a;
+    }
+
+    /* 22. MOMA MUSEUM PLACARD */
+    .theme-museum {
+      background: #fbfaf8;
+      color: #18181b;
+      font-family: var(--font-sans);
+      padding: 40px 38px 30px 38px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.38), -6px 10px 24px rgba(0,0,0,0.12);
+      border: 1px solid #e7e5e0;
+    }
+    .theme-museum .mu-artist {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #18181b;
+      margin-bottom: 4px;
+    }
+    .theme-museum .mu-work {
+      font-family: var(--font-serif);
+      font-size: 17px;
+      font-weight: 700;
+      font-style: italic;
+      color: var(--accent, #c2593f);
+      margin-bottom: 4px;
+    }
+    .theme-museum .mu-medium {
+      font-size: 10.5px;
+      color: #78716c;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #e7e5e0;
+    }
+    .theme-museum .card-content {
+      font-family: var(--font-serif);
+      font-size: 14.5px;
+      line-height: 1.85;
+      color: #292524;
+      margin-bottom: 24px;
+      white-space: pre-wrap;
+    }
+    .theme-museum .mu-foot {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      color: #a8a29e;
+      padding-top: 10px;
+      border-top: 1px solid #f0eee9;
+    }
+
+    /* 23. MACINTOSH SYSTEM 7 OS */
+    .theme-macos {
+      background: #f4f2eb;
+      color: #18181b;
+      font-family: var(--font-mono);
+      padding: 0;
+      border: 2px solid #18181b;
+      border-radius: 3px;
+      box-shadow: 6px 6px 0px #18181b, 0 20px 50px rgba(0,0,0,0.4);
+      overflow: hidden;
+    }
+    .theme-macos .mac-titlebar {
+      height: 28px;
+      background: repeating-linear-gradient(
+        0deg,
+        #18181b,
+        #18181b 1px,
+        #f4f2eb 1px,
+        #f4f2eb 3px
+      );
+      border-bottom: 2px solid #18181b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .theme-macos .mac-close {
+      position: absolute;
+      left: 10px;
+      width: 12px;
+      height: 12px;
+      background: #f4f2eb;
+      border: 1.5px solid #18181b;
+    }
+    .theme-macos .mac-win-title {
+      background: #f4f2eb;
+      padding: 1px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #18181b;
+    }
+    .theme-macos .mac-subbar {
+      padding: 6px 20px;
+      border-bottom: 1px solid #18181b;
+      background: #eae6da;
+      display: flex;
+      justify-content: space-between;
+      font-size: 9.5px;
+      color: #57534e;
+    }
+    .theme-macos .mac-body {
+      padding: 24px 28px 20px 28px;
+    }
+    .theme-macos .card-content {
+      font-size: 14px;
+      line-height: 1.8;
+      color: #18181b;
+      margin-bottom: 20px;
+      white-space: pre-wrap;
+    }
+    .theme-macos .mac-foot {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px dotted #18181b;
+      padding-top: 10px;
+      font-size: 10px;
+      color: #57534e;
+    }
+
+    /* 24. HAUTE COUTURE FOIL INVITATION */
+    .theme-vogue {
+      background: #0d0d10;
+      color: #f5eedc;
+      font-family: var(--font-serif);
+      padding: 40px 36px 30px 36px;
+      box-shadow: 0 22px 55px rgba(0,0,0,0.65);
+      border: 1px solid #d4af37;
+      outline: 1px solid rgba(212, 175, 55, 0.35);
+      outline-offset: -7px;
+      position: relative;
+    }
+    .theme-vogue .vg-head {
+      text-align: center;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+      padding-bottom: 14px;
+      margin-bottom: 22px;
+    }
+    .theme-vogue .vg-crest {
+      font-size: 14px;
+      color: #d4af37;
+      margin-bottom: 4px;
+      letter-spacing: 0.2em;
+    }
+    .theme-vogue .vg-maison {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      color: #f3e5ab;
+      text-transform: uppercase;
+    }
+    .theme-vogue .card-content {
+      font-size: 15px;
+      line-height: 1.9;
+      color: #f5eedc;
+      margin-bottom: 26px;
+      white-space: pre-wrap;
+    }
+    .theme-vogue .vg-foot {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid rgba(212, 175, 55, 0.28);
+      padding-top: 12px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: #d4af37;
+    }
+
     /* =========================================================================
        SIDEBAR & CONTROLS
        ========================================================================= */
@@ -1818,7 +2175,7 @@
       <div class="brand-mark">T</div>
       <span class="brand-title">TypeCard</span>
       <div class="brand-divider"></div>
-      <span class="brand-sub">Social Studio // 18 Formats · 小红书排版利器</span>
+      <span class="brand-sub">Social Studio // 24 Formats · 小红书排版利器</span>
     </div>
 
     <div class="nav-right">
@@ -1881,7 +2238,7 @@
     <!-- Inspector Sidebar -->
     <div class="sidebar">
       
-      <!-- 1. Formats Grid (18 Formats + Category Filter) -->
+      <!-- 1. Formats Grid (24 Formats + Category Filter) -->
       <div>
         <div class="group-label">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -1889,13 +2246,13 @@
             <line x1="3" y1="9" x2="21" y2="9"></line>
             <line x1="9" y1="21" x2="9" y2="9"></line>
           </svg>
-          <span>美学格式 (18 种实体介质与流派)</span>
+          <span>美学格式 (24 种实体介质与流派)</span>
         </div>
         <div class="filter-tabs" id="format-filters">
-          <button class="filter-pill active" data-cat="all">全部 (18)</button>
+          <button class="filter-pill active" data-cat="all">全部 (24)</button>
           <button class="filter-pill" data-cat="print">纸质刊物</button>
           <button class="filter-pill" data-cat="retro">复古拟物</button>
-          <button class="filter-pill" data-cat="avant">先锋极简</button>
+          <button class="filter-pill" data-cat="avant">先锋艺术</button>
           <button class="filter-pill" data-cat="media">光影声像</button>
         </div>
         <div class="style-grid">
@@ -1906,6 +2263,30 @@
           <button class="style-card" data-theme="magazine" data-cat="print">
             <span class="style-name">📖 顶级月刊</span>
             <span class="style-meta">Editorial Vogue</span>
+          </button>
+          <button class="style-card" data-theme="bauhaus" data-cat="avant">
+            <span class="style-name">📐 包豪斯海报</span>
+            <span class="style-meta">Weimar 1923 Art</span>
+          </button>
+          <button class="style-card" data-theme="blueprint" data-cat="avant">
+            <span class="style-name">🧭 工程蓝图</span>
+            <span class="style-meta">Cyanotype CAD</span>
+          </button>
+          <button class="style-card" data-theme="boarding" data-cat="retro">
+            <span class="style-name">🛫 头等登机牌</span>
+            <span class="style-meta">First Class Pass</span>
+          </button>
+          <button class="style-card" data-theme="museum" data-cat="print">
+            <span class="style-name">🖼️ 美术馆展签</span>
+            <span class="style-meta">MoMA Curatorial</span>
+          </button>
+          <button class="style-card" data-theme="macos" data-cat="retro">
+            <span class="style-name">💻 复古麦金塔</span>
+            <span class="style-meta">Macintosh OS 1984</span>
+          </button>
+          <button class="style-card" data-theme="vogue" data-cat="avant">
+            <span class="style-name">🥂 黑金烫印函</span>
+            <span class="style-meta">Haute Couture Foil</span>
           </button>
           <button class="style-card" data-theme="coffee" data-cat="retro">
             <span class="style-name">☕ 咖啡豆卡</span>
@@ -2516,6 +2897,89 @@
         </div>
         <div style="display: flex; justify-content: space-between; font-size: 10px; color: #71717a; margin-top: 12px; font-family: var(--font-mono);">
           <span>TYPE I // CASSETTE</span>
+          <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
+        </div>
+      `,
+      bauhaus: `
+        <div class="bau-art-bar">
+          <div class="bau-shapes">
+            <div class="bau-circle"></div>
+            <div class="bau-rect"></div>
+            <div class="bau-tri"></div>
+          </div>
+          <div class="bau-title editable" contenteditable="true">WEIMAR // 1923</div>
+        </div>
+        <div class="bau-sub editable" contenteditable="true">FORM FOLLOWS FUNCTION</div>
+        <div class="card-content editable" contenteditable="true" spellcheck="false">剥离一切矫饰的浮华，让几何、色彩与结构直接对话。真正有力的设计从不取悦一时的潮流，而是在严密的理性秩序中，重塑日常生活的审美尺度。</div>
+        <div class="bau-foot">
+          <span>STAATLICHES BAUHAUS</span>
+          <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
+        </div>
+      `,
+      blueprint: `
+        <div class="bp-head">
+          <span class="bp-dim editable" contenteditable="true">|<--- SPEC: 460.00 MM --->|</span>
+          <span>CYANOTYPE // CAD</span>
+        </div>
+        <div class="card-content editable" contenteditable="true" spellcheck="false">任何伟大的建筑在落成之前，都曾是一纸克制而精密的蓝色草图。不要急于搭建高塔，先在寂静中校准每一处承重的坐标与结构。</div>
+        <div class="bp-foot">
+          <span class="editable" contenteditable="true">SCALE 1:1 // DWG NO. TC-24</span>
+          <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
+        </div>
+      `,
+      boarding: `
+        <div class="bp-top-bar">
+          <span class="editable" contenteditable="true">FIRST CLASS // BOARDING PASS</span>
+          <span>SEAT 01A</span>
+        </div>
+        <div class="bp-route-row">
+          <span class="bp-iata editable" contenteditable="true">TYO</span>
+          <span class="bp-plane">─── ✈︎ ───</span>
+          <span class="bp-iata editable" contenteditable="true">PAR</span>
+        </div>
+        <div class="bp-body">
+          <div class="card-content editable" contenteditable="true" spellcheck="false">人生最迷人的时刻，往往不是抵达终点的那一刻，而是合上笔记本、穿过登机廊桥，把自己彻底交给未知云层与远方的三万英尺高空。</div>
+          <div class="bp-Bottom">
+            <span class="editable" contenteditable="true">FLIGHT AF-084 // GATE B12</span>
+            <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
+          </div>
+        </div>
+      `,
+      museum: `
+        <div class="mu-artist editable" contenteditable="true">ANONYMOUS ARCHIVE (b. 1984)</div>
+        <div class="mu-work editable" contenteditable="true">Study for Quiet Contemplation, No. 7</div>
+        <div class="mu-medium editable" contenteditable="true">Mineral pigment and ink on cotton linen · 60 × 80 cm</div>
+        <div class="card-content editable" contenteditable="true" spellcheck="false">当你驻足在展厅柔和的射灯下，画布上的留白便不再是空缺，而是艺术家为你预留的呼吸之地。审美的终极意义，是在作品中照见自己。</div>
+        <div class="mu-foot">
+          <span class="editable" contenteditable="true">MOMA COLLECTION // GALLERY 04</span>
+          <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
+        </div>
+      `,
+      macos: `
+        <div class="mac-titlebar">
+          <div class="mac-close"></div>
+          <span class="mac-win-title editable" contenteditable="true">Untitled-Memo.txt</span>
+        </div>
+        <div class="mac-subbar">
+          <span>System 7.0.1</span>
+          <span>42K in disk // 188K available</span>
+        </div>
+        <div class="mac-body">
+          <div class="card-content editable" contenteditable="true" spellcheck="false">Here's to the crazy ones. 在那个只有黑白像素与软盘读盘声的年代，每一次敲击键盘都像是在数字荒原上开垦绿洲。保持饥渴，保持纯粹。</div>
+          <div class="mac-foot">
+            <span class="editable" contenteditable="true">MACINTOSH CLASSIC // 1984</span>
+            <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
+          </div>
+        </div>
+      `,
+      vogue: `
+        <div class="vg-head">
+          <div class="vg-crest">❖ ─── ❖ ─── ❖</div>
+          <div class="vg-maison editable" contenteditable="true">MAISON DE L'ESPRIT · PARIS</div>
+        </div>
+        <div class="card-content editable" contenteditable="true" spellcheck="false">真正的奢华从不急于自我表白。它是暗夜丝绒上一道内敛的香槟金边，是历经时光淬炼后依然从容不迫的锋芒与分寸感。</div>
+        <div class="vg-foot">
+          <span class="editable" contenteditable="true">SOIRÉE PRIVÉE // R.S.V.P.</span>
           <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
         </div>
       `
@@ -3948,12 +4412,228 @@
         ctx.font = '10px "JetBrains Mono", monospace';
         ctx.textAlign = 'center';
         ctx.fillText('[ 04:32 ]', cx + cardW / 2, twY + 22);
+
+      } else if (curTheme === 'bauhaus') {
+        ctx.fillStyle = '#f5f1e6';
+        ctx.fillRect(cx, cy, cardW, cardH);
+        ctx.shadowColor = 'transparent';
+        ctx.strokeStyle = '#18181b';
+        ctx.lineWidth = 3;
+        ctx.strokeRect(cx + 1.5, cy + 1.5, cardW - 3, cardH - 3);
+
+        // Geometric shapes: Red Circle, Blue Square, Yellow Triangle
+        ctx.fillStyle = curPantone;
+        ctx.beginPath(); ctx.arc(cx + 44, cy + 40, 12, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#1e3a8a';
+        ctx.fillRect(cx + 64, cy + 29, 22, 22);
+        ctx.fillStyle = '#eab308';
+        ctx.beginPath();
+        ctx.moveTo(cx + 106, cy + 29);
+        ctx.lineTo(cx + 94, cy + 51);
+        ctx.lineTo(cx + 118, cy + 51);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = '#18181b';
+        ctx.font = '800 11px "JetBrains Mono", monospace';
+        ctx.textAlign = 'right';
+        ctx.fillText(getTxt('.bau-title', 'WEIMAR // 1923'), cx + cardW - 32, cy + 44);
+
+        ctx.strokeStyle = '#18181b';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(cx + 32, cy + 64); ctx.lineTo(cx + cardW - 32, cy + 64);
+        ctx.stroke();
+
+        // Left accent bar + Bauhaus subtitle
+        ctx.fillStyle = curPantone;
+        ctx.fillRect(cx + 32, cy + 78, 5, 20);
+        ctx.fillStyle = '#18181b';
+        ctx.font = '800 17px -apple-system, sans-serif';
+        ctx.textAlign = 'left';
+        ctx.fillText(getTxt('.bau-sub', 'FORM FOLLOWS FUNCTION'), cx + 46, cy + 94);
+
+      } else if (curTheme === 'blueprint') {
+        ctx.fillStyle = '#0c2d57';
+        ctx.fillRect(cx, cy, cardW, cardH);
+        ctx.shadowColor = 'transparent';
+
+        // 20px minor & 100px major CAD grid
+        ctx.lineWidth = 1;
+        for (let x = 0; x <= cardW; x += 20) {
+          ctx.strokeStyle = (x % 100 === 0) ? 'rgba(255,255,255,0.14)' : 'rgba(255,255,255,0.04)';
+          ctx.beginPath(); ctx.moveTo(cx + x, cy); ctx.lineTo(cx + x, cy + cardH); ctx.stroke();
+        }
+        for (let y = 0; y <= cardH; y += 20) {
+          ctx.strokeStyle = (y % 100 === 0) ? 'rgba(255,255,255,0.14)' : 'rgba(255,255,255,0.04)';
+          ctx.beginPath(); ctx.moveTo(cx, cy + y); ctx.lineTo(cx + cardW, cy + y); ctx.stroke();
+        }
+        ctx.strokeStyle = 'rgba(255,255,255,0.6)';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(cx + 1, cy + 1, cardW - 2, cardH - 2);
+        ctx.lineWidth = 1;
+
+        ctx.fillStyle = '#38bdf8';
+        ctx.font = 'bold 11px "JetBrains Mono", monospace';
+        ctx.textAlign = 'left';
+        ctx.fillText(getTxt('.bp-dim', '|<--- SPEC: 460.00 MM --->|'), cx + 32, cy + 40);
+        ctx.fillStyle = '#bae6fd';
+        ctx.textAlign = 'right';
+        ctx.fillText('CYANOTYPE // CAD', cx + cardW - 32, cy + 40);
+
+        ctx.strokeStyle = 'rgba(255,255,255,0.45)';
+        ctx.setLineDash([4, 3]);
+        ctx.beginPath(); ctx.moveTo(cx + 32, cy + 52); ctx.lineTo(cx + cardW - 32, cy + 52); ctx.stroke();
+        ctx.setLineDash([]);
+
+      } else if (curTheme === 'boarding') {
+        ctx.fillStyle = '#fdfdfc';
+        roundRect(ctx, cx, cy, cardW, cardH, 8);
+        ctx.fill();
+        ctx.shadowColor = 'transparent';
+
+        // Top colored airline bar
+        ctx.save();
+        roundRect(ctx, cx, cy, cardW, 38, 8);
+        ctx.clip();
+        ctx.fillStyle = curPantone;
+        ctx.fillRect(cx, cy, cardW, 38);
+        ctx.restore();
+        ctx.fillStyle = curPantone;
+        ctx.fillRect(cx, cy + 20, cardW, 18);
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 10.5px "JetBrains Mono", monospace';
+        ctx.textAlign = 'left';
+        ctx.fillText(getTxt('.bp-top-bar span:first-child', 'FIRST CLASS // BOARDING PASS'), cx + 28, cy + 24);
+        ctx.textAlign = 'right';
+        ctx.fillText('SEAT 01A', cx + cardW - 28, cy + 24);
+
+        // Route IATA codes
+        const iataEls = card.querySelectorAll('.bp-iata');
+        const fromCode = iataEls[0] ? iataEls[0].innerText.trim() : 'TYO';
+        const toCode = iataEls[1] ? iataEls[1].innerText.trim() : 'PAR';
+        ctx.fillStyle = '#18181b';
+        ctx.font = '800 26px -apple-system, sans-serif';
+        ctx.textAlign = 'left';
+        ctx.fillText(fromCode, cx + 28, cy + 78);
+        ctx.textAlign = 'right';
+        ctx.fillText(toCode, cx + cardW - 28, cy + 78);
+
+        ctx.fillStyle = curPantone;
+        ctx.font = 'bold 15px "JetBrains Mono", monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('─── ✈ ───', cx + cardW / 2, cy + 74);
+
+        ctx.strokeStyle = '#d4d4d8';
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath(); ctx.moveTo(cx + 28, cy + 94); ctx.lineTo(cx + cardW - 28, cy + 94); ctx.stroke();
+        ctx.setLineDash([]);
+
+      } else if (curTheme === 'museum') {
+        ctx.fillStyle = '#fbfaf8';
+        roundRect(ctx, cx, cy, cardW, cardH, 2);
+        ctx.fill();
+        ctx.shadowColor = 'transparent';
+
+        ctx.fillStyle = '#18181b';
+        ctx.font = 'bold 12px -apple-system, sans-serif';
+        ctx.textAlign = 'left';
+        ctx.fillText(getTxt('.mu-artist', 'ANONYMOUS ARCHIVE (b. 1984)'), cx + 38, cy + 46);
+
+        ctx.fillStyle = curPantone;
+        ctx.font = 'italic bold 16.5px "Playfair Display", Georgia, serif';
+        ctx.fillText(getTxt('.mu-work', 'Study for Quiet Contemplation, No. 7'), cx + 38, cy + 70);
+
+        ctx.fillStyle = '#78716c';
+        ctx.font = '10.5px -apple-system, sans-serif';
+        ctx.fillText(getTxt('.mu-medium', 'Mineral pigment and ink on cotton linen · 60 × 80 cm'), cx + 38, cy + 90);
+
+        ctx.strokeStyle = '#e7e5e0';
+        ctx.beginPath(); ctx.moveTo(cx + 38, cy + 102); ctx.lineTo(cx + cardW - 38, cy + 102); ctx.stroke();
+
+      } else if (curTheme === 'macos') {
+        // Hard 1984 pixel shadow
+        ctx.shadowColor = 'transparent';
+        ctx.fillStyle = '#18181b';
+        ctx.fillRect(cx + 6, cy + 6, cardW, cardH);
+
+        ctx.fillStyle = '#f4f2eb';
+        ctx.fillRect(cx, cy, cardW, cardH);
+        ctx.strokeStyle = '#18181b';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(cx + 1, cy + 1, cardW - 2, cardH - 2);
+
+        // Pinstripe title bar
+        ctx.lineWidth = 1;
+        for (let y = cy + 4; y < cy + 26; y += 3) {
+          ctx.beginPath(); ctx.moveTo(cx + 2, y); ctx.lineTo(cx + cardW - 2, y); ctx.stroke();
+        }
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(cx, cy + 28); ctx.lineTo(cx + cardW, cy + 28); ctx.stroke();
+
+        // Close box
+        ctx.fillStyle = '#f4f2eb';
+        ctx.fillRect(cx + 10, cy + 8, 12, 12);
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(cx + 10, cy + 8, 12, 12);
+
+        // Centered window title
+        const winTitle = getTxt('.mac-win-title', 'Untitled-Memo.txt');
+        ctx.font = 'bold 11px "JetBrains Mono", monospace';
+        const wtW = ctx.measureText(winTitle).width + 20;
+        ctx.fillStyle = '#f4f2eb';
+        ctx.fillRect(cx + (cardW - wtW) / 2, cy + 4, wtW, 20);
+        ctx.fillStyle = '#18181b';
+        ctx.textAlign = 'center';
+        ctx.fillText(winTitle, cx + cardW / 2, cy + 18);
+
+        // Subbar
+        ctx.fillStyle = '#eae6da';
+        ctx.fillRect(cx + 2, cy + 29, cardW - 4, 24);
+        ctx.strokeStyle = '#18181b';
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(cx, cy + 53); ctx.lineTo(cx + cardW, cy + 53); ctx.stroke();
+
+        ctx.fillStyle = '#57534e';
+        ctx.font = '9.5px "JetBrains Mono", monospace';
+        ctx.textAlign = 'left';
+        ctx.fillText('System 7.0.1', cx + 20, cy + 44);
+        ctx.textAlign = 'right';
+        ctx.fillText('42K in disk // 188K available', cx + cardW - 20, cy + 44);
+
+      } else if (curTheme === 'vogue') {
+        ctx.fillStyle = '#0d0d10';
+        roundRect(ctx, cx, cy, cardW, cardH, 2);
+        ctx.fill();
+        ctx.shadowColor = 'transparent';
+
+        // Double Champagne Gold Foil Borders
+        ctx.strokeStyle = '#d4af37';
+        ctx.lineWidth = 1.2;
+        ctx.strokeRect(cx + 1, cy + 1, cardW - 2, cardH - 2);
+        ctx.strokeStyle = 'rgba(212, 175, 55, 0.38)';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(cx + 8, cy + 8, cardW - 16, cardH - 16);
+
+        ctx.fillStyle = '#d4af37';
+        ctx.font = '13px "Playfair Display", Georgia, serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('❖ ─── ❖ ─── ❖', cx + cardW / 2, cy + 44);
+
+        ctx.fillStyle = '#f3e5ab';
+        ctx.font = 'bold 13px "Playfair Display", Georgia, serif';
+        ctx.fillText(getTxt('.vg-maison', "MAISON DE L'ESPRIT · PARIS"), cx + cardW / 2, cy + 66);
+
+        ctx.strokeStyle = 'rgba(212, 175, 55, 0.3)';
+        ctx.beginPath(); ctx.moveTo(cx + 36, cy + 80); ctx.lineTo(cx + cardW - 36, cy + 80); ctx.stroke();
       }
 
       // =======================================================================
       // 5. DRAW MAIN BODY CONTENT (WITH HIGHLIGHT MARKERS, ALIGNMENT & DROP CAP)
       // =======================================================================
-      const bodyColor = (curTheme === 'cinema') ? '#fde047' : ((curTheme === 'polaroid') ? '#f4f4f5' : ((curTheme === 'cassette') ? '#292524' : (isDark ? '#e4e4e7' : '#27272a')));
+      const isDarkTheme = (isDark || curTheme === 'blueprint' || curTheme === 'vogue');
+      const bodyColor = (curTheme === 'cinema') ? '#fde047' : ((curTheme === 'polaroid') ? '#f4f4f5' : ((curTheme === 'blueprint') ? '#f0f9ff' : ((curTheme === 'vogue') ? '#f5eedc' : ((curTheme === 'cassette') ? '#292524' : (isDarkTheme ? '#e4e4e7' : '#27272a')))));
 
       if (curTheme === 'ticket') {
         drawRichBody(cx + 148, cy + 74, cardW - 176, bodyColor, false);
@@ -4002,7 +4682,7 @@
       // =======================================================================
       // 6. DRAW FOOTER
       // =======================================================================
-      const footEl = card.querySelector('.paper-foot, .mag-footer, .coffee-foot, .washi-foot, .rx-foot, .cal-foot, .cinema-foot, .bento-foot, .cargo-foot, .margiela-foot, .airmail-foot, .polaroid-foot, .receipt-foot, .ticket-footer, .eink-footer, .vinyl-foot, .cassette-label-box + div');
+      const footEl = card.querySelector('.paper-foot, .mag-footer, .coffee-foot, .washi-foot, .rx-foot, .cal-foot, .cinema-foot, .bento-foot, .cargo-foot, .margiela-foot, .airmail-foot, .polaroid-foot, .receipt-foot, .ticket-footer, .eink-footer, .vinyl-foot, .cassette-label-box + div, .bau-foot, .bp-foot, .bp-Bottom, .mu-foot, .mac-foot, .vg-foot');
       const footRel = getRel(footEl);
       const footY = footRel ? (cy + footRel.y + footRel.h / 2) : (cy + cardH - 24);
 
@@ -4019,7 +4699,7 @@
           lineRight = cx + cardW - 28;
         }
 
-        ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
+        ctx.strokeStyle = (curTheme === 'vogue') ? 'rgba(212,175,55,0.28)' : (isDarkTheme ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)');
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(lineLeft, footY - 12);
@@ -4033,7 +4713,7 @@
           leftFootText = footEl.firstElementChild.innerText.trim();
         }
 
-        ctx.fillStyle = isDark ? '#71717a' : '#a8a29e';
+        ctx.fillStyle = (curTheme === 'vogue') ? '#d4af37' : ((curTheme === 'blueprint') ? '#bae6fd' : (isDarkTheme ? '#71717a' : '#78716c'));
         ctx.font = '10px "JetBrains Mono", monospace';
         ctx.textAlign = 'left';
         if (leftFootText) ctx.fillText(leftFootText, leftX, footY + 4);
