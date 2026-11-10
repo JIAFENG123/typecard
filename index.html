@@ -1,0 +1,3473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TypeCard — 社交美学卡片工坊 (小红书/Instagram/Twitter 排版神器)</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+    :root {
+      --bg: #09090b;
+      --surface: #111114;
+      --surface-subtle: #18181b;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(255, 255, 255, 0.16);
+      --text-primary: #f4f4f5;
+      --text-secondary: #a1a1aa;
+      --text-tertiary: #71717a;
+      --accent: #c2593f;
+      --pantone-color: #c2593f;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --font-serif: 'Playfair Display', Georgia, "Songti SC", "Noto Serif SC", serif;
+      --card-font: var(--font-serif);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Navigation Header */
+    header {
+      height: 52px;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: rgba(9, 9, 11, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      width: 26px;
+      height: 26px;
+      background: #ffffff;
+      color: #09090b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: -0.04em;
+    }
+
+    .brand-title {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+    }
+
+    .brand-divider {
+      width: 1px;
+      height: 14px;
+      background: var(--border);
+    }
+
+    .brand-sub {
+      font-size: 11.5px;
+      color: var(--text-tertiary);
+      font-family: var(--font-mono);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      height: 32px;
+      padding: 0 13px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
+      border: 1px solid transparent;
+      outline: none;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-primary);
+      border-color: var(--border);
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.09);
+      border-color: var(--border-hover);
+    }
+
+    .btn-primary {
+      background: #f4f4f5;
+      color: #09090b;
+      font-weight: 600;
+    }
+    .btn-primary:hover {
+      background: #ffffff;
+      box-shadow: 0 0 16px rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-magic {
+      background: rgba(194, 89, 63, 0.12);
+      color: #fca5a5;
+      border-color: rgba(194, 89, 63, 0.3);
+    }
+    .btn-magic:hover {
+      background: rgba(194, 89, 63, 0.2);
+      border-color: rgba(194, 89, 63, 0.5);
+      color: #ffffff;
+    }
+
+    /* Workspace */
+    .app-workspace {
+      display: flex;
+      flex: 1;
+      height: calc(100vh - 52px);
+      overflow: hidden;
+    }
+
+    /* 3D Stage */
+    .canvas-stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      overflow: auto;
+      background-color: #09090b;
+      position: relative;
+      perspective: 1200px;
+    }
+    .canvas-stage[data-wall="dots"] {
+      background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .canvas-stage[data-wall="lines"] {
+      background-image: linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    .canvas-stage[data-wall="studio"] {
+      background: radial-gradient(circle at 50% 45%, #18181f 0%, #09090b 100%);
+    }
+    .canvas-stage[data-wall="plain"] {
+      background: #09090b;
+    }
+
+    #export-wrapper {
+      padding: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transition: padding 0.2s ease;
+    }
+
+    /* Card base with 3D Parallax */
+    #the-card {
+      width: 460px;
+      max-width: 88vw;
+      box-sizing: border-box;
+      position: relative;
+      user-select: text;
+      -webkit-user-select: text;
+      transform-style: preserve-3d;
+      transition: transform 0.15s ease-out, box-shadow 0.2s ease;
+      will-change: transform;
+    }
+
+    .glare-overlay {
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.18) 0%, transparent 65%);
+      opacity: var(--glare-opacity, 0);
+      transition: opacity 0.25s ease;
+      z-index: 20;
+    }
+
+    .editable {
+      outline: none;
+      word-break: break-word;
+      border-radius: 2px;
+      transition: background 0.15s ease;
+    }
+    .editable:focus {
+      background: rgba(0, 0, 0, 0.04);
+    }
+    .theme-cargo .editable:focus,
+    .theme-vinyl .editable:focus,
+    .theme-cassette .editable:focus,
+    .theme-cinema .editable:focus,
+    .theme-bento .editable:focus,
+    .theme-pantone .card-content.editable:focus {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    /* Aspect Ratio Adapters */
+    #the-card[data-ratio="auto"] {
+      min-height: unset;
+      display: block;
+    }
+    #the-card[data-ratio="3:4"] {
+      min-height: 613px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    #the-card[data-ratio="1:1"] {
+      min-height: 460px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Typography Flavors */
+    #the-card[data-font="serif"] .card-content { font-family: var(--font-serif) !important; }
+    #the-card[data-font="sans"] .card-content { font-family: var(--font-sans) !important; }
+    #the-card[data-font="mono"] .card-content { font-family: var(--font-mono) !important; }
+
+    /* =========================================================================
+       THEMES CSS (18 STYLES)
+       ========================================================================= */
+
+    /* 1. BROADSHEET NEWSPAPER */
+    .theme-newspaper {
+      background-color: #fbf9f4;
+      color: #1c1917;
+      font-family: var(--font-serif);
+      padding: 38px 34px 28px 34px;
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.28);
+      border: 1px solid #e7e2d6;
+      border-radius: 2px;
+    }
+    .theme-newspaper .masthead {
+      border-bottom: 2px solid #1c1917;
+      padding-bottom: 8px;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+    .theme-newspaper .mast-title {
+      font-size: 21px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+    .theme-newspaper .mast-meta {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      color: #78716c;
+      letter-spacing: 0.05em;
+      border-top: 1px solid rgba(0, 0, 0, 0.12);
+      padding-top: 5px;
+    }
+    .theme-newspaper .article-head {
+      margin-bottom: 14px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      padding-bottom: 8px;
+    }
+    .theme-newspaper .article-title {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: #18181b;
+    }
+    .theme-newspaper .card-content {
+      font-size: 14px;
+      line-height: 1.8;
+      color: #292524;
+      margin-bottom: 24px;
+      white-space: pre-wrap;
+    }
+    .theme-newspaper .card-content::first-letter {
+      float: left;
+      font-size: 40px;
+      line-height: 0.85;
+      font-weight: 700;
+      padding-right: 8px;
+      padding-top: 2px;
+      color: var(--accent);
+      font-family: var(--font-serif);
+    }
+    .theme-newspaper .paper-foot {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: #78716c;
+      border-top: 1px solid rgba(0, 0, 0, 0.15);
+      padding-top: 10px;
+    }
+
+    /* 2. COFFEE TASTING CARD */
+    .theme-coffee {
+      background: #fbf9f4;
+      color: #292524;
+      border: 1px solid #ece5d6;
+      border-radius: 6px;
+      padding: 34px 30px 26px 30px;
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.25);
+    }
+    .theme-coffee .coffee-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+    }
+    .theme-coffee .origin-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+    .theme-coffee .coffee-title {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: #18181b;
+    }
+    .theme-coffee .coffee-meta-right {
+      text-align: right;
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      color: #78716c;
+      line-height: 1.5;
+    }
+    .theme-coffee .card-content {
+      font-family: var(--font-serif);
+      font-size: 14.5px;
+      line-height: 1.8;
+      color: #292524;
+      margin-bottom: 20px;
+      white-space: pre-wrap;
+    }
+    .theme-coffee .flavor-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 22px;
+    }
+    .theme-coffee .pill {
+      background: #efe7d7;
+      color: #786146;
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      padding: 3px 8px;
+      border-radius: 999px;
+    }
+    .theme-coffee .coffee-foot {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      padding-top: 10px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: #a8a29e;
+    }
+
+    /* 3. CARGO HAZARD */
+    .theme-cargo {
+      background-color: #18181b;
+      color: #f4f4f5;
+      font-family: var(--font-mono);
+      border-radius: 6px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      border: 1px solid #27272a;
+      overflow: hidden;
+    }
+    .theme-cargo .hazard-bar {
+      height: 12px;
+      background: repeating-linear-gradient(
+        -45deg,
+        #f59e0b,
+        #f59e0b 10px,
+        #18181b 10px,
+        #18181b 20px
+      );
+      border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    }
+    .theme-cargo .cargo-body {
+      padding: 28px 30px 24px 30px;
+    }
+    .theme-cargo .cargo-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      padding-bottom: 12px;
+    }
+    .theme-cargo .cargo-tag {
+      font-size: 10px;
+      font-weight: 700;
+      color: #f59e0b;
+      letter-spacing: 0.12em;
+      margin-bottom: 4px;
+    }
+    .theme-cargo .cargo-title {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+    }
+    .theme-cargo .fragile-badge {
+      border: 1px solid rgba(245, 158, 11, 0.8);
+      color: #fbbf24;
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 3px 7px;
+    }
+    .theme-cargo .card-content {
+      font-size: 13px;
+      line-height: 1.75;
+      color: #d4d4d8;
+      margin-bottom: 22px;
+      white-space: pre-wrap;
+    }
+    .theme-cargo .cargo-foot {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding-top: 12px;
+      font-size: 10px;
+      color: #71717a;
+    }
+
+    /* 4. MARGIELA 4-STITCH */
+    .theme-margiela {
+      background-color: #faf8f5;
+      background-image: radial-gradient(#d6d3cd 0.6px, transparent 0.6px);
+      background-size: 6px 6px;
+      color: #1c1917;
+      font-family: var(--font-mono);
+      padding: 36px 32px 30px 32px;
+      box-shadow: 0 16px 45px rgba(0,0,0,0.22);
+      border: 1px solid #e7e2d8;
+      border-radius: 2px;
+      position: relative;
+    }
+    .theme-margiela .stitch-tl { position: absolute; top: 10px; left: 10px; width: 14px; height: 2px; background: #ffffff; border: 1px solid rgba(0,0,0,0.2); transform: rotate(45deg); }
+    .theme-margiela .stitch-tr { position: absolute; top: 10px; right: 10px; width: 14px; height: 2px; background: #ffffff; border: 1px solid rgba(0,0,0,0.2); transform: rotate(-45deg); }
+    .theme-margiela .stitch-bl { position: absolute; bottom: 10px; left: 10px; width: 14px; height: 2px; background: #ffffff; border: 1px solid rgba(0,0,0,0.2); transform: rotate(-45deg); }
+    .theme-margiela .stitch-br { position: absolute; bottom: 10px; right: 10px; width: 14px; height: 2px; background: #ffffff; border: 1px solid rgba(0,0,0,0.2); transform: rotate(45deg); }
+    .theme-margiela .matrix-grid {
+      text-align: center;
+      font-size: 10.5px;
+      color: #78716c;
+      letter-spacing: 0.15em;
+      line-height: 1.7;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      padding-bottom: 14px;
+      margin-bottom: 20px;
+    }
+    .theme-margiela .matrix-active {
+      border: 1px solid #18181b;
+      border-radius: 999px;
+      padding: 0 4px;
+      color: #18181b;
+      font-weight: 700;
+    }
+    .theme-margiela .card-content {
+      font-size: 13px;
+      line-height: 1.75;
+      color: #27272a;
+      margin-bottom: 22px;
+      white-space: pre-wrap;
+      letter-spacing: -0.01em;
+    }
+    .theme-margiela .margiela-foot {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid rgba(0,0,0,0.1);
+      padding-top: 12px;
+      font-size: 10px;
+      color: #a8a29e;
+    }
+
+    /* 5. AIRMAIL POSTCARD */
+    .theme-airmail {
+      background: repeating-linear-gradient(
+        135deg,
+        #dc2626 0px,
+        #dc2626 10px,
+        transparent 10px,
+        transparent 16px,
+        #2563eb 16px,
+        #2563eb 26px,
+        transparent 26px,
+        transparent 32px
+      );
+      padding: 6px;
+      border-radius: 4px;
+      box-shadow: 0 16px 45px rgba(0,0,0,0.3);
+    }
+    .theme-airmail .airmail-card {
+      background: #faf7ee;
+      padding: 28px 28px 24px 28px;
+      border-radius: 2px;
+    }
+    .theme-airmail .airmail-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      padding-bottom: 12px;
+      margin-bottom: 18px;
+    }
+    .theme-airmail .par-avion {
+      background: #1e3a8a;
+      color: #ffffff;
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      padding: 2px 7px;
+      border-radius: 2px;
+    }
+    .theme-airmail .airmail-stamp {
+      border: 1px dashed #b91c1c;
+      color: #b91c1c;
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      padding: 4px 8px;
+      text-align: center;
+      transform: rotate(2deg);
+    }
+    .theme-airmail .card-content {
+      font-family: var(--font-serif);
+      font-size: 14.5px;
+      line-height: 1.8;
+      color: #292524;
+      margin-bottom: 22px;
+      white-space: pre-wrap;
+    }
+    .theme-airmail .airmail-foot {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      padding-top: 10px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: #a8a29e;
+    }
+
+    /* 6. POLAROID */
+    .theme-polaroid {
+      background: #fdfdfd;
+      color: #1c1917;
+      padding: 20px 20px 28px 20px;
+      border-radius: 3px;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.35);
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+    .theme-polaroid .film-window {
+      background: #141416;
+      aspect-ratio: 1 / 1;
+      padding: 26px 24px;
+      border-radius: 2px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: #f4f4f5;
+      margin-bottom: 18px;
+    }
+    .theme-polaroid .film-top {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: #71717a;
+    }
+    .theme-polaroid .card-content {
+      font-family: var(--font-serif);
+      font-size: 14.5px;
+      line-height: 1.8;
+      color: #f4f4f5;
+      font-style: italic;
+      white-space: pre-wrap;
+    }
+    .theme-polaroid .film-bottom-code {
+      text-align: right;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: #71717a;
+      letter-spacing: 0.1em;
+    }
+    .theme-polaroid .polaroid-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #52525b;
+      padding: 0 4px;
+    }
+
+    /* 7. RECEIPT */
+    .theme-receipt {
+      background: #fbfaf6;
+      color: #18181b;
+      font-family: var(--font-mono);
+      padding: 36px 30px 30px 30px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.28);
+      mask-image: radial-gradient(circle 5px at 10px 0, transparent 0, transparent 5px, black 5.5px),
+                  radial-gradient(circle 5px at 10px 100%, transparent 0, transparent 5px, black 5.5px);
+      mask-size: 20px 100%;
+      mask-repeat: repeat-x;
+      -webkit-mask-image: radial-gradient(circle 5px at 10px 0, transparent 0, transparent 5px, black 5.5px),
+                          radial-gradient(circle 5px at 10px 100%, transparent 0, transparent 5px, black 5.5px);
+      -webkit-mask-size: 20px 100%;
+      -webkit-mask-repeat: repeat-x;
+    }
+    .theme-receipt .receipt-head {
+      border-bottom: 1px dashed var(--accent, #a1a1aa);
+      padding-bottom: 14px;
+      margin-bottom: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .theme-receipt .receipt-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-align: center;
+      color: var(--accent, #18181b);
+    }
+    .theme-receipt .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10.5px;
+      color: #71717a;
+    }
+    .theme-receipt .card-content {
+      font-size: 13px;
+      line-height: 1.75;
+      color: #18181b;
+      margin-bottom: 24px;
+      white-space: pre-wrap;
+    }
+    .theme-receipt .receipt-foot {
+      border-top: 1px dashed var(--accent, #a1a1aa);
+      padding-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .theme-receipt .barcode-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .theme-receipt .barcode-lines {
+      height: 22px;
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+    }
+    .theme-receipt .bar {
+      background: var(--accent, #18181b);
+      height: 100%;
+    }
+    .theme-receipt .meta-end {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: #71717a;
+    }
+
+    /* 8. PANTONE SWATCH */
+    .theme-pantone {
+      background: #ffffff;
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.4);
+      border-radius: 4px;
+      overflow: hidden;
+      font-family: var(--font-sans);
+    }
+    .theme-pantone .pantone-swatch {
+      background: var(--pantone-color, var(--accent));
+      padding: 44px 36px;
+      min-height: 220px;
+      display: flex;
+      align-items: center;
+      transition: background 0.25s ease;
+    }
+    .theme-pantone .card-content {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.75;
+      color: #ffffff;
+      white-space: pre-wrap;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+    .theme-pantone .pantone-label {
+      padding: 24px 34px 28px 34px;
+      background: #ffffff;
+      color: #09090b;
+    }
+    .theme-pantone .pantone-code {
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+      color: var(--accent, #09090b);
+    }
+    .theme-pantone .pantone-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #52525b;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+    .theme-pantone .pantone-meta {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: #a1a1aa;
+      border-top: 1px solid #f4f4f5;
+      padding-top: 10px;
+    }
+
+    /* 9. TICKET */
+    .theme-ticket {
+      background: #fbf8f0;
+      color: #27272a;
+      font-family: var(--font-mono);
+      display: flex;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+    .theme-ticket .ticket-stub {
+      width: 120px;
+      background: #f4efdf;
+      padding: 26px 16px;
+      border-right: 2px dashed #d4cebe;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+    .theme-ticket .ticket-stub::before, .theme-ticket .ticket-stub::after {
+      content: '';
+      position: absolute;
+      right: -9px;
+      width: 16px;
+      height: 16px;
+      background: #09090b;
+      border-radius: 50%;
+      z-index: 10;
+    }
+    .theme-ticket .ticket-stub::before { top: -8px; }
+    .theme-ticket .ticket-stub::after { bottom: -8px; }
+    .theme-ticket .stub-number {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--accent, #b45309);
+    }
+    .theme-ticket .stub-meta {
+      font-size: 9.5px;
+      color: #78716c;
+      line-height: 1.5;
+    }
+    .theme-ticket .ticket-main {
+      flex: 1;
+      padding: 28px 28px 24px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .theme-ticket .ticket-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      padding-bottom: 10px;
+      margin-bottom: 16px;
+    }
+    .theme-ticket .ticket-type {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--accent, #b45309);
+      text-transform: uppercase;
+    }
+    .theme-ticket .ticket-seat {
+      font-size: 11px;
+      color: #78716c;
+    }
+    .theme-ticket .card-content {
+      font-size: 13.5px;
+      line-height: 1.75;
+      color: #292524;
+      margin-bottom: 20px;
+      white-space: pre-wrap;
+    }
+    .theme-ticket .ticket-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 10px;
+      color: #a8a29e;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      padding-top: 10px;
+    }
+
+    /* 10. E-INK EX LIBRIS */
+    .theme-eink {
+      background: #f8f6f0;
+      color: #1c1917;
+      font-family: var(--font-serif);
+      padding: 46px 44px 40px 44px;
+      box-shadow: 0 14px 38px rgba(0,0,0,0.22);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      position: relative;
+    }
+    .theme-eink::before {
+      content: '⌜                                                               ⌝';
+      position: absolute;
+      top: 10px; left: 14px; right: 14px;
+      font-size: 13px; color: #a8a29e;
+      display: flex; justify-content: space-between;
+      pointer-events: none;
+    }
+    .theme-eink::after {
+      content: '⌞                                                               ⌟';
+      position: absolute;
+      bottom: 10px; left: 14px; right: 14px;
+      font-size: 13px; color: #a8a29e;
+      display: flex; justify-content: space-between;
+      pointer-events: none;
+    }
+    .theme-eink .eink-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid #18181b;
+      padding-bottom: 10px;
+      margin-bottom: 26px;
+      font-family: var(--font-sans);
+    }
+    .theme-eink .eink-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent, #18181b);
+    }
+    .theme-eink .eink-date {
+      font-size: 11px;
+      color: #71717a;
+      font-family: var(--font-mono);
+    }
+    .theme-eink .quote-mark {
+      font-size: 40px;
+      line-height: 0.5;
+      font-family: var(--font-serif);
+      color: var(--accent, #a1a1aa);
+      margin-bottom: 10px;
+    }
+    .theme-eink .card-content {
+      font-size: 16px;
+      line-height: 1.85;
+      color: #27272a;
+      margin-bottom: 30px;
+      white-space: pre-wrap;
+    }
+    .theme-eink .eink-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      padding-top: 14px;
+      font-size: 12.5px;
+    }
+    .theme-eink .eink-author {
+      font-style: italic;
+      color: #52525b;
+    }
+    .theme-eink .eink-folio {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: #71717a;
+    }
+
+    /* 11. VINYL LINER */
+    .theme-vinyl {
+      background: #141416;
+      color: #f4f4f5;
+      font-family: var(--font-mono);
+      padding: 34px 30px;
+      border-radius: 6px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .theme-vinyl .vinyl-head {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      padding-bottom: 10px;
+      margin-bottom: 16px;
+      font-size: 11px;
+      color: #a1a1aa;
+    }
+    .theme-vinyl .vinyl-badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #1e1e24;
+      padding: 8px 12px;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 18px;
+    }
+    .theme-vinyl .spool-disc {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.25);
+      background: #050505;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .theme-vinyl .spool-center {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent, #f97316);
+    }
+    .theme-vinyl .card-content {
+      font-family: var(--font-serif);
+      font-size: 14.5px;
+      line-height: 1.8;
+      color: #d4d4d8;
+      font-style: italic;
+      margin-bottom: 22px;
+      white-space: pre-wrap;
+    }
+    .theme-vinyl .vinyl-foot {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding-top: 12px;
+      font-size: 10px;
+      color: #71717a;
+    }
+
+    /* 12. CASSETTE TAPE */
+    .theme-cassette {
+      background: #222227;
+      color: #f4f4f5;
+      font-family: var(--font-mono);
+      padding: 24px;
+      border-radius: 8px;
+      border: 2px solid #333338;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      position: relative;
+    }
+    .theme-cassette .cassette-label-box {
+      background: #fbf8f0;
+      color: #1c1917;
+      border-radius: 4px;
+      padding: 20px 22px 16px 22px;
+      border: 1px solid #e7e2d4;
+    }
+    .theme-cassette .tape-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 2px solid var(--accent, #b45309);
+      padding-bottom: 6px;
+      margin-bottom: 14px;
+    }
+    .theme-cassette .tape-side {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--accent, #b45309);
+    }
+    .theme-cassette .tape-brand {
+      font-size: 10px;
+      color: #78716c;
+      letter-spacing: 0.1em;
+    }
+    .theme-cassette .card-content {
+      font-size: 13.5px;
+      line-height: 1.75;
+      color: #292524;
+      margin-bottom: 18px;
+      white-space: pre-wrap;
+    }
+    .theme-cassette .tape-window {
+      height: 38px;
+      background: #18181b;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 0 40px;
+      border: 1px solid #3f3f46;
+      margin-top: 14px;
+    }
+    .theme-cassette .tape-spool {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid #a1a1aa;
+      position: relative;
+    }
+    .theme-cassette .tape-spool::after {
+      content: '';
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: #ffffff;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* 13. EDITORIAL MAGAZINE */
+    .theme-magazine {
+      background: #fbf9f5;
+      color: #18181b;
+      font-family: var(--font-serif);
+      padding: 38px 34px 28px 34px;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.25);
+      border: 1px solid #e7e2d6;
+      border-radius: 2px;
+    }
+    .theme-magazine .mag-header {
+      border-bottom: 2px solid #18181b;
+      padding-bottom: 10px;
+      margin-bottom: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .theme-magazine .mag-title {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    .theme-magazine .mag-issue {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+    }
+    .theme-magazine .mag-kicker {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .theme-magazine .card-content {
+      font-size: 15px;
+      line-height: 1.85;
+      color: #27272a;
+      margin-bottom: 24px;
+      white-space: pre-wrap;
+    }
+    .theme-magazine .mag-footer {
+      border-top: 1px solid rgba(0,0,0,0.12);
+      padding-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: #71717a;
+    }
+    .theme-magazine .issn-code {
+      letter-spacing: 0.12em;
+      font-weight: 600;
+    }
+
+    /* 14. WASHI TAPE MEMO */
+    .theme-washi {
+      background: #fdfcf7;
+      background-image: 
+        linear-gradient(rgba(0,0,0,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.035) 1px, transparent 1px);
+      background-size: 20px 20px;
+      color: #27272a;
+      padding: 42px 32px 28px 32px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.2);
+      border: 1px solid #eae5d8;
+      border-radius: 4px;
+      position: relative;
+    }
+    .theme-washi .washi-tape {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-1deg);
+      width: 120px;
+      height: 26px;
+      background: var(--accent);
+      opacity: 0.65;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+      border-left: 2px dashed rgba(255,255,255,0.5);
+      border-right: 2px dashed rgba(255,255,255,0.5);
+    }
+    .theme-washi .washi-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px dashed rgba(0,0,0,0.12);
+      padding-bottom: 10px;
+      margin-bottom: 18px;
+    }
+    .theme-washi .washi-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      background: rgba(0,0,0,0.04);
+      padding: 3px 8px;
+      border-radius: 3px;
+    }
+    .theme-washi .card-content {
+      font-family: var(--font-serif);
+      font-size: 15px;
+      line-height: 1.85;
+      color: #292524;
+      margin-bottom: 22px;
+      white-space: pre-wrap;
+    }
+    .theme-washi .washi-foot {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: #a8a29e;
+      border-top: 1px dashed rgba(0,0,0,0.12);
+      padding-top: 10px;
+    }
+
+    /* 15. RX PRESCRIPTION */
+    .theme-prescription {
+      background: #fcfbf7;
+      color: #18181b;
+      font-family: var(--font-sans);
+      padding: 34px 30px 26px 30px;
+      box-shadow: 0 16px 42px rgba(0,0,0,0.22);
+      border: 1px solid #e5dfd0;
+      border-radius: 4px;
+    }
+    .theme-prescription .rx-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+    }
+    .theme-prescription .rx-symbol {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .theme-prescription .rx-meta-right {
+      text-align: right;
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      color: #71717a;
+      line-height: 1.5;
+    }
+    .theme-prescription .rx-patient-bar {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: #52525b;
+      background: rgba(0,0,0,0.035);
+      padding: 6px 10px;
+      border-radius: 3px;
+      margin-bottom: 16px;
+    }
+    .theme-prescription .card-content {
+      font-family: var(--font-serif);
+      font-size: 14.5px;
+      line-height: 1.8;
+      color: #27272a;
+      margin-bottom: 22px;
+      white-space: pre-wrap;
+    }
+    .theme-prescription .rx-foot {
+      border-top: 1px dashed rgba(0,0,0,0.15);
+      padding-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: #71717a;
+    }
+    .theme-prescription .rx-seal {
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      transform: rotate(-3deg);
+      display: inline-block;
+    }
+
+    /* 16. DESK TEAR-OFF CALENDAR */
+    .theme-calendar {
+      background: #ffffff;
+      color: #18181b;
+      border-radius: 6px;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.25);
+      border: 1px solid #eae5d8;
+      overflow: hidden;
+    }
+    .theme-calendar .cal-top-perforation {
+      height: 16px;
+      background: repeating-linear-gradient(
+        90deg,
+        #18181b 0px,
+        #18181b 10px,
+        transparent 10px,
+        transparent 16px
+      );
+      border-bottom: 1px dashed #d4cebe;
+    }
+    .theme-calendar .cal-body {
+      padding: 24px 30px 24px 30px;
+    }
+    .theme-calendar .cal-date-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      border-bottom: 1px solid #f4f4f5;
+      padding-bottom: 12px;
+      margin-bottom: 18px;
+    }
+    .theme-calendar .cal-huge-day {
+      font-family: var(--font-serif);
+      font-size: 50px;
+      font-weight: 800;
+      line-height: 0.9;
+      color: var(--accent);
+    }
+    .theme-calendar .cal-date-meta {
+      text-align: right;
+      font-family: var(--font-mono);
+    }
+    .theme-calendar .cal-month {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #18181b;
+    }
+    .theme-calendar .cal-lunar {
+      font-size: 10px;
+      color: #71717a;
+      margin-top: 2px;
+    }
+    .theme-calendar .card-content {
+      font-family: var(--font-serif);
+      font-size: 14.5px;
+      line-height: 1.85;
+      color: #27272a;
+      margin-bottom: 22px;
+      white-space: pre-wrap;
+    }
+    .theme-calendar .cal-foot {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid #f4f4f5;
+      padding-top: 10px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: #a1a1aa;
+    }
+
+    /* 17. 16:9 CINEMA SUBTITLE */
+    .theme-cinema {
+      background: #0d0d11;
+      color: #f4f4f5;
+      padding: 20px 24px;
+      border-radius: 4px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      border: 1px solid #27272a;
+      position: relative;
+    }
+    .theme-cinema .cinema-top {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      color: #71717a;
+      letter-spacing: 0.1em;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    .theme-cinema .cinema-screen {
+      background: radial-gradient(circle at 50% 50%, #1e1e24 0%, #0d0d11 100%);
+      padding: 30px 20px;
+      border-radius: 3px;
+      border: 1px solid rgba(255,255,255,0.05);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .theme-cinema .card-content {
+      font-family: var(--font-sans);
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.8;
+      color: #fde047;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+      white-space: pre-wrap;
+    }
+    .theme-cinema .cinema-sub-en {
+      margin-top: 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #a1a1aa;
+      letter-spacing: 0.02em;
+    }
+    .theme-cinema .cinema-foot {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: #71717a;
+    }
+    .theme-cinema .rec-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      background: #ef4444;
+      border-radius: 50%;
+      margin-right: 6px;
+    }
+
+    /* 18. SWISS BENTO */
+    .theme-bento {
+      background: #18181b;
+      color: #f4f4f5;
+      font-family: var(--font-sans);
+      padding: 36px 32px 28px 32px;
+      border-radius: 6px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.12);
+      position: relative;
+    }
+    .theme-bento .bento-pill-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .theme-bento .bento-tag {
+      background: var(--accent);
+      color: #ffffff;
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 3px 8px;
+      border-radius: 2px;
+    }
+    .theme-bento .bento-num {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: #71717a;
+      padding: 3px 0;
+    }
+    .theme-bento .bento-quote-symbol {
+      font-family: var(--font-serif);
+      font-size: 54px;
+      line-height: 0.6;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .theme-bento .card-content {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.7;
+      color: #ffffff;
+      margin-bottom: 24px;
+      letter-spacing: -0.01em;
+      white-space: pre-wrap;
+    }
+    .theme-bento .bento-foot {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding-top: 12px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: #71717a;
+    }
+
+    /* =========================================================================
+       SIDEBAR & CONTROLS
+       ========================================================================= */
+    .sidebar {
+      width: 320px;
+      background: var(--surface);
+      border-left: 1px solid var(--border);
+      padding: 22px 18px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .group-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-tertiary);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 9px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* 18 Formats Grid */
+    .style-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 7px;
+    }
+    .style-card {
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 9px 10px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      transition: all 0.15s ease;
+      text-align: left;
+    }
+    .style-card:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--border-hover);
+    }
+    .style-card.active {
+      background: rgba(255, 255, 255, 0.09);
+      border-color: #ffffff;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.08);
+    }
+    .style-card .style-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .style-card .style-meta {
+      font-size: 9.5px;
+      color: var(--text-tertiary);
+      font-family: var(--font-mono);
+    }
+
+    /* Color Swatches */
+    .color-swatches {
+      display: flex;
+      gap: 9px;
+      align-items: center;
+    }
+    .color-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.15s ease;
+    }
+    .color-dot:hover {
+      transform: scale(1.15);
+    }
+    .color-dot.active {
+      border-color: #ffffff;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+    }
+
+    /* Segmented box */
+    .seg-box {
+      display: flex;
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2px;
+      gap: 2px;
+    }
+    .seg-item {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text-tertiary);
+      padding: 6px 0;
+      font-size: 11px;
+      font-weight: 500;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-align: center;
+    }
+    .seg-item:hover {
+      color: var(--text-primary);
+    }
+    .seg-item.active {
+      background: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+    }
+
+    /* Custom Input */
+    .custom-input {
+      width: 100%;
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      font-size: 12px;
+      padding: 7px 10px;
+      border-radius: 6px;
+      outline: none;
+      font-family: var(--font-sans);
+      transition: border-color 0.15s ease;
+    }
+    .custom-input:focus {
+      border-color: var(--border-hover);
+    }
+
+    /* Sliders */
+    .slider-field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+    .slider-val {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+      color: var(--text-tertiary);
+    }
+    input[type="range"] {
+      width: 100%;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 2px;
+      appearance: none;
+      outline: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #f4f4f5;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%) translateY(14px);
+      background: #18181b;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #f4f4f5;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 7px 16px;
+      border-radius: 9999px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.2s cubic-bezier(0.2, 0.8, 0.3, 1);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header>
+    <div class="nav-left">
+      <div class="brand-mark">T</div>
+      <span class="brand-title">TypeCard</span>
+      <div class="brand-divider"></div>
+      <span class="brand-sub">Social Studio // 18 Formats · 小红书排版利器</span>
+    </div>
+
+    <div class="nav-right">
+      <button class="btn btn-magic" id="btn-random-quote" title="切换一条小红书精选爆款文案">
+        <span>✨ 换一条爆款文案</span>
+      </button>
+
+      <button class="btn btn-secondary" id="btn-copy" title="复制 2x 高清 PNG 到系统剪贴板">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        <span>复制图片</span>
+      </button>
+
+      <button class="btn btn-primary" id="btn-download" title="下载无损 PNG 图片 (小红书/全平台首选)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        <span>下载图片</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Workspace -->
+  <div class="app-workspace">
+    <!-- Center Preview Stage with 3D Parallax Tilt -->
+    <div class="canvas-stage" id="stage" data-wall="dots">
+      <div id="export-wrapper">
+        <div id="the-card" class="theme-newspaper" data-ratio="auto" data-font="serif">
+          <div class="glare-overlay"></div>
+          <!-- Dynamic Content injected via JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Inspector Sidebar -->
+    <div class="sidebar">
+      
+      <!-- 1. Formats Grid (18 Formats) -->
+      <div>
+        <div class="group-label">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="3" y1="9" x2="21" y2="9"></line>
+            <line x1="9" y1="21" x2="9" y2="9"></line>
+          </svg>
+          <span>美学格式 (18 种实体介质与流派)</span>
+        </div>
+        <div class="style-grid">
+          <button class="style-card active" data-theme="newspaper">
+            <span class="style-name">📰 纽时大报</span>
+            <span class="style-meta">Broadsheet Drop Cap</span>
+          </button>
+          <button class="style-card" data-theme="magazine">
+            <span class="style-name">📖 顶级月刊</span>
+            <span class="style-meta">Editorial Vogue</span>
+          </button>
+          <button class="style-card" data-theme="coffee">
+            <span class="style-name">☕ 咖啡豆卡</span>
+            <span class="style-meta">Origin Tasting Card</span>
+          </button>
+          <button class="style-card" data-theme="washi">
+            <span class="style-name">📌 胶带便签</span>
+            <span class="style-meta">Washi Tape Memo</span>
+          </button>
+          <button class="style-card" data-theme="prescription">
+            <span class="style-name">💊 精神处方</span>
+            <span class="style-meta">Rx Creative Remedy</span>
+          </button>
+          <button class="style-card" data-theme="calendar">
+            <span class="style-name">🗓️ 撕历金句</span>
+            <span class="style-meta">365 Desk Tear-off</span>
+          </button>
+          <button class="style-card" data-theme="cinema">
+            <span class="style-name">🎬 宽银幕台词</span>
+            <span class="style-meta">16:9 Movie Subtitle</span>
+          </button>
+          <button class="style-card" data-theme="bento">
+            <span class="style-name">⚡ 瑞士大字</span>
+            <span class="style-meta">Swiss Bento Block</span>
+          </button>
+          <button class="style-card" data-theme="cargo">
+            <span class="style-name">📦 工业封签</span>
+            <span class="style-meta">Hazard Stencil</span>
+          </button>
+          <button class="style-card" data-theme="margiela">
+            <span class="style-name">🧵 缝线白标</span>
+            <span class="style-meta">Margiela Fabric</span>
+          </button>
+          <button class="style-card" data-theme="airmail">
+            <span class="style-name">✈️ 航空信封</span>
+            <span class="style-meta">Par Avion Postcard</span>
+          </button>
+          <button class="style-card" data-theme="polaroid">
+            <span class="style-name">🎞️ 胶片拍立得</span>
+            <span class="style-meta">Tri-X Film Frame</span>
+          </button>
+          <button class="style-card" data-theme="receipt">
+            <span class="style-name">🧾 热敏小票</span>
+            <span class="style-meta">Thermal Receipt</span>
+          </button>
+          <button class="style-card" data-theme="pantone">
+            <span class="style-name">🎨 潘通色卡</span>
+            <span class="style-meta">Pantone Swatch</span>
+          </button>
+          <button class="style-card" data-theme="ticket">
+            <span class="style-name">🎟️ 复古票根</span>
+            <span class="style-meta">Cinema Stub</span>
+          </button>
+          <button class="style-card" data-theme="eink">
+            <span class="style-name">🏛️ 古典藏书票</span>
+            <span class="style-meta">Ex Libris Folio</span>
+          </button>
+          <button class="style-card" data-theme="vinyl">
+            <span class="style-name">💿 黑胶内页</span>
+            <span class="style-meta">Vinyl Liner Notes</span>
+          </button>
+          <button class="style-card" data-theme="cassette">
+            <span class="style-name">📼 复古磁带</span>
+            <span class="style-meta">Cassette Tape</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 2. Social Ratio Adapter -->
+      <div>
+        <div class="group-label">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <rect x="5" y="2" width="14" height="20" rx="2"></rect>
+            <line x1="12" y1="18" x2="12.01" y2="18"></line>
+          </svg>
+          <span>社媒分享比例 (ASPECT RATIO)</span>
+        </div>
+        <div class="seg-box">
+          <button class="seg-item active" data-ratio="auto">自适应</button>
+          <button class="seg-item" data-ratio="3:4" title="小红书/手机端最具张力比例">3:4 小红书</button>
+          <button class="seg-item" data-ratio="1:1" title="即刻/Instagram 经典正方">1:1 方形</button>
+        </div>
+      </div>
+
+      <!-- 3. Typography Flavor -->
+      <div>
+        <div class="group-label">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <polyline points="4 7 4 4 20 4 20 7"></polyline>
+            <line x1="9" y1="20" x2="15" y2="20"></line>
+            <line x1="12" y1="4" x2="12" y2="20"></line>
+          </svg>
+          <span>字体调性 (TYPOGRAPHY)</span>
+        </div>
+        <div class="seg-box">
+          <button class="seg-item active" data-font="serif">宋体/文艺</button>
+          <button class="seg-item" data-font="sans">黑体/现代</button>
+          <button class="seg-item" data-font="mono">等宽/极客</button>
+        </div>
+      </div>
+
+      <!-- 4. Watermark / Social Handle -->
+      <div>
+        <div class="group-label">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path>
+          </svg>
+          <span>小红书 / 创作者水印 (WATERMARK)</span>
+        </div>
+        <input type="text" id="input-watermark" class="custom-input" value="@我的小红书" placeholder="输入作者署名或小红书号" />
+      </div>
+
+      <!-- 5. Mineral Palette -->
+      <div>
+        <div class="group-label">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="12" cy="12" r="10"></circle>
+          </svg>
+          <span>矿物色谱主调</span>
+        </div>
+        <div class="color-swatches">
+          <div class="color-dot active" style="background: #c2593f;" data-color="#c2593f" title="Terracotta / 陶土赭红"></div>
+          <div class="color-dot" style="background: #1e3a5f;" data-color="#1e3a5f" title="Prussian Blue / 普鲁士蓝"></div>
+          <div class="color-dot" style="background: #2b5c46;" data-color="#2b5c46" title="Alpine Forest / 高山松绿"></div>
+          <div class="color-dot" style="background: #d97706;" data-color="#d97706" title="Ochre / 暖琥珀黄"></div>
+          <div class="color-dot" style="background: #e11d48;" data-color="#e11d48" title="Carmine / 胭脂深红"></div>
+          <div class="color-dot" style="background: #475569;" data-color="#475569" title="Slate Gray / 莫兰迪板岩"></div>
+          <div class="color-dot" style="background: #18181b;" data-color="#18181b" title="Obsidian / 曜石极黑"></div>
+        </div>
+      </div>
+
+      <!-- 6. Backdrop & Canvas Size -->
+      <div>
+        <div class="group-label">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+          </svg>
+          <span>底板背景</span>
+        </div>
+        <div class="seg-box">
+          <button class="seg-item active" data-wall="dots">点阵</button>
+          <button class="seg-item" data-wall="lines">网格</button>
+          <button class="seg-item" data-wall="studio">影棚</button>
+          <button class="seg-item" data-wall="plain">纯黑</button>
+          <button class="seg-item" data-wall="none">无底</button>
+        </div>
+      </div>
+
+      <!-- 7. Sliders -->
+      <div class="slider-field">
+        <div class="slider-header">
+          <span>卡片宽度 (WIDTH)</span>
+          <span class="slider-val" id="val-width">460 px</span>
+        </div>
+        <input type="range" id="input-width" min="380" max="680" value="460">
+      </div>
+
+      <div class="slider-field">
+        <div class="slider-header">
+          <span>外围边距 (PADDING)</span>
+          <span class="slider-val" id="val-pad">40 px</span>
+        </div>
+        <input type="range" id="input-pad" min="0" max="80" value="40">
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+    <span id="toast-text">已更新</span>
+  </div>
+
+  <script>
+    const stage = document.getElementById('stage');
+    const card = document.getElementById('the-card');
+    const exportWrapper = document.getElementById('export-wrapper');
+    const toast = document.getElementById('toast');
+    const toastText = document.getElementById('toast-text');
+    const inputWatermark = document.getElementById('input-watermark');
+
+    let curTheme = 'newspaper';
+    let curRatio = 'auto';
+    let curFont = 'serif';
+    let curPantone = '#c2593f';
+    let curWatermark = '@我的小红书';
+
+    // Viral quotes library for Xiaohongshu / Social
+    const VIRAL_QUOTES = [
+      {
+        title: "ON THE SUBTLETY OF THE UNSEEN",
+        content: "真正的审美并不喧哗。在这座充斥着轰鸣与算法的巨型城池里，文字是最顽强的避难所。当油墨印透纸背的那一瞬间，所有匆忙的念头便有了坚实的重量与归宿。",
+        author: "纽约客专栏"
+      },
+      {
+        title: "精神解药 // THE DAILY REMEDY",
+        content: "世界上只有一种真正的英雄主义，那就是认清生活的真相后，依然热爱黄昏、咖啡与刚出炉的面包。关掉无休止的焦虑通知，给思想保留自由呼吸的领地。",
+        author: "生活沉思录"
+      },
+      {
+        title: "剥离多余修饰 // MINIMALISM",
+        content: "生活不是不断往行李箱里塞东西，而是在漫长的旅途中，一件件辨认出什么是真正不可替代的。留白不是空无一物，而是把最宝贵的时间还给自己。",
+        author: "极简日常"
+      },
+      {
+        title: "SCENE 42 // 电影对白",
+        content: "所有的记忆都是潮湿的。我们穿过汹涌的人潮与漫长的黑夜，不过是为了在某一个黄昏，遇见能听懂你沉默的人。",
+        author: "王家卫式独白"
+      },
+      {
+        title: "设计的骨相 // DESIGN PHILOSOPHY",
+        content: "好的设计就像空气，你时刻身处其中却不觉其刻意，只有当你失去它时，才发觉窒息。不向平庸的潮流低头，在克制中构筑属于自己的严谨秩序。",
+        author: "包豪斯手记"
+      },
+      {
+        title: "允许自己像一棵树一样生长",
+        content: "有落叶的枯索，有蓄力的冬眠，也有在春天悄然破土的繁茂。不要拿别人的花期，来丈量自己的节气。在自己的时区里，步履不停。",
+        author: "慢生长日签"
+      },
+      {
+        title: "不要向深夜出卖睡眠",
+        content: "不要在情绪低谷时做重大决定，不要在深夜向算法出卖睡眠。关掉吵闹刺眼的手机屏幕，去看看窗外真实的月亮与微风。",
+        author: "夜间备忘录"
+      },
+      {
+        title: "先锋永远匿名 // THE UNKNOWN",
+        content: "真正的先锋是不依赖显赫的名牌印章。当一个人不再急于证明自己的时候，他的存在本身便成了一种坚不可摧的风格与辨识度。",
+        author: "先锋档案"
+      }
+    ];
+
+    let quoteIndex = 0;
+
+    const SWATCH_META = {
+      '#c2593f': { code: 'PANTONE 18-1442 TCX', name: 'ROASTED TERRACOTTA', cmyk: 'CMYK 18 72 78 8' },
+      '#1e3a5f': { code: 'PANTONE 19-4052 TCX', name: 'CLASSIC PRUSSIAN', cmyk: 'CMYK 88 64 28 32' },
+      '#2b5c46': { code: 'PANTONE 18-5622 TCX', name: 'ALPINE SAGE GREEN', cmyk: 'CMYK 74 32 68 24' },
+      '#d97706': { code: 'PANTONE 16-1144 TCX', name: 'WARM AMBER OCHRE', cmyk: 'CMYK 12 52 100 4' },
+      '#e11d48': { code: 'PANTONE 19-1763 TCX', name: 'CRIMSON CARMINE', cmyk: 'CMYK 0 94 65 12' },
+      '#475569': { code: 'PANTONE 17-4408 TCX', name: 'SLATE MORANDI GRAY', cmyk: 'CMYK 52 36 30 18' },
+      '#18181b': { code: 'PANTONE 19-4004 TCX', name: 'OBSIDIAN JET BLACK', cmyk: 'CMYK 72 65 60 76' }
+    };
+
+    // 18 Full Aesthetic Templates
+    const THEME_TEMPLATES = {
+      newspaper: `
+        <div class="masthead">
+          <div class="mast-title editable" contenteditable="true">The Daily Chronicle</div>
+          <div class="mast-meta">
+            <span>VOL. CXLII // NO. 48,291</span>
+            <span>NEW YORK, AUTUMN</span>
+            <span>FIFTEEN CENTS</span>
+          </div>
+        </div>
+        <div class="article-head">
+          <div class="article-title editable" contenteditable="true">ON THE SUBTLETY OF THE UNSEEN / 论无形之物的幽微</div>
+        </div>
+        <div class="card-content editable" contenteditable="true" spellcheck="false">真正的审美并不喧哗。在这座充斥着轰鸣与算法的巨型城池里，文字是最顽强的避难所。当油墨印透纸背的那一瞬间，所有匆忙的念头便有了坚实的重量与归宿。</div>
+        <div class="paper-foot">
+          <span>EDITORIAL DISPATCH // SEC. 02</span>
+          <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
+        </div>
+      `,
+      magazine: `
+        <div class="mag-header">
+          <div class="mag-title editable" contenteditable="true">THE ESSAY</div>
+          <div class="mag-issue editable" contenteditable="true">ISSUE NO. 08 // VOL. 24</div>
+        </div>
+        <div class="mag-kicker editable" contenteditable="true">CRITIQUE & CONTEMPLATION</div>
+        <div class="card-content editable" contenteditable="true" spellcheck="false">在极速刷屏的碎片时代，深度的专注成了一种稀缺的奢侈品。我们所抵抗的从来不是技术，而是无休止的被动接受。停下来，写一段完整的句子，是对抗虚无最有力的姿态。</div>
+        <div class="mag-footer">
+          <span class="issn-code">ISSN 2849-0194</span>
+          <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
+        </div>
+      `,
+      coffee: `
+        <div class="coffee-head">
+          <div>
+            <div class="origin-badge editable" contenteditable="true">SINGLE ORIGIN ROAST</div>
+            <div class="coffee-title editable" contenteditable="true">ETHIOPIA YIRGACHEFFE</div>
+          </div>
+          <div class="coffee-meta-right">
+            <div>ALTITUDE: 2,100M</div>
+            <div>WASHED PROCESS</div>
+          </div>
+        </div>
+        <div class="card-content editable" contenteditable="true" spellcheck="false">真正的敏锐不是捕捉所有信息，
+而是在复杂的风味谱系中，
+准确辨识出那一丝茉莉花香与柑橘酸质的清甜。
+给生活留一点烘焙的温度。</div>
+        <div class="flavor-pills">
+          <span class="pill">JASMINE</span>
+          <span class="pill">BERGAMOT</span>
+          <span class="pill">PEACH</span>
+          <span class="pill">WILD HONEY</span>
+        </div>
+        <div class="coffee-foot">
+          <span>ROASTED FOR THE DISCERNING</span>
+          <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
+        </div>
+      `,
+      washi: `
+        <div class="washi-tape"></div>
+        <div class="washi-head">
+          <span class="washi-badge editable" contenteditable="true">#今日灵感便签 // 01</span>
+          <span style="font-family: var(--font-mono); font-size: 10px; color: #78716c;">${new Date().toISOString().substring(0, 10)}</span>
+        </div>
+        <div class="card-content editable" contenteditable="true" spellcheck="false">生活不是不断往行李箱里塞东西，
+而是在漫长的旅途中，
+一件件辨认出什么是真正不可替代的。
+留白不是空无一物，
+而是把最宝贵的时间还给自己。</div>
+        <div class="washi-foot">
+          <span>MEMO PAD // KRAFT</span>
+          <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
+        </div>
+      `,
+      prescription: `
+        <div class="rx-head">
+          <div class="rx-symbol">℞</div>
+          <div class="rx-meta-right">
+            <div>MED: #9402-A</div>
+            <div>DATE: ${new Date().toISOString().substring(0, 10)}</div>
+          </div>
+        </div>
+        <div class="rx-patient-bar">
+          <span>PATIENT: 精神内耗患者</span>
+          <span>DOSAGE: 每日清晨服用</span>
+        </div>
+        <div class="card-content editable" contenteditable="true" spellcheck="false">【处方提示】
+世界上只有一种真正的英雄主义，
+那就是认清生活的真相后，依然热爱黄昏、咖啡与刚出炉的面包。
+关掉过剩的焦虑通知，
+随风服用，无需就水。</div>
+        <div class="rx-foot">
+          <span class="rx-seal">DR. VIBE APPROVED</span>
+          <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
+        </div>
+      `,
+      calendar: `
+        <div class="cal-top-perforation"></div>
+        <div class="cal-body">
+          <div class="cal-date-row">
+            <div class="cal-huge-day editable" contenteditable="true">${new Date().getDate()}</div>
+            <div class="cal-date-meta">
+              <div class="cal-month editable" contenteditable="true">NOV · 霜降</div>
+              <div class="cal-lunar editable" contenteditable="true">SUNDAY · 宜停顿放空</div>
+            </div>
+          </div>
+          <div class="card-content editable" contenteditable="true" spellcheck="false">允许自己像一棵树一样生长：
+有落叶的枯索，有蓄力的冬眠，也有在春天悄然破土的繁茂。
+不要拿别人的花期，来丈量自己的节气。</div>
+          <div class="cal-foot">
+            <span>365 DAYS ARCHIVE</span>
+            <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
+          </div>
+        </div>
+      `,
+      cinema: `
+        <div class="cinema-top">
+          <span><span class="rec-dot"></span>REC [01:42:19]</span>
+          <span class="editable" contenteditable="true">SCENE 48 // 宽银幕电影</span>
+        </div>
+        <div class="cinema-screen">
+          <div class="card-content editable" contenteditable="true" spellcheck="false">“所有的记忆都是潮湿的。
+我们穿过汹涌的人潮与漫长的黑夜，
+不过是为了在某一个黄昏，
+遇见能听懂你沉默的人。”</div>
+          <div class="cinema-sub-en editable" contenteditable="true">All memories are humid in the quiet dusk.</div>
+        </div>
+        <div class="cinema-foot">
+          <span>2.35:1 ANAMORPHIC</span>
+          <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
+        </div>
+      `,
+      bento: `
+        <div class="bento-pill-bar">
+          <span class="bento-tag editable" contenteditable="true">STATEMENT</span>
+          <span class="bento-num">NO. 04</span>
+        </div>
+        <div class="bento-quote-symbol">“</div>
+        <div class="card-content editable" contenteditable="true" spellcheck="false">剥离所有冗余修饰，
+生活才露出它本来的骨相。
+不向平庸的潮流妥协，
+在克制中构筑属于自己的严谨秩序。</div>
+        <div class="bento-foot">
+          <span>SWISS TYPOGRAPHY</span>
+          <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
+        </div>
+      `,
+      cargo: `
+        <div class="hazard-bar"></div>
+        <div class="cargo-body">
+          <div class="cargo-head">
+            <div>
+              <div class="cargo-tag editable" contenteditable="true">HEAVY FREIGHT // STENCIL</div>
+              <div class="cargo-title editable" contenteditable="true">CARGO: IDEAS & PROTOCOLS</div>
+            </div>
+            <span class="fragile-badge">FRAGILE</span>
+          </div>
+          <div class="card-content editable" contenteditable="true" spellcheck="false">CAUTION: HANDLE WITH CARE.
+重型思想正在装运。
+剥离所有冗余修饰，
+将纯粹的核心逻辑稳固封入集装箱。</div>
+          <div class="cargo-foot">
+            <span>BAY: 04 // 420 KG</span>
+            <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
+          </div>
+        </div>
+      `,
+      margiela: `
+        <div class="stitch-tl"></div><div class="stitch-tr"></div><div class="stitch-bl"></div><div class="stitch-br"></div>
+        <div class="matrix-grid">
+          0 1 2 3 4 5 6 7 8 9<br>
+          10 <span class="matrix-active">11</span> 12 13 14 15 16<br>
+          17 18 19 20 21 22 23
+        </div>
+        <div class="card-content editable" contenteditable="true" spellcheck="false">真正的先锋是匿名。
+不依赖显赫的名牌印章，
+仅凭四道缝线与纯白织唛，
+就能让物品本身拥有不可磨灭的辨识度。</div>
+        <div class="margiela-foot">
+          <span>PARIS // ARCHIVE</span>
+          <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
+        </div>
+      `,
+      airmail: `
+        <div class="airmail-card">
+          <div class="airmail-head">
+            <span class="par-avion">PAR AVION</span>
+            <div class="airmail-stamp">POSTAGE<br>★ 1984 ★</div>
+          </div>
+          <div class="card-content editable" contenteditable="true" spellcheck="false">亲爱的朋友：
+山里的初雪已经落下来了。
+寄去这封信的时候，炉火正好生旺。
+愿你那里的冬日，也如同这杯红茶般温热。</div>
+          <div class="airmail-foot">
+            <span>DISPATCH // SEC. 04</span>
+            <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
+          </div>
+        </div>
+      `,
+      polaroid: `
+        <div class="film-window">
+          <div class="film-top">
+            <span>KODAK TRI-X 400</span>
+            <span>EXP 24</span>
+          </div>
+          <div class="card-content editable" contenteditable="true" spellcheck="false">“那一天的光线正好穿过百叶窗，
+在木地板上切割出均匀的光斑。
+按下快门的时候，
+时间好像慢了整整半秒。”</div>
+          <div class="film-bottom-code">#0482</div>
+        </div>
+        <div class="polaroid-foot">
+          <span class="editable" contenteditable="true">SHADOWS & MEMORY</span>
+          <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
+        </div>
+      `,
+      receipt: `
+        <div class="receipt-head">
+          <div class="receipt-title editable" contenteditable="true">TYPECARD // SPEC SHEET</div>
+          <div class="receipt-row">
+            <span class="editable" contenteditable="true">DOC: #8492</span>
+            <span>${new Date().toISOString().substring(0, 10)}</span>
+            <span class="editable" contenteditable="true">REV: 02</span>
+          </div>
+        </div>
+        <div class="card-content editable" contenteditable="true" spellcheck="false">真正的审美并不依赖于华丽的渐变与浮夸的阴影。
+如同抚平一张收据、展开一页泛黄的手账，
+在严谨的秩序与克制之中，
+为思想留下自由呼吸的空隙。</div>
+        <div class="receipt-foot">
+          <div class="barcode-box">
+            <div class="barcode-lines" id="barcode-lines"></div>
+            <span style="font-size: 9.5px; font-family: monospace; letter-spacing: 0.08em; color: #71717a;">*84920194*</span>
+          </div>
+          <div class="meta-end">
+            <span>ORDER CONFIRMED</span>
+            <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
+          </div>
+        </div>
+      `,
+      pantone: `
+        <div class="pantone-swatch">
+          <div class="card-content editable" contenteditable="true" spellcheck="false">色彩从不需要繁复的辞藻解释。
+当一抹陶土赭红落在纸面，
+黄昏与炉火的温度便已弥散开来。</div>
+        </div>
+        <div class="pantone-label">
+          <div class="pantone-code editable" contenteditable="true">PANTONE 18-1442 TCX</div>
+          <div class="pantone-name editable" contenteditable="true">ROASTED TERRACOTTA</div>
+          <div class="pantone-meta">
+            <span>CMYK 18 72 78 8</span>
+            <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
+          </div>
+        </div>
+      `,
+      ticket: `
+        <div class="ticket-stub">
+          <div>
+            <div class="stub-number editable" contenteditable="true">A-42</div>
+            <div style="font-size: 9px; font-weight: 700; color: var(--accent); letter-spacing: 0.1em; margin-top: 2px;">ADMIT ONE</div>
+          </div>
+          <div class="stub-meta">
+            <div class="editable" contenteditable="true">CINEMA NOIR</div>
+            <div class="editable" contenteditable="true">SEAT: 08-F</div>
+            <div class="editable" contenteditable="true">ROW: 12</div>
+          </div>
+        </div>
+        <div class="ticket-main">
+          <div class="ticket-header">
+            <span class="ticket-type editable" contenteditable="true">PREMIERE TICKET</span>
+            <span class="ticket-seat">${new Date().toISOString().substring(0, 10)}</span>
+          </div>
+          <div class="card-content editable" contenteditable="true" spellcheck="false">所有的记忆都是潮湿的。
+我们在夜幕降临时聚集在放映机前，
+等待那束穿透灰尘的光，
+将某个消逝的下午重新点亮。</div>
+          <div class="ticket-footer">
+            <span>GATE 03 // HALL A</span>
+            <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
+          </div>
+        </div>
+      `,
+      eink: `
+        <div class="eink-header">
+          <span class="eink-tag editable" contenteditable="true">CHAPTER 04</span>
+          <span class="eink-date">${new Date().toISOString().substring(0, 10)}</span>
+        </div>
+        <div class="quote-mark">“</div>
+        <div class="card-content editable" contenteditable="true" spellcheck="false">所谓生活，并没有太多惊心动魄的高潮。
+大多数时刻，我们只是在平静的水流中前行。
+能够感知微小的起伏与阳光的温度，
+就是最大的幸运。</div>
+        <div class="eink-footer">
+          <span class="eink-author editable" contenteditable="true">— 随笔手记</span>
+          <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
+        </div>
+      `,
+      vinyl: `
+        <div class="vinyl-head">
+          <span class="editable" contenteditable="true">SIDE A // 33⅓ RPM</span>
+          <span>STEREO MASTER</span>
+        </div>
+        <div class="vinyl-badge">
+          <div class="spool-disc"><div class="spool-center"></div></div>
+          <div>
+            <div style="font-size: 11px; font-weight: 700; color: #fff;">TRACK 03: NOCTURNE</div>
+            <div style="font-size: 9.5px; color: #71717a;">ACOUSTIC SESSION IN B-FLAT</div>
+          </div>
+        </div>
+        <div class="card-content editable" contenteditable="true" spellcheck="false">在黑胶唱片细微的底噪中，
+音乐拥有了呼吸的轮廓。
+针尖摩挲着凹槽，
+将那些未曾言说的情绪，
+缓缓释放进夜色里。</div>
+        <div class="vinyl-foot">
+          <span>ANALOG RECORDING</span>
+          <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
+        </div>
+      `,
+      cassette: `
+        <div class="cassette-label-box">
+          <div class="tape-meta-row">
+            <span class="tape-side editable" contenteditable="true">SIDE A</span>
+            <span class="tape-brand editable" contenteditable="true">TDK NORMAL BIAS 90</span>
+          </div>
+          <div class="card-content editable" contenteditable="true" spellcheck="false">还记得用圆珠笔倒磁带的午后吗？
+那些被磁粉记录下来的声音，
+即使有些微的失真与杂音，
+却始终温热如初。</div>
+          <div class="tape-window">
+            <div class="tape-spool"></div>
+            <span style="font-size: 10px; color: #71717a; font-family: monospace;">[ 04:32 ]</span>
+            <div class="tape-spool"></div>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 10px; color: #71717a; margin-top: 12px; font-family: var(--font-mono);">
+          <span>TYPE I // CASSETTE</span>
+          <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
+        </div>
+      `
+    };
+
+    function renderBarcode() {
+      const container = document.getElementById('barcode-lines');
+      if (!container) return;
+      container.innerHTML = '';
+      const widths = [1, 2, 1, 3, 2, 1, 4, 1, 2, 1, 3, 2, 1, 2, 1, 4, 2, 1, 3, 1, 2, 1];
+      widths.forEach(w => {
+        const bar = document.createElement('div');
+        bar.className = 'bar';
+        bar.style.width = w + 'px';
+        container.appendChild(bar);
+      });
+    }
+
+    function setTheme(t) {
+      curTheme = t;
+      document.querySelectorAll('.style-card').forEach(b => {
+        b.classList.toggle('active', b.dataset.theme === t);
+      });
+      card.className = `theme-${t}`;
+      card.innerHTML = `<div class="glare-overlay"></div>` + THEME_TEMPLATES[t];
+      if (t === 'receipt') renderBarcode();
+      updateWatermarks();
+      showToast(`已应用格式：${t.toUpperCase()}`);
+    }
+
+    function updateWatermarks() {
+      card.querySelectorAll('.card-watermark').forEach(el => {
+        el.textContent = curWatermark;
+      });
+    }
+
+    inputWatermark.addEventListener('input', (e) => {
+      curWatermark = e.target.value.trim() || '@TypeCard';
+      updateWatermarks();
+    });
+
+    document.querySelectorAll('.style-card').forEach(b => {
+      b.addEventListener('click', () => setTheme(b.dataset.theme));
+    });
+
+    // Ratio Switch
+    document.querySelectorAll('.seg-item[data-ratio]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.seg-item[data-ratio]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        curRatio = btn.dataset.ratio;
+        card.setAttribute('data-ratio', curRatio);
+        showToast(`已切换画幅：${curRatio === '3:4' ? '小红书 3:4' : (curRatio === '1:1' ? '方形 1:1' : '自适应 (紧凑贴合)')}`);
+      });
+    });
+
+    // Font Switch
+    document.querySelectorAll('.seg-item[data-font]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.seg-item[data-font]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        curFont = btn.dataset.font;
+        card.setAttribute('data-font', curFont);
+        showToast(`已切换字体：${curFont === 'serif' ? '宋体/文艺' : (curFont === 'sans' ? '黑体/现代' : '等宽/极客')}`);
+      });
+    });
+
+    // Random Viral Quote
+    document.getElementById('btn-random-quote').addEventListener('click', () => {
+      quoteIndex = (quoteIndex + 1) % VIRAL_QUOTES.length;
+      const q = VIRAL_QUOTES[quoteIndex];
+      const contentEl = card.querySelector('.card-content');
+      if (contentEl) {
+        contentEl.textContent = q.content;
+      }
+      const titleEl = card.querySelector('.article-title, .mag-title, .coffee-title, .cargo-title');
+      if (titleEl) {
+        titleEl.textContent = q.title;
+      }
+      showToast(`已填入爆款文案：${q.author}`);
+    });
+
+    // Color Swatches
+    document.querySelectorAll('.color-dot').forEach(dot => {
+      dot.addEventListener('click', () => {
+        document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+        dot.classList.add('active');
+        curPantone = dot.dataset.color;
+        document.documentElement.style.setProperty('--pantone-color', curPantone);
+        document.documentElement.style.setProperty('--accent', curPantone);
+        card.style.setProperty('--accent', curPantone);
+        card.style.setProperty('--pantone-color', curPantone);
+
+        const pCode = card.querySelector('.pantone-code');
+        const pName = card.querySelector('.pantone-name');
+        if (pCode && SWATCH_META[curPantone]) {
+          pCode.textContent = SWATCH_META[curPantone].code;
+          pName.textContent = SWATCH_META[curPantone].name;
+        }
+
+        showToast(`已应用色彩：${dot.title.split('/')[0]}`);
+      });
+    });
+
+    // Wall Switch
+    document.querySelectorAll('.seg-item[data-wall]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.seg-item[data-wall]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const wall = btn.dataset.wall;
+        if (wall === 'none') {
+          stage.removeAttribute('data-wall');
+          stage.style.background = 'transparent';
+          exportWrapper.style.padding = '0';
+        } else {
+          stage.style.background = '';
+          stage.setAttribute('data-wall', wall);
+          exportWrapper.style.padding = document.getElementById('input-pad').value + 'px';
+        }
+      });
+    });
+
+    // Sliders
+    const inputWidth = document.getElementById('input-width');
+    const valWidth = document.getElementById('val-width');
+    inputWidth.addEventListener('input', (e) => {
+      card.style.width = e.target.value + 'px';
+      valWidth.textContent = e.target.value + ' px';
+    });
+
+    const inputPad = document.getElementById('input-pad');
+    const valPad = document.getElementById('val-pad');
+    inputPad.addEventListener('input', (e) => {
+      exportWrapper.style.padding = e.target.value + 'px';
+      valPad.textContent = e.target.value + ' px';
+    });
+
+    // Toast
+    let toastTimeout = null;
+    function showToast(msg) {
+      toastText.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    // 3D Parallax Tilt
+    stage.addEventListener('mousemove', (e) => {
+      const rect = stage.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const rx = ((y - rect.height / 2) / (rect.height / 2)) * -6;
+      const ry = ((x - rect.width / 2) / (rect.width / 2)) * 6;
+      card.style.transform = `rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translateZ(8px)`;
+
+      const cardRect = card.getBoundingClientRect();
+      const gx = ((e.clientX - cardRect.left) / cardRect.width) * 100;
+      const gy = ((e.clientY - cardRect.top) / cardRect.height) * 100;
+      card.style.setProperty('--mouse-x', `${gx}%`);
+      card.style.setProperty('--mouse-y', `${gy}%`);
+      card.style.setProperty('--glare-opacity', '1');
+    });
+
+    stage.addEventListener('mouseleave', () => {
+      card.style.transform = 'rotateX(0deg) rotateY(0deg) translateZ(0px)';
+      card.style.setProperty('--glare-opacity', '0');
+    });
+
+    // =========================================================================
+    // NATIVE CANVAS 2D EXPORT ENGINE (PRECISION VECTOR EMBODIMENT)
+    // =========================================================================
+    function wrapTextLines(ctx, text, maxWidth) {
+      const lines = [];
+      const paragraphs = text.split('\n');
+      for (const para of paragraphs) {
+        if (para === '') {
+          lines.push('');
+          continue;
+        }
+        let currentLine = '';
+        for (let i = 0; i < para.length; i++) {
+          const char = para[i];
+          const testLine = currentLine + char;
+          const w = ctx.measureText(testLine).width;
+          if (w > maxWidth && i > 0) {
+            lines.push(currentLine);
+            currentLine = char;
+          } else {
+            currentLine = testLine;
+          }
+        }
+        if (currentLine) lines.push(currentLine);
+      }
+      return lines;
+    }
+
+    function roundRect(ctx, x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.arcTo(x + w, y, x + w, y + h, r);
+      ctx.arcTo(x + w, y + h, x, y + h, r);
+      ctx.arcTo(x, y + h, x, y, r);
+      ctx.arcTo(x, y, x + w, y, r);
+      ctx.closePath();
+    }
+
+    async function renderToCanvas() {
+      const scale = 2; // Crisp 2x Retina
+      const wall = stage.getAttribute('data-wall') || 'dots';
+      const isTransparent = (wall === 'none');
+      const pad = isTransparent ? 0 : (parseInt(document.getElementById('input-pad').value) || 40);
+
+      // 1. Temporarily clear 3D tilt to measure the true un-distorted DOM dimensions
+      const prevTransform = card.style.transform;
+      const prevTransition = card.style.transition;
+      card.style.transform = 'none';
+      card.style.transition = 'none';
+
+      // Force layout flush so we read exact on-screen geometry
+      const cardRect = card.getBoundingClientRect();
+      const cardW = Math.round(card.offsetWidth || cardRect.width);
+      const cardH = Math.round(card.offsetHeight || cardRect.height);
+
+      function getRel(el) {
+        if (!el) return null;
+        const r = el.getBoundingClientRect();
+        return {
+          x: Math.round(r.left - cardRect.left),
+          y: Math.round(r.top - cardRect.top),
+          w: Math.round(r.width),
+          h: Math.round(r.height)
+        };
+      }
+
+      const contentEl = card.querySelector('.card-content');
+      const contentText = contentEl ? contentEl.innerText : '';
+      const contentRel = getRel(contentEl) || { x: 34, y: 100, w: cardW - 68, h: 100 };
+
+      const cs = contentEl ? window.getComputedStyle(contentEl) : null;
+      const fontSize = cs ? (parseFloat(cs.fontSize) || 14.5) : 14.5;
+      const lineHeight = cs ? (parseFloat(cs.lineHeight) || (fontSize * 1.75)) : 26;
+
+      let fontFam = '"Playfair Display", Georgia, "Songti SC", serif';
+      if (curFont === 'sans') fontFam = '-apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif';
+      if (curFont === 'mono') fontFam = '"JetBrains Mono", Consolas, monospace';
+
+      const contentFont = `${cs && cs.fontStyle === 'italic' ? 'italic ' : ''}400 ${fontSize}px ${fontFam}`;
+
+      const canvasW = (cardW + pad * 2) * scale;
+      const canvasH = (cardH + pad * 2) * scale;
+
+      const outCanvas = document.createElement('canvas');
+      outCanvas.width = canvasW;
+      outCanvas.height = canvasH;
+      const ctx = outCanvas.getContext('2d');
+      ctx.scale(scale, scale);
+
+      // Measure text lines using exact DOM content width
+      ctx.font = contentFont;
+      const textLines = wrapTextLines(ctx, contentText, contentRel.w);
+
+      // 2. Draw Backdrop
+      if (!isTransparent) {
+        const fullW = cardW + pad * 2;
+        const fullH = cardH + pad * 2;
+        if (wall === 'studio') {
+          const grad = ctx.createRadialGradient(fullW / 2, fullH * 0.45, 10, fullW / 2, fullH / 2, fullW * 0.75);
+          grad.addColorStop(0, '#18181f');
+          grad.addColorStop(1, '#09090b');
+          ctx.fillStyle = grad;
+          ctx.fillRect(0, 0, fullW, fullH);
+        } else {
+          ctx.fillStyle = '#09090b';
+          ctx.fillRect(0, 0, fullW, fullH);
+          if (wall === 'dots') {
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+            for (let x = 12; x < fullW; x += 24) {
+              for (let y = 12; y < fullH; y += 24) {
+                ctx.fillRect(x, y, 1.5, 1.5);
+              }
+            }
+          } else if (wall === 'lines') {
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.035)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            for (let x = 0; x <= fullW; x += 32) {
+              ctx.moveTo(x, 0); ctx.lineTo(x, fullH);
+            }
+            for (let y = 0; y <= fullH; y += 32) {
+              ctx.moveTo(0, y); ctx.lineTo(fullW, y);
+            }
+            ctx.stroke();
+          }
+        }
+      }
+
+      // 3. Draw Card Base
+      const cx = pad;
+      const cy = pad;
+      ctx.save();
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.38)';
+      ctx.shadowBlur = 38;
+      ctx.shadowOffsetY = 18;
+
+      const darkThemes = ['cargo', 'vinyl', 'cassette', 'cinema', 'bento'];
+      const isDark = darkThemes.includes(curTheme);
+
+      // =======================================================================
+      // CARD OUTER SHELL RENDERING
+      // =======================================================================
+      if (curTheme === 'pantone') {
+        ctx.fillStyle = '#ffffff';
+        roundRect(ctx, cx, cy, cardW, cardH, 4);
+        ctx.fill();
+        ctx.shadowColor = 'transparent';
+
+        const labelEl = card.querySelector('.pantone-label');
+        const labelRel = getRel(labelEl);
+        const swatchH = labelRel ? labelRel.y : (cardH - 96);
+
+        // Color block
+        ctx.fillStyle = curPantone;
+        ctx.fillRect(cx, cy, cardW, swatchH);
+
+        // Text inside swatch
+        ctx.fillStyle = '#ffffff';
+        ctx.font = `500 15px -apple-system, sans-serif`;
+        let ly = cy + contentRel.y + fontSize;
+        for (const line of textLines) {
+          ctx.fillText(line, cx + contentRel.x, ly);
+          ly += lineHeight;
+        }
+
+        // Label info
+        ctx.fillStyle = '#18181b';
+        ctx.font = 'bold 16px -apple-system, sans-serif';
+        ctx.fillText(SWATCH_META[curPantone]?.code || 'PANTONE 18-1442 TCX', cx + 34, cy + swatchH + 34);
+        ctx.fillStyle = '#71717a';
+        ctx.font = '600 12px -apple-system, sans-serif';
+        ctx.fillText(SWATCH_META[curPantone]?.name || 'ROASTED TERRACOTTA', cx + 34, cy + swatchH + 54);
+
+        ctx.textAlign = 'right';
+        ctx.font = '10px "JetBrains Mono", monospace';
+        ctx.fillText(curWatermark, cx + cardW - 34, cy + swatchH + 54);
+
+        card.style.transform = prevTransform;
+        card.style.transition = prevTransition;
+        ctx.restore();
+        return outCanvas;
+
+      } else if (curTheme === 'airmail') {
+        // Authentically render 135deg repeating Red & Blue diagonal stripes border!
+        ctx.save();
+        roundRect(ctx, cx, cy, cardW, cardH, 4);
+        ctx.clip(); // Clip stripes strictly inside envelope outer bounds
+
+        // Base cream tone under stripes
+        ctx.fillStyle = '#faf7ee';
+        ctx.fillRect(cx, cy, cardW, cardH);
+
+        // Rotate canvas around center by 135 degrees to map repeating-linear-gradient(135deg)
+        const centerX = cx + cardW / 2;
+        const centerY = cy + cardH / 2;
+        ctx.translate(centerX, centerY);
+        ctx.rotate(135 * Math.PI / 180);
+
+        const maxSpan = Math.hypot(cardW, cardH) + 60;
+        // Period = 32px: Red (10px) + Gap (6px) + Blue (10px) + Gap (6px)
+        for (let x = -maxSpan; x <= maxSpan; x += 32) {
+          ctx.fillStyle = '#dc2626';
+          ctx.fillRect(x, -maxSpan, 10, maxSpan * 2);
+          ctx.fillStyle = '#2563eb';
+          ctx.fillRect(x + 16, -maxSpan, 10, maxSpan * 2);
+        }
+        ctx.restore();
+
+        // Inner postcard body (6px padding inset)
+        ctx.fillStyle = '#faf7ee';
+        roundRect(ctx, cx + 6, cy + 6, cardW - 12, cardH - 12, 2);
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(0, 0, 0, 0.08)';
+        ctx.stroke();
+
+      } else if (curTheme === 'receipt') {
+        ctx.fillStyle = '#fbfaf6';
+        roundRect(ctx, cx, cy, cardW, cardH, 2);
+        ctx.fill();
+        ctx.shadowColor = 'transparent';
+
+        // Punch out semicircular tear notches along top and bottom edges (every 20px, radius 5px)
+        ctx.save();
+        ctx.fillStyle = isTransparent ? '#09090b' : (wall === 'studio' ? '#18181f' : '#09090b');
+        for (let x = 10; x < cardW; x += 20) {
+          // Top notch
+          ctx.beginPath();
+          ctx.arc(cx + x, cy, 5, 0, Math.PI);
+          ctx.fill();
+          // Bottom notch
+          ctx.beginPath();
+          ctx.arc(cx + x, cy + cardH, 5, Math.PI, 0);
+          ctx.fill();
+        }
+        ctx.restore();
+
+      } else if (curTheme === 'ticket') {
+        ctx.fillStyle = '#fbf8f0';
+        roundRect(ctx, cx, cy, cardW, cardH, 4);
+        ctx.fill();
+        ctx.shadowColor = 'transparent';
+
+        // Left stub
+        const stubEl = card.querySelector('.ticket-stub');
+        const stubRel = getRel(stubEl) || { x: 0, y: 0, w: 120, h: cardH };
+        ctx.fillStyle = '#f4efdf';
+        roundRect(ctx, cx, cy, stubRel.w, cardH, 4);
+        ctx.fill();
+
+        // Vertical dashed tear line
+        ctx.strokeStyle = '#d4cebe';
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.moveTo(cx + stubRel.w, cy); ctx.lineTo(cx + stubRel.w, cy + cardH);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Cutout punch holes at top & bottom of stub divider line
+        ctx.save();
+        ctx.fillStyle = isTransparent ? '#09090b' : (wall === 'studio' ? '#18181f' : '#09090b');
+        ctx.beginPath();
+        ctx.arc(cx + stubRel.w, cy, 8, 0, Math.PI);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(cx + stubRel.w, cy + cardH, 8, Math.PI, 0);
+        ctx.fill();
+        ctx.restore();
+
+      } else if (curTheme === 'washi') {
+        ctx.fillStyle = '#fdfcf7';
+        roundRect(ctx, cx, cy, cardW, cardH, 4);
+        ctx.fill();
+        ctx.shadowColor = 'transparent';
+
+        // Subtle 20px grid background
+        ctx.strokeStyle = 'rgba(0, 0, 0, 0.035)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        for (let x = 0; x <= cardW; x += 20) {
+          ctx.moveTo(cx + x, cy); ctx.lineTo(cx + x, cy + cardH);
+        }
+        for (let y = 0; y <= cardH; y += 20) {
+          ctx.moveTo(cx, cy + y); ctx.lineTo(cx + cardW, cy + y);
+        }
+        ctx.stroke();
+
+      } else if (curTheme === 'cinema') {
+        ctx.fillStyle = '#0d0d11';
+        roundRect(ctx, cx, cy, cardW, cardH, 4);
+        ctx.fill();
+        ctx.shadowColor = 'transparent';
+
+      } else {
+        ctx.fillStyle = isDark ? '#18181b' : (curTheme === 'polaroid' ? '#fdfdfd' : (curTheme === 'calendar' ? '#ffffff' : '#fbf9f4'));
+        roundRect(ctx, cx, cy, cardW, cardH, 4);
+        ctx.fill();
+        ctx.shadowColor = 'transparent';
+      }
+
+      ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.1)' : '#eae5d8';
+      ctx.lineWidth = 1;
+      if (curTheme !== 'airmail') ctx.stroke();
+
+      // =======================================================================
+      // THEME-SPECIFIC HEADERS & DECORATIONS (ALL 18 THEMES COMPLETE)
+      // =======================================================================
+      if (curTheme === 'newspaper') {
+        ctx.fillStyle = '#18181b';
+        ctx.font = 'bold 20px "Playfair Display", Georgia, serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(card.querySelector('.mast-title')?.innerText || 'The Daily Chronicle', cx + cardW / 2, cy + 38);
+
+        ctx.strokeStyle = '#1c1917';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(cx + 34, cy + 46); ctx.lineTo(cx + cardW - 34, cy + 46);
+        ctx.stroke();
+
+        ctx.fillStyle = '#78716c';
+        ctx.font = '10px "JetBrains Mono", monospace';
+        ctx.textAlign = 'left';
+        ctx.fillText('VOL. CXLII // NO. 48,291', cx + 34, cy + 58);
+        ctx.textAlign = 'right';
+        ctx.fillText('FIFTEEN CENTS', cx + cardW - 34, cy + 58);
+
+        ctx.fillStyle = '#18181b';
+        ctx.font = 'bold 14px "Playfair Display", Georgia, serif';
+        ctx.textAlign = 'left';
+        ctx.fillText(card.querySelector('.article-title')?.innerText || 'ON THE SUBTLETY OF THE UNSEEN', cx + 34, cy + 82);
+
+      } else if (curTheme === 'magazine') {
+        ctx.fillStyle = '#18181b';
+        ctx.font = '800 23px "Playfair Display", Georgia, serif';
+        ctx.textAlign = 'left';
+        ctx.fillText('THE ESSAY', cx + 34, cy + 44);
+
+        ctx.fillStyle = curPantone;
+        ctx.font = 'bold 10px "JetBrains Mono", monospace';
+        ctx.textAlign = 'right';
+        ctx.fillText('ISSUE NO. 08 // VOL. 24', cx + cardW - 34, cy + 44);
+
+        ctx.strokeStyle = '#18181b';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(cx + 34, cy + 52); ctx.lineTo(cx + cardW - 34, cy + 52);
+        ctx.stroke();
+
+        ctx.fillStyle = curPantone;
+        ctx.font = 'bold 11px -apple-system, sans-serif';
+        ctx.textAlign = 'left';
+        ctx.fillText('CRITIQUE & CONTEMPLATION', cx + 34, cy + 74);
+
+      } else if (curTheme === 'coffee') {
+        ctx.fillStyle = curPantone;
+        ctx.font = 'bold 10px "JetBrains Mono", monospace';
+        ctx.textAlign = 'left';
+        ctx.fillText('SINGLE ORIGIN ROAST', cx + 30, cy + 34);
+
+        ctx.fillStyle = '#18181b';
+        ctx.font = '800 16px -apple-system, sans-serif';
+        ctx.fillText(card.querySelector('.coffee-title')?.innerText || 'ETHIOPIA YIRGACHEFFE', cx + 30, cy + 54);
+
+        ctx.fillStyle = '#78716c';
+        ctx.font = '10px "JetBrains Mono", monospace';
+        ctx.textAlign = 'right';
+        ctx.fillText('ALTITUDE: 2,100M', cx + cardW - 30, cy + 38);
+        ctx.fillText('WASHED PROCESS', cx + cardW - 30, cy + 52);
+
+        // Flavor pills
+        const pills = card.querySelectorAll('.flavor-pills .pill');
+        if (pills.length > 0) {
+          const pillBoxRel = getRel(card.querySelector('.flavor-pills'));
+          if (pillBoxRel) {
+            let px = cx + pillBoxRel.x;
+            const py = cy + pillBoxRel.y;
+            pills.forEach(p => {
+              const pw = Math.round(p.offsetWidth);
+              const ph = Math.round(p.offsetHeight);
+              ctx.fillStyle = '#efe7d7';
+              roundRect(ctx, px, py, pw, ph, 999);
+              ctx.fill();
+              ctx.fillStyle = '#786146';
+              ctx.font = 'bold 9.5px "JetBrains Mono", monospace';
+              ctx.textAlign = 'center';
+              ctx.fillText(p.innerText, px + pw / 2, py + ph / 2 + 3);
+              px += pw + 6;
+            });
+          }
+        }
+
+      } else if (curTheme === 'washi') {
+        // Tilted translucent Washi Tape strip across the top edge
+        ctx.save();
+        ctx.translate(cx + cardW / 2, cy - 2);
+        ctx.rotate(-1.5 * Math.PI / 180);
+        ctx.fillStyle = curPantone;
+        ctx.globalAlpha = 0.65;
+        roundRect(ctx, -60, -12, 120, 24, 2);
+        ctx.fill();
+
+        // White dashed jagged edges on left & right
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
+        ctx.setLineDash([3, 2]);
+        ctx.beginPath();
+        ctx.moveTo(-60, -12); ctx.lineTo(-60, 12);
+        ctx.moveTo(60, -12); ctx.lineTo(60, 12);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.restore();
+
+        ctx.fillStyle = curPantone;
+        ctx.font = 'bold 10px "JetBrains Mono", monospace';
+        ctx.textAlign = 'left';
+        ctx.fillText('#今日灵感便签 // 01', cx + 32, cy + 36);
+
+        ctx.fillStyle = '#a8a29e';
+        ctx.textAlign = 'right';
+        ctx.fillText(new Date().toISOString().substring(0, 10), cx + cardW - 32, cy + 36);
+
+      } else if (curTheme === 'prescription') {
+        ctx.fillStyle = curPantone;
+        ctx.font = 'bold 30px "Playfair Display", Georgia, serif';
+        ctx.textAlign = 'left';
+        ctx.fillText('℞', cx + 30, cy + 42);
+
+        ctx.fillStyle = '#71717a';
+        ctx.font = '9.5px "JetBrains Mono", monospace';
+        ctx.textAlign = 'right';
+        ctx.fillText('MED: #9402-A', cx + cardW - 30, cy + 32);
+        ctx.fillText(new Date().toISOString().substring(0, 10), cx + cardW - 30, cy + 46);
+
+        // 2px accent rule
+        ctx.strokeStyle = curPantone;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(cx + 30, cy + 50); ctx.lineTo(cx + cardW - 30, cy + 50);
+        ctx.stroke();
+        ctx.lineWidth = 1;
+
+        // Patient bar
+        ctx.fillStyle = 'rgba(0,0,0,0.04)';
+        roundRect(ctx, cx + 30, cy + 58, cardW - 60, 24, 3);
+        ctx.fill();
+        ctx.fillStyle = '#52525b';
+        ctx.font = '10.5px "JetBrains Mono", monospace';
+        ctx.textAlign = 'left';
+        ctx.fillText('PATIENT: 精神内耗患者', cx + 38, cy + 74);
+        ctx.textAlign = 'right';
+        ctx.fillText('DOSAGE: 每日清晨', cx + cardW - 38, cy + 74);
+
+      } else if (curTheme === 'calendar') {
+        // Perforation strip
+        ctx.fillStyle = '#18181b';
+        for (let x = cx; x < cx + cardW; x += 16) {
+          ctx.fillRect(x, cy, 10, 12);
+        }
+        ctx.strokeStyle = '#d4cebe';
+        ctx.setLineDash([3, 3]);
+        ctx.beginPath();
+        ctx.moveTo(cx, cy + 16); ctx.lineTo(cx + cardW, cy + 16);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        ctx.fillStyle = curPantone;
+        ctx.font = '800 48px "Playfair Display", Georgia, serif';
+        ctx.textAlign = 'left';
+        ctx.fillText(new Date().getDate().toString(), cx + 30, cy + 68);
+
+        ctx.fillStyle = '#18181b';
+        ctx.font = 'bold 13px -apple-system, sans-serif';
+        ctx.textAlign = 'right';
+        ctx.fillText('NOV · 霜降', cx + cardW - 30, cy + 48);
+        ctx.fillStyle = '#71717a';
+        ctx.font = '10px "JetBrains Mono", monospace';
+        ctx.fillText('SUNDAY · 宜停顿放空', cx + cardW - 30, cy + 66);
+
+      } else if (curTheme === 'cinema') {
+        ctx.fillStyle = '#ef4444';
+        ctx.beginPath();
+        ctx.arc(cx + 28, cy + 28, 4, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#71717a';
+        ctx.font = '10px "JetBrains Mono", monospace';
+        ctx.textAlign = 'left';
+        ctx.fillText('REC [01:42:19]', cx + 38, cy + 32);
+        ctx.textAlign = 'right';
+        ctx.fillText('SCENE 48 // 宽银幕', cx + cardW - 28, cy + 32);
+
+        // Screen display area
+        const screenEl = card.querySelector('.cinema-screen');
+        const sRel = getRel(screenEl);
+        if (sRel) {
+          ctx.fillStyle = '#16161c';
+          roundRect(ctx, cx + sRel.x, cy + sRel.y, sRel.w, sRel.h, 3);
+          ctx.fill();
+        }
+
+      } else if (curTheme === 'bento') {
+        ctx.fillStyle = curPantone;
+        roundRect(ctx, cx + 32, cy + 26, 74, 18, 2);
+        ctx.fill();
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 9.5px "JetBrains Mono", monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('STATEMENT', cx + 32 + 37, cy + 39);
+
+        ctx.fillStyle = curPantone;
+        ctx.font = '54px "Playfair Display", serif';
+        ctx.textAlign = 'left';
+        ctx.fillText('“', cx + 32, cy + 86);
+
+      } else if (curTheme === 'cargo') {
+        // Hazard strip
+        ctx.fillStyle = '#f59e0b';
+        ctx.fillRect(cx, cy, cardW, 10);
+        ctx.fillStyle = '#18181b';
+        for (let x = cx; x < cx + cardW; x += 16) {
+          ctx.beginPath(); ctx.moveTo(x, cy); ctx.lineTo(x + 8, cy); ctx.lineTo(x, cy + 10); ctx.closePath();
+          ctx.fill();
+        }
+
+        ctx.fillStyle = '#f59e0b';
+        ctx.font = 'bold 10px "JetBrains Mono", monospace';
+        ctx.textAlign = 'left';
+        ctx.fillText('HEAVY FREIGHT // STENCIL', cx + 30, cy + 34);
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 14.5px -apple-system, sans-serif';
+        ctx.fillText('CARGO: IDEAS & PROTOCOLS', cx + 30, cy + 54);
+
+        // Fragile Badge
+        ctx.strokeStyle = 'rgba(245, 158, 11, 0.8)';
+        ctx.strokeRect(cx + cardW - 30 - 64, cy + 24, 64, 20);
+        ctx.fillStyle = '#fbbf24';
+        ctx.font = 'bold 10px "JetBrains Mono", monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('FRAGILE', cx + cardW - 30 - 32, cy + 38);
+
+      } else if (curTheme === 'polaroid') {
+        // Dark film window
+        const winEl = card.querySelector('.film-window');
+        const wRel = getRel(winEl);
+        if (wRel) {
+          ctx.fillStyle = '#141416';
+          roundRect(ctx, cx + wRel.x, cy + wRel.y, wRel.w, wRel.h, 2);
+          ctx.fill();
+          ctx.fillStyle = '#71717a';
+          ctx.font = '10px "JetBrains Mono", monospace';
+          ctx.textAlign = 'left';
+          ctx.fillText('KODAK TRI-X 400', cx + wRel.x + 16, cy + wRel.y + 20);
+          ctx.textAlign = 'right';
+          ctx.fillText('EXP 24', cx + wRel.x + wRel.w - 16, cy + wRel.y + 20);
+          ctx.fillText('#0482', cx + wRel.x + wRel.w - 16, cy + wRel.y + wRel.h - 14);
+        }
+
+      } else if (curTheme === 'receipt') {
+        ctx.fillStyle = curPantone;
+        ctx.font = 'bold 13px "JetBrains Mono", monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('TYPECARD // SPEC SHEET', cx + cardW / 2, cy + 44);
+
+        const rowEl = card.querySelector('.receipt-row');
+        const rRel = getRel(rowEl);
+        if (rRel) {
+          ctx.fillStyle = '#71717a';
+          ctx.font = '10.5px "JetBrains Mono", monospace';
+          ctx.textAlign = 'left';
+          ctx.fillText('DOC: #8492', cx + rRel.x, cy + rRel.y + 10);
+          ctx.textAlign = 'center';
+          ctx.fillText(new Date().toISOString().substring(0, 10), cx + cardW / 2, cy + rRel.y + 10);
+          ctx.textAlign = 'right';
+          ctx.fillText('REV: 02', cx + rRel.x + rRel.w, cy + rRel.y + 10);
+        }
+
+        ctx.strokeStyle = curPantone;
+        ctx.setLineDash([3, 3]);
+        ctx.beginPath();
+        ctx.moveTo(cx + 30, cy + 62); ctx.lineTo(cx + cardW - 30, cy + 62);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Barcode lines in footer
+        const bcEl = card.querySelector('.barcode-lines');
+        const bRel = getRel(bcEl);
+        if (bRel) {
+          const widths = [1, 2, 1, 3, 2, 1, 4, 1, 2, 1, 3, 2, 1, 2, 1, 4, 2, 1, 3, 1, 2, 1];
+          let bx = cx + bRel.x;
+          const by = cy + bRel.y;
+          ctx.fillStyle = curPantone;
+          widths.forEach(w => {
+            ctx.fillRect(bx, by, w, bRel.h);
+            bx += w + 2;
+          });
+        }
+
+      } else if (curTheme === 'airmail') {
+        const amHead = card.querySelector('.airmail-head');
+        const hRel = getRel(amHead);
+        if (hRel) {
+          // Par Avion Blue Pill
+          ctx.fillStyle = '#1e3a8a';
+          roundRect(ctx, cx + hRel.x, cy + hRel.y, 76, 18, 2);
+          ctx.fill();
+          ctx.fillStyle = '#ffffff';
+          ctx.font = 'bold 9.5px "JetBrains Mono", monospace';
+          ctx.textAlign = 'center';
+          ctx.fillText('PAR AVION', cx + hRel.x + 38, cy + hRel.y + 13);
+
+          // Postage Red Dashed Stamp with 2deg tilt
+          const stampEl = card.querySelector('.airmail-stamp');
+          const sRel = getRel(stampEl);
+          if (sRel) {
+            ctx.save();
+            ctx.translate(cx + sRel.x + sRel.w / 2, cy + sRel.y + sRel.h / 2);
+            ctx.rotate(2 * Math.PI / 180);
+            ctx.strokeStyle = '#b91c1c';
+            ctx.setLineDash([3, 2]);
+            ctx.strokeRect(-sRel.w / 2, -sRel.h / 2, sRel.w, sRel.h);
+            ctx.setLineDash([]);
+            ctx.fillStyle = '#b91c1c';
+            ctx.font = '9px "JetBrains Mono", monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText('POSTAGE', 0, -2);
+            ctx.fillText('★ 1984 ★', 0, 10);
+            ctx.restore();
+          }
+        }
+
+      } else if (curTheme === 'vinyl') {
+        // Vinyl Top Masthead: SIDE A / STEREO MASTER
+        const vhEl = card.querySelector('.vinyl-head');
+        const vhRel = getRel(vhEl);
+        if (vhRel) {
+          const headLeft = vhEl.firstElementChild ? vhEl.firstElementChild.innerText : 'SIDE A // 33⅓ RPM';
+          const headRight = vhEl.lastElementChild ? vhEl.lastElementChild.innerText : 'STEREO MASTER';
+          ctx.fillStyle = '#a1a1aa';
+          ctx.font = '11px "JetBrains Mono", monospace';
+          ctx.textAlign = 'left';
+          ctx.fillText(headLeft, cx + vhRel.x, cy + vhRel.y + 12);
+          ctx.textAlign = 'right';
+          ctx.fillText(headRight, cx + vhRel.x + vhRel.w, cy + vhRel.y + 12);
+
+          ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(cx + vhRel.x, cy + vhRel.y + vhRel.h);
+          ctx.lineTo(cx + vhRel.x + vhRel.w, cy + vhRel.y + vhRel.h);
+          ctx.stroke();
+        }
+
+        // Vinyl Badge: Spool Disc with Grooves & Accent Center + Track Info
+        const vbEl = card.querySelector('.vinyl-badge');
+        const vbRel = getRel(vbEl);
+        if (vbRel) {
+          ctx.fillStyle = '#1e1e24';
+          roundRect(ctx, cx + vbRel.x, cy + vbRel.y, vbRel.w, vbRel.h, 4);
+          ctx.fill();
+          ctx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
+          ctx.stroke();
+
+          const discRel = getRel(card.querySelector('.spool-disc'));
+          if (discRel) {
+            const dx = cx + discRel.x + discRel.w / 2;
+            const dy = cy + discRel.y + discRel.h / 2;
+            const dr = discRel.w / 2;
+
+            // Outer Vinyl Disc
+            ctx.fillStyle = '#050505';
+            ctx.beginPath();
+            ctx.arc(dx, dy, dr, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            // Vinyl sound grooves
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+            ctx.beginPath();
+            ctx.arc(dx, dy, dr * 0.72, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(dx, dy, dr * 0.45, 0, Math.PI * 2);
+            ctx.stroke();
+
+            // Accent center hub
+            ctx.fillStyle = curPantone;
+            ctx.beginPath();
+            ctx.arc(dx, dy, 5, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Track info
+            ctx.textAlign = 'left';
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 11px -apple-system, sans-serif';
+            ctx.fillText('TRACK 03: NOCTURNE', dx + dr + 12, dy - 2);
+
+            ctx.fillStyle = '#71717a';
+            ctx.font = '9.5px "JetBrains Mono", monospace';
+            ctx.fillText('ACOUSTIC SESSION IN B-FLAT', dx + dr + 12, dy + 12);
+          }
+        }
+
+      } else if (curTheme === 'cassette') {
+        const boxEl = card.querySelector('.cassette-label-box');
+        const bRel = getRel(boxEl);
+        if (bRel) {
+          ctx.fillStyle = '#fbf8f0';
+          roundRect(ctx, cx + bRel.x, cy + bRel.y, bRel.w, bRel.h, 4);
+          ctx.fill();
+          ctx.strokeStyle = '#e7e2d4';
+          ctx.stroke();
+
+          // Tape meta row
+          const sideEl = card.querySelector('.tape-side');
+          const brandEl = card.querySelector('.tape-brand');
+          const rowEl = card.querySelector('.tape-meta-row');
+          const rRel = getRel(rowEl);
+          if (rRel) {
+            ctx.fillStyle = curPantone;
+            ctx.font = '800 14px "JetBrains Mono", monospace';
+            ctx.textAlign = 'left';
+            ctx.fillText(sideEl ? sideEl.innerText : 'SIDE A', cx + rRel.x, cy + rRel.y + 14);
+
+            ctx.fillStyle = '#78716c';
+            ctx.font = '10px "JetBrains Mono", monospace';
+            ctx.textAlign = 'right';
+            ctx.fillText(brandEl ? brandEl.innerText : 'TDK NORMAL BIAS 90', cx + rRel.x + rRel.w, cy + rRel.y + 14);
+
+            ctx.strokeStyle = curPantone;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(cx + rRel.x, cy + rRel.y + rRel.h);
+            ctx.lineTo(cx + rRel.x + rRel.w, cy + rRel.y + rRel.h);
+            ctx.stroke();
+            ctx.lineWidth = 1;
+          }
+
+          // Tape window with spools
+          const winEl = card.querySelector('.tape-window');
+          const wRel = getRel(winEl);
+          if (wRel) {
+            ctx.fillStyle = '#18181b';
+            roundRect(ctx, cx + wRel.x, cy + wRel.y, wRel.w, wRel.h, 4);
+            ctx.fill();
+            ctx.strokeStyle = '#3f3f46';
+            ctx.stroke();
+
+            const spools = card.querySelectorAll('.tape-spool');
+            spools.forEach(sp => {
+              const sRel = getRel(sp);
+              if (sRel) {
+                const sx = cx + sRel.x + sRel.w / 2;
+                const sy = cy + sRel.y + sRel.h / 2;
+                ctx.strokeStyle = '#a1a1aa';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(sx, sy, sRel.w / 2, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.arc(sx, sy, 3, 0, Math.PI * 2);
+                ctx.fill();
+              }
+            });
+
+            ctx.fillStyle = '#71717a';
+            ctx.font = '10px "JetBrains Mono", monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText('[ 04:32 ]', cx + wRel.x + wRel.w / 2, cy + wRel.y + wRel.h / 2 + 4);
+          }
+        }
+
+      } else if (curTheme === 'margiela') {
+        // 4 corner stitches
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(cx + 8, cy + 18); ctx.lineTo(cx + 18, cy + 8); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(cx + cardW - 18, cy + 8); ctx.lineTo(cx + cardW - 8, cy + 18); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(cx + 8, cy + cardH - 18); ctx.lineTo(cx + 18, cy + cardH - 8); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(cx + cardW - 18, cy + cardH - 8); ctx.lineTo(cx + cardW - 8, cy + cardH - 18); ctx.stroke();
+        ctx.lineWidth = 1;
+
+        // Matrix 0-23
+        const mgEl = card.querySelector('.matrix-grid');
+        const mgRel = getRel(mgEl);
+        if (mgRel) {
+          ctx.fillStyle = '#78716c';
+          ctx.font = '10px "JetBrains Mono", monospace';
+          ctx.textAlign = 'center';
+          ctx.fillText('0  1  2  3  4  5  6  7  8  9', cx + cardW / 2, cy + mgRel.y + 12);
+          ctx.fillText('10 (11) 12 13 14 15 16', cx + cardW / 2, cy + mgRel.y + 26);
+          ctx.fillText('17 18 19 20 21 22 23', cx + cardW / 2, cy + mgRel.y + 40);
+
+          ctx.strokeStyle = 'rgba(0,0,0,0.1)';
+          ctx.beginPath();
+          ctx.moveTo(cx + 32, cy + mgRel.y + mgRel.h);
+          ctx.lineTo(cx + cardW - 32, cy + mgRel.y + mgRel.h);
+          ctx.stroke();
+        }
+
+      } else if (curTheme === 'ticket') {
+        const stubEl = card.querySelector('.ticket-stub');
+        const stubRel = getRel(stubEl);
+        if (stubRel) {
+          ctx.fillStyle = curPantone;
+          ctx.font = '800 20px "JetBrains Mono", monospace';
+          ctx.textAlign = 'left';
+          ctx.fillText('A-42', cx + 18, cy + 44);
+
+          ctx.font = 'bold 9px "JetBrains Mono", monospace';
+          ctx.fillText('ADMIT ONE', cx + 18, cy + 58);
+
+          ctx.fillStyle = '#78716c';
+          ctx.font = '9.5px "JetBrains Mono", monospace';
+          ctx.fillText('CINEMA NOIR', cx + 18, cy + 86);
+          ctx.fillText('SEAT: 08-F', cx + 18, cy + 102);
+          ctx.fillText('ROW: 12', cx + 18, cy + 118);
+        }
+
+        const thEl = card.querySelector('.ticket-header');
+        const thRel = getRel(thEl);
+        if (thRel) {
+          ctx.fillStyle = curPantone;
+          ctx.font = 'bold 11px "JetBrains Mono", monospace';
+          ctx.textAlign = 'left';
+          ctx.fillText('PREMIERE TICKET', cx + thRel.x, cy + thRel.y + 14);
+
+          ctx.fillStyle = '#78716c';
+          ctx.textAlign = 'right';
+          ctx.fillText(new Date().toISOString().substring(0, 10), cx + thRel.x + thRel.w, cy + thRel.y + 14);
+
+          ctx.strokeStyle = 'rgba(0,0,0,0.08)';
+          ctx.beginPath();
+          ctx.moveTo(cx + thRel.x, cy + thRel.y + thRel.h);
+          ctx.lineTo(cx + thRel.x + thRel.w, cy + thRel.y + thRel.h);
+          ctx.stroke();
+        }
+
+      } else if (curTheme === 'eink') {
+        // Corner bracket marks
+        ctx.fillStyle = '#a8a29e';
+        ctx.font = '14px "JetBrains Mono", monospace';
+        ctx.textAlign = 'left';
+        ctx.fillText('⌜', cx + 14, cy + 22);
+        ctx.fillText('⌞', cx + 14, cy + cardH - 12);
+        ctx.textAlign = 'right';
+        ctx.fillText('⌝', cx + cardW - 14, cy + 22);
+        ctx.fillText('⌟', cx + cardW - 14, cy + cardH - 12);
+
+        const ehEl = card.querySelector('.eink-header');
+        const ehRel = getRel(ehEl);
+        if (ehRel) {
+          ctx.fillStyle = curPantone;
+          ctx.font = 'bold 10px -apple-system, sans-serif';
+          ctx.textAlign = 'left';
+          ctx.fillText('CHAPTER 04', cx + ehRel.x, cy + ehRel.y + 12);
+
+          ctx.fillStyle = '#71717a';
+          ctx.font = '11px "JetBrains Mono", monospace';
+          ctx.textAlign = 'right';
+          ctx.fillText(new Date().toISOString().substring(0, 10), cx + ehRel.x + ehRel.w, cy + ehRel.y + 12);
+
+          ctx.strokeStyle = '#18181b';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(cx + ehRel.x, cy + ehRel.y + ehRel.h);
+          ctx.lineTo(cx + ehRel.x + ehRel.w, cy + ehRel.y + ehRel.h);
+          ctx.stroke();
+        }
+
+        const qmEl = card.querySelector('.quote-mark');
+        const qmRel = getRel(qmEl);
+        if (qmRel) {
+          ctx.fillStyle = curPantone;
+          ctx.font = '40px "Playfair Display", Georgia, serif';
+          ctx.textAlign = 'left';
+          ctx.fillText('“', cx + qmRel.x, cy + qmRel.y + 30);
+        }
+      }
+
+      // =======================================================================
+      // 4. DRAW MAIN CONTENT & SUBTITLES AT EXACT RELATIVE POSITION
+      // =======================================================================
+      ctx.textAlign = 'left';
+      ctx.fillStyle = (curTheme === 'cinema') ? '#fde047' : ((curTheme === 'polaroid') ? '#f4f4f5' : (isDark ? '#d4d4d8' : '#27272a'));
+      ctx.font = contentFont;
+
+      let lineY = cy + contentRel.y + fontSize;
+      for (const line of textLines) {
+        ctx.fillText(line, cx + contentRel.x, lineY);
+        lineY += lineHeight;
+      }
+
+      // Cinema English Subtitle
+      if (curTheme === 'cinema') {
+        const subEnEl = card.querySelector('.cinema-sub-en');
+        if (subEnEl) {
+          const seRel = getRel(subEnEl);
+          if (seRel) {
+            ctx.fillStyle = '#a1a1aa';
+            ctx.font = '11px "JetBrains Mono", monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText(subEnEl.innerText, cx + cardW / 2, cy + seRel.y + 12);
+          }
+        }
+      }
+
+      // =======================================================================
+      // 5. DRAW FOOTER AT EXACT DOM RELATIVE POSITION
+      // =======================================================================
+      const footEl = card.querySelector('.paper-foot, .mag-footer, .coffee-foot, .washi-foot, .rx-foot, .cal-foot, .cinema-foot, .bento-foot, .cargo-foot, .margiela-foot, .airmail-foot, .polaroid-foot, .receipt-foot, .ticket-footer, .eink-footer, .vinyl-foot, .cassette-label-box + div');
+      const footRel = getRel(footEl);
+      const footY = footRel ? (cy + footRel.y + footRel.h / 2) : (cy + cardH - 24);
+
+      if (curTheme !== 'pantone') {
+        ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
+        ctx.beginPath();
+        ctx.moveTo(cx + 30, footY - 12);
+        ctx.lineTo(cx + cardW - 30, footY - 12);
+        ctx.stroke();
+
+        let leftFootText = curTheme.toUpperCase() + ' // PRO';
+        if (footEl && footEl.firstElementChild) {
+          leftFootText = footEl.firstElementChild.innerText.trim();
+        }
+
+        ctx.fillStyle = isDark ? '#71717a' : '#a8a29e';
+        ctx.font = '10px "JetBrains Mono", monospace';
+        ctx.textAlign = 'left';
+        ctx.fillText(leftFootText, cx + 30, footY + 4);
+        ctx.textAlign = 'right';
+        ctx.fillText(curWatermark, cx + cardW - 30, footY + 4);
+      }
+
+      // Restore DOM state
+      card.style.transform = prevTransform;
+      card.style.transition = prevTransition;
+      ctx.restore();
+      return outCanvas;
+    }
+
+    // Download PNG
+    document.getElementById('btn-download').addEventListener('click', async () => {
+      try {
+        showToast('正在生成 2x 高清图片...');
+        const canvas = await renderToCanvas();
+        const a = document.createElement('a');
+        a.download = `typecard-${curTheme}-${curRatio}-${Date.now()}.png`;
+        a.href = canvas.toDataURL('image/png');
+        a.click();
+        showToast(`🎉 高清无损 PNG 已保存 (${canvas.width}×${canvas.height} px)！`);
+      } catch (err) {
+        console.error(err);
+        showToast('导出出错，请重试');
+      }
+    });
+
+    // Copy to Clipboard
+    document.getElementById('btn-copy').addEventListener('click', async () => {
+      try {
+        showToast('正在写入系统剪贴板...');
+        const canvas = await renderToCanvas();
+        canvas.toBlob(async (blob) => {
+          if (!blob) return;
+          try {
+            await navigator.clipboard.write([
+              new ClipboardItem({ 'image/png': blob })
+            ]);
+            showToast('📋 已复制高清图片！可在微信/小红书/推特直接 Ctrl+V 发送！');
+          } catch (clipErr) {
+            const a = document.createElement('a');
+            a.download = `typecard-${curTheme}.png`;
+            a.href = canvas.toDataURL('image/png');
+            a.click();
+            showToast('剪贴板受限，已自动为您下载文件！');
+          }
+        }, 'image/png');
+      } catch (err) {
+        console.error(err);
+        showToast('复制出错，请点击下载');
+      }
+    });
+
+    // Initial render
+    setTheme('newspaper');
+  </script>
+</body>
+</html>
