@@ -1610,14 +1610,15 @@
       font-family: var(--font-mono);
       padding: 0;
       border-radius: 8px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.38);
       overflow: hidden;
-      border: 1px solid #e4e4e7;
+      border: none;
     }
     .theme-boarding .bp-top-bar {
       background: var(--accent, #c2593f);
       color: #ffffff;
       padding: 12px 28px;
+      border-radius: 8px 8px 0 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -2566,9 +2567,9 @@
         <div class="masthead">
           <div class="mast-title editable" contenteditable="true">The Daily Chronicle</div>
           <div class="mast-meta">
-            <span>VOL. CXLII // NO. 48,291</span>
-            <span>NEW YORK, AUTUMN</span>
-            <span>FIFTEEN CENTS</span>
+            <span class="editable" contenteditable="true">VOL. CXLII // NO. 48,291</span>
+            <span class="editable" contenteditable="true">NEW YORK, AUTUMN</span>
+            <span class="editable" contenteditable="true">FIFTEEN CENTS</span>
           </div>
         </div>
         <div class="article-head">
@@ -2576,7 +2577,7 @@
         </div>
         <div class="card-content editable" contenteditable="true" spellcheck="false">真正的审美并不喧哗。在这座充斥着轰鸣与算法的巨型城池里，文字是最顽强的避难所。当油墨印透纸背的那一瞬间，所有匆忙的念头便有了坚实的重量与归宿。</div>
         <div class="paper-foot">
-          <span>EDITORIAL DISPATCH // SEC. 02</span>
+          <span class="editable" contenteditable="true">EDITORIAL DISPATCH // SEC. 02</span>
           <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
         </div>
       `,
@@ -2588,7 +2589,7 @@
         <div class="mag-kicker editable" contenteditable="true">CRITIQUE & CONTEMPLATION</div>
         <div class="card-content editable" contenteditable="true" spellcheck="false">在极速刷屏的碎片时代，深度的专注成了一种稀缺的奢侈品。我们所抵抗的从来不是技术，而是无休止的被动接受。停下来，写一段完整的句子，是对抗虚无最有力的姿态。</div>
         <div class="mag-footer">
-          <span class="issn-code">ISSN 2849-0194</span>
+          <span class="issn-code editable" contenteditable="true">ISSN 2849-0194</span>
           <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
         </div>
       `,
@@ -2599,8 +2600,8 @@
             <div class="coffee-title editable" contenteditable="true">ETHIOPIA YIRGACHEFFE</div>
           </div>
           <div class="coffee-meta-right">
-            <div>ALTITUDE: 2,100M</div>
-            <div>WASHED PROCESS</div>
+            <div class="editable" contenteditable="true">ALTITUDE: 2,100M</div>
+            <div class="editable" contenteditable="true">WASHED PROCESS</div>
           </div>
         </div>
         <div class="card-content editable" contenteditable="true" spellcheck="false">真正的敏锐不是捕捉所有信息，
@@ -2608,13 +2609,13 @@
 准确辨识出那一丝茉莉花香与柑橘酸质的清甜。
 给生活留一点烘焙的温度。</div>
         <div class="flavor-pills">
-          <span class="pill">JASMINE</span>
-          <span class="pill">BERGAMOT</span>
-          <span class="pill">PEACH</span>
-          <span class="pill">WILD HONEY</span>
+          <span class="pill editable" contenteditable="true">JASMINE</span>
+          <span class="pill editable" contenteditable="true">BERGAMOT</span>
+          <span class="pill editable" contenteditable="true">PEACH</span>
+          <span class="pill editable" contenteditable="true">WILD HONEY</span>
         </div>
         <div class="coffee-foot">
-          <span>ROASTED FOR THE DISCERNING</span>
+          <span class="editable" contenteditable="true">ROASTED FOR THE DISCERNING</span>
           <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
         </div>
       `,
@@ -2622,7 +2623,7 @@
         <div class="washi-tape"></div>
         <div class="washi-head">
           <span class="washi-badge editable" contenteditable="true">#今日灵感便签 // 01</span>
-          <span style="font-family: var(--font-mono); font-size: 10px; color: #78716c;">${new Date().toISOString().substring(0, 10)}</span>
+          <span class="washi-date editable" contenteditable="true" style="font-family: var(--font-mono); font-size: 10px; color: #78716c;">${new Date().toISOString().substring(0, 10)}</span>
         </div>
         <div class="card-content editable" contenteditable="true" spellcheck="false">生活不是不断往行李箱里塞东西，
 而是在漫长的旅途中，
@@ -2630,7 +2631,7 @@
 留白不是空无一物，
 而是把最宝贵的时间还给自己。</div>
         <div class="washi-foot">
-          <span>MEMO PAD // KRAFT</span>
+          <span class="editable" contenteditable="true">MEMO PAD // KRAFT</span>
           <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
         </div>
       `,
@@ -2638,13 +2639,13 @@
         <div class="rx-head">
           <div class="rx-symbol">℞</div>
           <div class="rx-meta-right">
-            <div>MED: #9402-A</div>
-            <div>DATE: ${new Date().toISOString().substring(0, 10)}</div>
+            <div class="rx-med editable" contenteditable="true">MED: #9402-A</div>
+            <div class="rx-date editable" contenteditable="true">DATE: ${new Date().toISOString().substring(0, 10)}</div>
           </div>
         </div>
         <div class="rx-patient-bar">
-          <span>PATIENT: 精神内耗患者</span>
-          <span>DOSAGE: 每日清晨服用</span>
+          <span class="rx-patient editable" contenteditable="true">PATIENT: 精神内耗患者</span>
+          <span class="rx-dosage editable" contenteditable="true">DOSAGE: 每日清晨服用</span>
         </div>
         <div class="card-content editable" contenteditable="true" spellcheck="false">【处方提示】
 世界上只有一种真正的英雄主义，
@@ -2652,7 +2653,7 @@
 关掉过剩的焦虑通知，
 随风服用，无需就水。</div>
         <div class="rx-foot">
-          <span class="rx-seal">DR. VIBE APPROVED</span>
+          <span class="rx-seal editable" contenteditable="true">DR. VIBE APPROVED</span>
           <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
         </div>
       `,
@@ -2670,15 +2671,15 @@
 有落叶的枯索，有蓄力的冬眠，也有在春天悄然破土的繁茂。
 不要拿别人的花期，来丈量自己的节气。</div>
           <div class="cal-foot">
-            <span>365 DAYS ARCHIVE</span>
+            <span class="editable" contenteditable="true">365 DAYS ARCHIVE</span>
             <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
           </div>
         </div>
       `,
       cinema: `
         <div class="cinema-top">
-          <span><span class="rec-dot"></span>REC [01:42:19]</span>
-          <span class="editable" contenteditable="true">SCENE 48 // 宽银幕电影</span>
+          <span><span class="rec-dot"></span><span class="cinema-rec editable" contenteditable="true">REC [01:42:19]</span></span>
+          <span class="cinema-scene editable" contenteditable="true">SCENE 48 // 宽银幕电影</span>
         </div>
         <div class="cinema-screen">
           <div class="card-content editable" contenteditable="true" spellcheck="false">“所有的记忆都是潮湿的。
@@ -2688,14 +2689,14 @@
           <div class="cinema-sub-en editable" contenteditable="true">All memories are humid in the quiet dusk.</div>
         </div>
         <div class="cinema-foot">
-          <span>2.35:1 ANAMORPHIC</span>
+          <span class="editable" contenteditable="true">2.35:1 ANAMORPHIC</span>
           <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
         </div>
       `,
       bento: `
         <div class="bento-pill-bar">
           <span class="bento-tag editable" contenteditable="true">STATEMENT</span>
-          <span class="bento-num">NO. 04</span>
+          <span class="bento-num editable" contenteditable="true">NO. 04</span>
         </div>
         <div class="bento-quote-symbol">“</div>
         <div class="card-content editable" contenteditable="true" spellcheck="false">剥离所有冗余修饰，
@@ -2703,7 +2704,7 @@
 不向平庸的潮流妥协，
 在克制中构筑属于自己的严谨秩序。</div>
         <div class="bento-foot">
-          <span>SWISS TYPOGRAPHY</span>
+          <span class="editable" contenteditable="true">SWISS TYPOGRAPHY</span>
           <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
         </div>
       `,
@@ -2715,14 +2716,14 @@
               <div class="cargo-tag editable" contenteditable="true">HEAVY FREIGHT // STENCIL</div>
               <div class="cargo-title editable" contenteditable="true">CARGO: IDEAS & PROTOCOLS</div>
             </div>
-            <span class="fragile-badge">FRAGILE</span>
+            <span class="fragile-badge editable" contenteditable="true">FRAGILE</span>
           </div>
           <div class="card-content editable" contenteditable="true" spellcheck="false">CAUTION: HANDLE WITH CARE.
 重型思想正在装运。
 剥离所有冗余修饰，
 将纯粹的核心逻辑稳固封入集装箱。</div>
           <div class="cargo-foot">
-            <span>BAY: 04 // 420 KG</span>
+            <span class="editable" contenteditable="true">BAY: 04 // 420 KG</span>
             <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
           </div>
         </div>
@@ -2739,14 +2740,14 @@
 仅凭四道缝线与纯白织唛，
 就能让物品本身拥有不可磨灭的辨识度。</div>
         <div class="margiela-foot">
-          <span>PARIS // ARCHIVE</span>
+          <span class="editable" contenteditable="true">PARIS // ARCHIVE</span>
           <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
         </div>
       `,
       airmail: `
         <div class="airmail-card">
           <div class="airmail-head">
-            <span class="par-avion">PAR AVION</span>
+            <span class="par-avion editable" contenteditable="true">PAR AVION</span>
             <div class="airmail-stamp">POSTAGE<br>★ 1984 ★</div>
           </div>
           <div class="card-content editable" contenteditable="true" spellcheck="false">亲爱的朋友：
@@ -2754,7 +2755,7 @@
 寄去这封信的时候，炉火正好生旺。
 愿你那里的冬日，也如同这杯红茶般温热。</div>
           <div class="airmail-foot">
-            <span>DISPATCH // SEC. 04</span>
+            <span class="editable" contenteditable="true">DISPATCH // SEC. 04</span>
             <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
           </div>
         </div>
@@ -2762,14 +2763,14 @@
       polaroid: `
         <div class="film-window">
           <div class="film-top">
-            <span>KODAK TRI-X 400</span>
-            <span>EXP 24</span>
+            <span class="film-stock editable" contenteditable="true">KODAK TRI-X 400</span>
+            <span class="film-exp editable" contenteditable="true">EXP 24</span>
           </div>
           <div class="card-content editable" contenteditable="true" spellcheck="false">“那一天的光线正好穿过百叶窗，
 在木地板上切割出均匀的光斑。
 按下快门的时候，
 时间好像慢了整整半秒。”</div>
-          <div class="film-bottom-code">#0482</div>
+          <div class="film-bottom-code editable" contenteditable="true">#0482</div>
         </div>
         <div class="polaroid-foot">
           <span class="editable" contenteditable="true">SHADOWS & MEMORY</span>
@@ -2781,7 +2782,7 @@
           <div class="receipt-title editable" contenteditable="true">TYPECARD // SPEC SHEET</div>
           <div class="receipt-row">
             <span class="editable" contenteditable="true">DOC: #8492</span>
-            <span>${new Date().toISOString().substring(0, 10)}</span>
+            <span class="editable" contenteditable="true">${new Date().toISOString().substring(0, 10)}</span>
             <span class="editable" contenteditable="true">REV: 02</span>
           </div>
         </div>
@@ -2795,7 +2796,7 @@
             <span style="font-size: 9.5px; font-family: monospace; letter-spacing: 0.08em; color: #71717a;">*84920194*</span>
           </div>
           <div class="meta-end">
-            <span>ORDER CONFIRMED</span>
+            <span class="editable" contenteditable="true">ORDER CONFIRMED</span>
             <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
           </div>
         </div>
@@ -2810,7 +2811,7 @@
           <div class="pantone-code editable" contenteditable="true">PANTONE 18-1442 TCX</div>
           <div class="pantone-name editable" contenteditable="true">ROASTED TERRACOTTA</div>
           <div class="pantone-meta">
-            <span>CMYK 18 72 78 8</span>
+            <span class="editable" contenteditable="true">CMYK 18 72 78 8</span>
             <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
           </div>
         </div>
@@ -2830,14 +2831,14 @@
         <div class="ticket-main">
           <div class="ticket-header">
             <span class="ticket-type editable" contenteditable="true">PREMIERE TICKET</span>
-            <span class="ticket-seat">${new Date().toISOString().substring(0, 10)}</span>
+            <span class="ticket-seat editable" contenteditable="true">${new Date().toISOString().substring(0, 10)}</span>
           </div>
           <div class="card-content editable" contenteditable="true" spellcheck="false">所有的记忆都是潮湿的。
 我们在夜幕降临时聚集在放映机前，
 等待那束穿透灰尘的光，
 将某个消逝的下午重新点亮。</div>
           <div class="ticket-footer">
-            <span>GATE 03 // HALL A</span>
+            <span class="editable" contenteditable="true">GATE 03 // HALL A</span>
             <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
           </div>
         </div>
@@ -2845,7 +2846,7 @@
       eink: `
         <div class="eink-header">
           <span class="eink-tag editable" contenteditable="true">CHAPTER 04</span>
-          <span class="eink-date">${new Date().toISOString().substring(0, 10)}</span>
+          <span class="eink-date editable" contenteditable="true">${new Date().toISOString().substring(0, 10)}</span>
         </div>
         <div class="quote-mark">“</div>
         <div class="card-content editable" contenteditable="true" spellcheck="false">所谓生活，并没有太多惊心动魄的高潮。
@@ -2860,13 +2861,13 @@
       vinyl: `
         <div class="vinyl-head">
           <span class="editable" contenteditable="true">SIDE A // 33⅓ RPM</span>
-          <span>STEREO MASTER</span>
+          <span class="vinyl-master editable" contenteditable="true">STEREO MASTER</span>
         </div>
         <div class="vinyl-badge">
           <div class="spool-disc"><div class="spool-center"></div></div>
           <div>
-            <div style="font-size: 11px; font-weight: 700; color: #fff;">TRACK 03: NOCTURNE</div>
-            <div style="font-size: 9.5px; color: #71717a;">ACOUSTIC SESSION IN B-FLAT</div>
+            <div class="vinyl-track editable" contenteditable="true" style="font-size: 11px; font-weight: 700; color: #fff;">TRACK 03: NOCTURNE</div>
+            <div class="vinyl-sub editable" contenteditable="true" style="font-size: 9.5px; color: #71717a;">ACOUSTIC SESSION IN B-FLAT</div>
           </div>
         </div>
         <div class="card-content editable" contenteditable="true" spellcheck="false">在黑胶唱片细微的底噪中，
@@ -2875,7 +2876,7 @@
 将那些未曾言说的情绪，
 缓缓释放进夜色里。</div>
         <div class="vinyl-foot">
-          <span>ANALOG RECORDING</span>
+          <span class="editable" contenteditable="true">ANALOG RECORDING</span>
           <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
         </div>
       `,
@@ -2891,12 +2892,12 @@
 却始终温热如初。</div>
           <div class="tape-window">
             <div class="tape-spool"></div>
-            <span style="font-size: 10px; color: #71717a; font-family: monospace;">[ 04:32 ]</span>
+            <span class="tape-time editable" contenteditable="true" style="font-size: 10px; color: #71717a; font-family: monospace;">[ 04:32 ]</span>
             <div class="tape-spool"></div>
           </div>
         </div>
         <div style="display: flex; justify-content: space-between; font-size: 10px; color: #71717a; margin-top: 12px; font-family: var(--font-mono);">
-          <span>TYPE I // CASSETTE</span>
+          <span class="editable" contenteditable="true">TYPE I // CASSETTE</span>
           <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
         </div>
       `,
@@ -2912,14 +2913,14 @@
         <div class="bau-sub editable" contenteditable="true">FORM FOLLOWS FUNCTION</div>
         <div class="card-content editable" contenteditable="true" spellcheck="false">剥离一切矫饰的浮华，让几何、色彩与结构直接对话。真正有力的设计从不取悦一时的潮流，而是在严密的理性秩序中，重塑日常生活的审美尺度。</div>
         <div class="bau-foot">
-          <span>STAATLICHES BAUHAUS</span>
+          <span class="editable" contenteditable="true">STAATLICHES BAUHAUS</span>
           <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
         </div>
       `,
       blueprint: `
         <div class="bp-head">
           <span class="bp-dim editable" contenteditable="true">|<--- SPEC: 460.00 MM --->|</span>
-          <span>CYANOTYPE // CAD</span>
+          <span class="bp-cad editable" contenteditable="true">CYANOTYPE // CAD</span>
         </div>
         <div class="card-content editable" contenteditable="true" spellcheck="false">任何伟大的建筑在落成之前，都曾是一纸克制而精密的蓝色草图。不要急于搭建高塔，先在寂静中校准每一处承重的坐标与结构。</div>
         <div class="bp-foot">
@@ -2929,12 +2930,12 @@
       `,
       boarding: `
         <div class="bp-top-bar">
-          <span class="editable" contenteditable="true">FIRST CLASS // BOARDING PASS</span>
-          <span>SEAT 01A</span>
+          <span class="bp-class editable" contenteditable="true">FIRST CLASS // BOARDING PASS</span>
+          <span class="bp-seat editable" contenteditable="true">SEAT 01A</span>
         </div>
         <div class="bp-route-row">
           <span class="bp-iata editable" contenteditable="true">TYO</span>
-          <span class="bp-plane">─── ✈︎ ───</span>
+          <span class="bp-plane editable" contenteditable="true">─── ✈︎ ───</span>
           <span class="bp-iata editable" contenteditable="true">PAR</span>
         </div>
         <div class="bp-body">
@@ -2961,8 +2962,8 @@
           <span class="mac-win-title editable" contenteditable="true">Untitled-Memo.txt</span>
         </div>
         <div class="mac-subbar">
-          <span>System 7.0.1</span>
-          <span>42K in disk // 188K available</span>
+          <span class="mac-sys editable" contenteditable="true">System 7.0.1</span>
+          <span class="mac-disk editable" contenteditable="true">42K in disk // 188K available</span>
         </div>
         <div class="mac-body">
           <div class="card-content editable" contenteditable="true" spellcheck="false">Here's to the crazy ones. 在那个只有黑白像素与软盘读盘声的年代，每一次敲击键盘都像是在数字荒原上开垦绿洲。保持饥渴，保持纯粹。</div>
@@ -3046,17 +3047,31 @@
 
     function bindContentTracking() {
       const contentEl = card.querySelector('.card-content');
-      if (!contentEl) return;
-      contentEl.addEventListener('input', () => {
-        if (contentEl.innerHTML.includes('==')) {
-          contentEl.innerHTML = contentEl.innerHTML.replace(/==([^=]+)==/g, '<mark class="tc-mark">$1</mark>');
-        }
-        userCustomHTML = contentEl.innerHTML;
-        saveDraft();
-        updateHUD();
-      });
+      if (contentEl) {
+        const syncBody = () => {
+          if (contentEl.innerHTML.includes('==')) {
+            contentEl.innerHTML = contentEl.innerHTML.replace(/==([^=]+)==/g, '<mark class="tc-mark">$1</mark>');
+          }
+          userCustomHTML = contentEl.innerHTML;
+          saveDraft();
+          updateHUD();
+        };
+        contentEl.addEventListener('input', syncBody);
+        contentEl.addEventListener('compositionend', syncBody);
+        contentEl.addEventListener('blur', syncBody);
+      }
       card.querySelectorAll('.editable:not(.card-content)').forEach(el => {
-        el.addEventListener('input', () => updateHUD());
+        const syncSub = () => {
+          if (el.classList.contains('card-watermark')) {
+            curWatermark = el.innerText.trim() || '@我的小红书';
+            if (inputWatermark) inputWatermark.value = curWatermark;
+            saveDraft();
+          }
+          updateHUD();
+        };
+        el.addEventListener('input', syncSub);
+        el.addEventListener('compositionend', syncSub);
+        el.addEventListener('blur', syncSub);
       });
     }
 
@@ -3461,6 +3476,12 @@
     }
 
     async function renderToCanvas() {
+      // 0. Flush any active IME composition or contenteditable focus before reading DOM
+      if (document.activeElement && card.contains(document.activeElement)) {
+        document.activeElement.blur();
+      }
+      await new Promise(r => requestAnimationFrame(() => setTimeout(r, 40)));
+
       const scale = exportScale || 2; // 2x Retina or 3x Ultra-HD Print
       const wall = stage.getAttribute('data-wall') || 'dots';
       const isTransparent = (wall === 'none') && stage.style.background === 'transparent';
@@ -3493,10 +3514,11 @@
       function getTxt(sel, fallback) {
         const el = card.querySelector(sel);
         if (!el) return fallback;
-        const t = el.innerText.trim();
+        const t = (el.innerText || el.textContent || '').trim();
         return t || fallback;
       }
 
+      const wmText = getTxt('.card-watermark', curWatermark);
       const contentEl = card.querySelector('.card-content');
       const contentText = contentEl ? contentEl.innerText : '';
       const contentRel = getRel(contentEl) || { x: 34, y: 100, w: cardW - 68, h: 100 };
@@ -3548,6 +3570,14 @@
       // Extract character array with highlight flag from DOM .card-content
       function extractRichParagraphs(el) {
         if (!el) return [];
+        if (!el.querySelector('mark, .tc-mark')) {
+          const clean = (el.innerText || el.textContent || '').split(String.fromCharCode(13)).join('');
+          const lines = clean.split(String.fromCharCode(10));
+          while (lines.length > 1 && lines[lines.length - 1] === '') {
+            lines.pop();
+          }
+          return lines.map(line => Array.from(line).map(ch => ({ ch, mark: false })));
+        }
         const paras = [[]];
         function walk(node, isMarked) {
           if (node.nodeType === 3) {
@@ -3745,7 +3775,7 @@
 
         ctx.textAlign = 'right';
         ctx.font = '10px "JetBrains Mono", monospace';
-        ctx.fillText(curWatermark, cx + cardW - 34, cy + swatchH + 54);
+        ctx.fillText(wmText, cx + cardW - 34, cy + swatchH + 54);
 
         card.style.transform = prevTransform;
         card.style.transition = prevTransition;
@@ -3963,20 +3993,29 @@
         ctx.fillStyle = '#eab308';
         ctx.font = 'bold 9px "JetBrains Mono", monospace';
         ctx.textAlign = 'left';
-        ctx.fillText('KODAK TRI-X 400', cx + 28, cy + 34);
+        ctx.fillText(getTxt('.film-stock', 'KODAK TRI-X 400'), cx + 28, cy + 34);
         ctx.textAlign = 'right';
-        ctx.fillText('EXP 24', cx + cardW - 28, cy + 34);
+        ctx.fillText(getTxt('.film-exp', 'EXP 24'), cx + cardW - 28, cy + 34);
 
+      } else if (curTheme === 'bauhaus' || curTheme === 'blueprint' || curTheme === 'boarding' || curTheme === 'museum' || curTheme === 'macos' || curTheme === 'vogue') {
+        // Handled with exact corner radius & shell geometry in Step 4 below
       } else {
-        ctx.fillStyle = isDark ? '#18181b' : (curTheme === 'coffee' ? '#f5f0e6' : (curTheme === 'prescription' ? '#faf8f2' : (curTheme === 'eink' ? '#f8f6f0' : (curTheme === 'vinyl' ? '#141416' : (curTheme === 'cassette' ? '#1e1e24' : '#fbf9f4')))));
-        roundRect(ctx, cx, cy, cardW, cardH, 4);
+        const shellR = (curTheme === 'cassette') ? 8 : ((curTheme === 'bento' || curTheme === 'vinyl') ? 6 : 4);
+        ctx.fillStyle = isDark ? (curTheme === 'cassette' ? '#222227' : (curTheme === 'vinyl' ? '#141416' : (curTheme === 'bento' ? '#121214' : '#18181b'))) : (curTheme === 'coffee' ? '#f5f0e6' : (curTheme === 'prescription' ? '#faf8f2' : (curTheme === 'eink' ? '#f8f6f0' : '#fbf9f4')));
+        roundRect(ctx, cx, cy, cardW, cardH, shellR);
         ctx.fill();
         ctx.shadowColor = 'transparent';
+        ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.1)' : '#eae5d8';
+        ctx.lineWidth = 1;
+        ctx.stroke();
       }
 
-      ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.1)' : '#eae5d8';
-      ctx.lineWidth = 1;
-      if (curTheme !== 'airmail' && curTheme !== 'margiela') ctx.stroke();
+      if (curTheme === 'ticket' || curTheme === 'washi' || curTheme === 'cinema' || curTheme === 'cargo' || curTheme === 'calendar' || curTheme === 'polaroid' || curTheme === 'receipt') {
+        ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.1)' : '#eae5d8';
+        ctx.lineWidth = 1;
+        roundRect(ctx, cx, cy, cardW, cardH, curTheme === 'receipt' ? 2 : 4);
+        ctx.stroke();
+      }
 
       // =======================================================================
       // 4. THEME-SPECIFIC HEADERS, BADGES & EMBELLISHMENTS (DYNAMIC FROM DOM)
@@ -3996,9 +4035,11 @@
         ctx.fillStyle = '#78716c';
         ctx.font = '10px "JetBrains Mono", monospace';
         ctx.textAlign = 'left';
-        ctx.fillText('VOL. CXLII // NO. 48,291', cx + 34, cy + 58);
+        ctx.fillText(getTxt('.mast-meta span:first-child', 'VOL. CXLII // NO. 48,291'), cx + 34, cy + 58);
+        ctx.textAlign = 'center';
+        ctx.fillText(getTxt('.mast-meta span:nth-child(2)', 'NEW YORK, AUTUMN'), cx + cardW / 2, cy + 58);
         ctx.textAlign = 'right';
-        ctx.fillText('FIFTEEN CENTS', cx + cardW - 34, cy + 58);
+        ctx.fillText(getTxt('.mast-meta span:last-child', 'FIFTEEN CENTS'), cx + cardW - 34, cy + 58);
 
         ctx.fillStyle = '#18181b';
         ctx.font = 'bold 14px "Playfair Display", Georgia, serif';
@@ -4040,8 +4081,8 @@
         ctx.fillStyle = '#78716c';
         ctx.font = '9.5px "JetBrains Mono", monospace';
         ctx.textAlign = 'right';
-        ctx.fillText('ALTITUDE: 2,100M', cx + cardW - 34, cy + 36);
-        ctx.fillText('WASHED PROCESS', cx + cardW - 34, cy + 52);
+        ctx.fillText(getTxt('.coffee-meta-right div:first-child', 'ALTITUDE: 2,100M'), cx + cardW - 34, cy + 36);
+        ctx.fillText(getTxt('.coffee-meta-right div:last-child', 'WASHED PROCESS'), cx + cardW - 34, cy + 52);
 
         ctx.strokeStyle = 'rgba(140, 120, 81, 0.2)';
         ctx.beginPath();
@@ -4056,7 +4097,7 @@
 
         ctx.fillStyle = '#78716c';
         ctx.textAlign = 'right';
-        ctx.fillText(new Date().toISOString().substring(0, 10), cx + cardW - 34, cy + 34);
+        ctx.fillText(getTxt('.washi-date', new Date().toISOString().substring(0, 10)), cx + cardW - 34, cy + 34);
 
       } else if (curTheme === 'prescription') {
         ctx.fillStyle = curPantone;
@@ -4069,8 +4110,8 @@
         ctx.font = '10px "JetBrains Mono", monospace';
         ctx.fillStyle = '#78716c';
         ctx.textAlign = 'right';
-        ctx.fillText('MED: #9402-A', cx + cardW - 34, cy + 34);
-        ctx.fillText(new Date().toISOString().substring(0, 10), cx + cardW - 34, cy + 48);
+        ctx.fillText(getTxt('.rx-med', 'MED: #9402-A'), cx + cardW - 34, cy + 34);
+        ctx.fillText(getTxt('.rx-date', 'DATE: ' + new Date().toISOString().substring(0, 10)), cx + cardW - 34, cy + 48);
 
         ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
         roundRect(ctx, cx + 34, cy + 60, cardW - 68, 26, 3);
@@ -4078,9 +4119,9 @@
         ctx.fillStyle = '#57534e';
         ctx.font = '10.5px "JetBrains Mono", monospace';
         ctx.textAlign = 'left';
-        ctx.fillText('PATIENT: 精神内耗患者', cx + 44, cy + 77);
+        ctx.fillText(getTxt('.rx-patient', 'PATIENT: 精神内耗患者'), cx + 44, cy + 77);
         ctx.textAlign = 'right';
-        ctx.fillText('DOSAGE: 每日清晨服用', cx + cardW - 44, cy + 77);
+        ctx.fillText(getTxt('.rx-dosage', 'DOSAGE: 每日清晨服用'), cx + cardW - 44, cy + 77);
 
         // DR. VIBE APPROVED Circular Seal Stamp with -8deg tilt
         ctx.save();
@@ -4126,9 +4167,9 @@
         ctx.fillStyle = '#a1a1aa';
         ctx.font = '11px "JetBrains Mono", monospace';
         ctx.textAlign = 'left';
-        ctx.fillText('REC [01:42:19]', cx + 48, cy + 38);
+        ctx.fillText(getTxt('.cinema-rec', 'REC [01:42:19]'), cx + 48, cy + 38);
         ctx.textAlign = 'right';
-        ctx.fillText(getTxt('.cinema-top .editable', 'SCENE 48 // 宽银幕电影'), cx + cardW - 34, cy + 38);
+        ctx.fillText(getTxt('.cinema-scene', 'SCENE 48 // 宽银幕电影'), cx + cardW - 34, cy + 38);
 
         // 16:9 Inner cinema letterbox outline
         ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
@@ -4147,6 +4188,10 @@
         ctx.textAlign = 'center';
         ctx.fillText(bTag, cx + 34 + tagW / 2, cy + 42);
 
+        ctx.fillStyle = '#71717a';
+        ctx.textAlign = 'right';
+        ctx.fillText(getTxt('.bento-num', 'NO. 04'), cx + cardW - 34, cy + 42);
+
         ctx.fillStyle = curPantone;
         ctx.font = '800 28px "Playfair Display", Georgia, serif';
         ctx.textAlign = 'left';
@@ -4163,6 +4208,7 @@
         ctx.fillText(getTxt('.cargo-title', 'CARGO: IDEAS & PROTOCOLS'), cx + 34, cy + 62);
 
         // FRAGILE Badge
+        const fragTxt = getTxt('.fragile-badge', 'FRAGILE');
         ctx.strokeStyle = '#f59e0b';
         ctx.lineWidth = 1.5;
         roundRect(ctx, cx + cardW - 34 - 74, cy + 30, 74, 26, 2);
@@ -4170,7 +4216,7 @@
         ctx.fillStyle = '#f59e0b';
         ctx.font = 'bold 9.5px "JetBrains Mono", monospace';
         ctx.textAlign = 'center';
-        ctx.fillText('FRAGILE', cx + cardW - 34 - 37, cy + 47);
+        ctx.fillText(fragTxt, cx + cardW - 34 - 37, cy + 47);
 
       } else if (curTheme === 'margiela') {
         // Maison Margiela Matrix 0-23 with authentic circled 11
@@ -4210,13 +4256,14 @@
 
       } else if (curTheme === 'airmail') {
         // Par Avion Blue Pill
+        const paTxt = getTxt('.par-avion', 'PAR AVION');
         ctx.fillStyle = '#1e3a8a';
         roundRect(ctx, cx + 24, cy + 22, 80, 20, 3);
         ctx.fill();
         ctx.fillStyle = '#ffffff';
         ctx.font = 'bold 10px "JetBrains Mono", monospace';
         ctx.textAlign = 'center';
-        ctx.fillText('PAR AVION', cx + 64, cy + 36);
+        ctx.fillText(paTxt, cx + 64, cy + 36);
 
         // Vintage Postage Stamp with 2deg tilt
         ctx.save();
@@ -4246,7 +4293,7 @@
         ctx.textAlign = 'left';
         ctx.fillText(getTxt('.receipt-row span:first-child', 'DOC: #8492'), cx + 34, cy + 54);
         ctx.textAlign = 'center';
-        ctx.fillText(new Date().toISOString().substring(0, 10), cx + cardW / 2, cy + 54);
+        ctx.fillText(getTxt('.receipt-row span:nth-child(2)', new Date().toISOString().substring(0, 10)), cx + cardW / 2, cy + 54);
         ctx.textAlign = 'right';
         ctx.fillText(getTxt('.receipt-row span:last-child', 'REV: 02'), cx + cardW - 34, cy + 54);
 
@@ -4296,7 +4343,7 @@
 
         ctx.fillStyle = '#78716c';
         ctx.textAlign = 'right';
-        ctx.fillText(new Date().toISOString().substring(0, 10), cx + cardW - 28, cy + 38);
+        ctx.fillText(getTxt('.ticket-seat', new Date().toISOString().substring(0, 10)), cx + cardW - 28, cy + 38);
 
         ctx.strokeStyle = 'rgba(0, 0, 0, 0.08)';
         ctx.beginPath();
@@ -4321,7 +4368,7 @@
         ctx.fillStyle = '#71717a';
         ctx.font = '11px "JetBrains Mono", monospace';
         ctx.textAlign = 'right';
-        ctx.fillText(new Date().toISOString().substring(0, 10), cx + cardW - 34, cy + 34);
+        ctx.fillText(getTxt('.eink-date', new Date().toISOString().substring(0, 10)), cx + cardW - 34, cy + 34);
 
         ctx.strokeStyle = '#18181b';
         ctx.lineWidth = 1;
@@ -4338,9 +4385,9 @@
         ctx.fillStyle = '#a1a1aa';
         ctx.font = '11px "JetBrains Mono", monospace';
         ctx.textAlign = 'left';
-        ctx.fillText(getTxt('.vinyl-head .editable', 'SIDE A // 33⅓ RPM'), cx + 34, cy + 34);
+        ctx.fillText(getTxt('.vinyl-head span:first-child', 'SIDE A // 33⅓ RPM'), cx + 34, cy + 34);
         ctx.textAlign = 'right';
-        ctx.fillText('STEREO MASTER', cx + cardW - 34, cy + 34);
+        ctx.fillText(getTxt('.vinyl-master', 'STEREO MASTER'), cx + cardW - 34, cy + 34);
 
         ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
         ctx.beginPath();
@@ -4369,10 +4416,10 @@
         ctx.fillStyle = '#ffffff';
         ctx.font = 'bold 11px -apple-system, sans-serif';
         ctx.textAlign = 'left';
-        ctx.fillText('TRACK 03: NOCTURNE', dx + 32, dy - 2);
+        ctx.fillText(getTxt('.vinyl-track', 'TRACK 03: NOCTURNE'), dx + 32, dy - 2);
         ctx.fillStyle = '#71717a';
         ctx.font = '9.5px -apple-system, sans-serif';
-        ctx.fillText('ACOUSTIC SESSION IN B-FLAT', dx + 32, dy + 12);
+        ctx.fillText(getTxt('.vinyl-sub', 'ACOUSTIC SESSION IN B-FLAT'), dx + 32, dy + 12);
 
       } else if (curTheme === 'cassette') {
         ctx.fillStyle = '#fbf8f0';
@@ -4411,7 +4458,7 @@
         ctx.fillStyle = '#71717a';
         ctx.font = '10px "JetBrains Mono", monospace';
         ctx.textAlign = 'center';
-        ctx.fillText('[ 04:32 ]', cx + cardW / 2, twY + 22);
+        ctx.fillText(getTxt('.tape-time', '[ 04:32 ]'), cx + cardW / 2, twY + 22);
 
       } else if (curTheme === 'bauhaus') {
         ctx.fillStyle = '#f5f1e6';
@@ -4479,7 +4526,7 @@
         ctx.fillText(getTxt('.bp-dim', '|<--- SPEC: 460.00 MM --->|'), cx + 32, cy + 40);
         ctx.fillStyle = '#bae6fd';
         ctx.textAlign = 'right';
-        ctx.fillText('CYANOTYPE // CAD', cx + cardW - 32, cy + 40);
+        ctx.fillText(getTxt('.bp-cad', 'CYANOTYPE // CAD'), cx + cardW - 32, cy + 40);
 
         ctx.strokeStyle = 'rgba(255,255,255,0.45)';
         ctx.setLineDash([4, 3]);
@@ -4487,54 +4534,72 @@
         ctx.setLineDash([]);
 
       } else if (curTheme === 'boarding') {
-        ctx.fillStyle = '#fdfdfc';
+        const topBarRel = getRel(card.querySelector('.bp-top-bar')) || { x: 0, y: 0, w: cardW, h: 40 };
+        const routeRel = getRel(card.querySelector('.bp-route-row')) || { x: 0, y: 40, w: cardW, h: 55 };
+
+        // 1. Cast outer drop shadow using 8px rounded rect
+        ctx.save();
+        ctx.fillStyle = '#09090b';
         roundRect(ctx, cx, cy, cardW, cardH, 8);
         ctx.fill();
+        ctx.restore();
         ctx.shadowColor = 'transparent';
 
-        // Top colored airline bar
+        // 2. Clip inside 8px rounded card shell and paint top bar & body separately (zero white bleed at top corners!)
         ctx.save();
-        roundRect(ctx, cx, cy, cardW, 38, 8);
+        roundRect(ctx, cx, cy, cardW, cardH, 8);
         ctx.clip();
+
+        // Top colored airline bar (fills top 8px corners cleanly)
         ctx.fillStyle = curPantone;
-        ctx.fillRect(cx, cy, cardW, 38);
-        ctx.restore();
-        ctx.fillStyle = curPantone;
-        ctx.fillRect(cx, cy + 20, cardW, 18);
+        ctx.fillRect(cx, cy, cardW, topBarRel.h);
+
+        // Lower boarding pass body
+        ctx.fillStyle = '#fdfdfc';
+        ctx.fillRect(cx, cy + topBarRel.h, cardW, cardH - topBarRel.h);
 
         ctx.fillStyle = '#ffffff';
         ctx.font = 'bold 10.5px "JetBrains Mono", monospace';
         ctx.textAlign = 'left';
-        ctx.fillText(getTxt('.bp-top-bar span:first-child', 'FIRST CLASS // BOARDING PASS'), cx + 28, cy + 24);
+        ctx.fillText(getTxt('.bp-class', getTxt('.bp-top-bar span:first-child', 'FIRST CLASS // BOARDING PASS')), cx + 28, cy + Math.round(topBarRel.h * 0.62));
         ctx.textAlign = 'right';
-        ctx.fillText('SEAT 01A', cx + cardW - 28, cy + 24);
+        ctx.fillText(getTxt('.bp-seat', getTxt('.bp-top-bar span:last-child', 'SEAT 01A')), cx + cardW - 28, cy + Math.round(topBarRel.h * 0.62));
 
         // Route IATA codes
         const iataEls = card.querySelectorAll('.bp-iata');
         const fromCode = iataEls[0] ? iataEls[0].innerText.trim() : 'TYO';
         const toCode = iataEls[1] ? iataEls[1].innerText.trim() : 'PAR';
+        const routeBaseY = cy + routeRel.y + Math.round(routeRel.h * 0.69);
         ctx.fillStyle = '#18181b';
         ctx.font = '800 26px -apple-system, sans-serif';
         ctx.textAlign = 'left';
-        ctx.fillText(fromCode, cx + 28, cy + 78);
+        ctx.fillText(fromCode, cx + 28, routeBaseY);
         ctx.textAlign = 'right';
-        ctx.fillText(toCode, cx + cardW - 28, cy + 78);
+        ctx.fillText(toCode, cx + cardW - 28, routeBaseY);
 
         ctx.fillStyle = curPantone;
         ctx.font = 'bold 15px "JetBrains Mono", monospace';
         ctx.textAlign = 'center';
-        ctx.fillText('─── ✈ ───', cx + cardW / 2, cy + 74);
+        ctx.fillText(getTxt('.bp-plane', '─── ✈ ───'), cx + cardW / 2, routeBaseY - 4);
 
+        // Full-width dashed route divider matching .bp-route-row border-bottom
         ctx.strokeStyle = '#d4d4d8';
+        ctx.lineWidth = 1;
         ctx.setLineDash([4, 4]);
-        ctx.beginPath(); ctx.moveTo(cx + 28, cy + 94); ctx.lineTo(cx + cardW - 28, cy + 94); ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(cx, cy + routeRel.y + routeRel.h);
+        ctx.lineTo(cx + cardW, cy + routeRel.y + routeRel.h);
+        ctx.stroke();
         ctx.setLineDash([]);
+        ctx.restore();
 
       } else if (curTheme === 'museum') {
         ctx.fillStyle = '#fbfaf8';
-        roundRect(ctx, cx, cy, cardW, cardH, 2);
-        ctx.fill();
+        ctx.fillRect(cx, cy, cardW, cardH);
         ctx.shadowColor = 'transparent';
+        ctx.strokeStyle = '#e7e5e0';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(cx + 0.5, cy + 0.5, cardW - 1, cardH - 1);
 
         ctx.fillStyle = '#18181b';
         ctx.font = 'bold 12px -apple-system, sans-serif';
@@ -4556,18 +4621,21 @@
         // Hard 1984 pixel shadow
         ctx.shadowColor = 'transparent';
         ctx.fillStyle = '#18181b';
-        ctx.fillRect(cx + 6, cy + 6, cardW, cardH);
+        roundRect(ctx, cx + 6, cy + 6, cardW, cardH, 3);
+        ctx.fill();
 
         ctx.fillStyle = '#f4f2eb';
-        ctx.fillRect(cx, cy, cardW, cardH);
+        roundRect(ctx, cx, cy, cardW, cardH, 3);
+        ctx.fill();
         ctx.strokeStyle = '#18181b';
         ctx.lineWidth = 2;
-        ctx.strokeRect(cx + 1, cy + 1, cardW - 2, cardH - 2);
+        roundRect(ctx, cx + 1, cy + 1, cardW - 2, cardH - 2, 3);
+        ctx.stroke();
 
         // Pinstripe title bar
         ctx.lineWidth = 1;
         for (let y = cy + 4; y < cy + 26; y += 3) {
-          ctx.beginPath(); ctx.moveTo(cx + 2, y); ctx.lineTo(cx + cardW - 2, y); ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(cx + 4, y); ctx.lineTo(cx + cardW - 4, y); ctx.stroke();
         }
         ctx.lineWidth = 2;
         ctx.beginPath(); ctx.moveTo(cx, cy + 28); ctx.lineTo(cx + cardW, cy + 28); ctx.stroke();
@@ -4598,14 +4666,13 @@
         ctx.fillStyle = '#57534e';
         ctx.font = '9.5px "JetBrains Mono", monospace';
         ctx.textAlign = 'left';
-        ctx.fillText('System 7.0.1', cx + 20, cy + 44);
+        ctx.fillText(getTxt('.mac-sys', 'System 7.0.1'), cx + 20, cy + 44);
         ctx.textAlign = 'right';
-        ctx.fillText('42K in disk // 188K available', cx + cardW - 20, cy + 44);
+        ctx.fillText(getTxt('.mac-disk', '42K in disk // 188K available'), cx + cardW - 20, cy + 44);
 
       } else if (curTheme === 'vogue') {
         ctx.fillStyle = '#0d0d10';
-        roundRect(ctx, cx, cy, cardW, cardH, 2);
-        ctx.fill();
+        ctx.fillRect(cx, cy, cardW, cardH);
         ctx.shadowColor = 'transparent';
 
         // Double Champagne Gold Foil Borders
@@ -4647,13 +4714,14 @@
         ctx.fillStyle = '#71717a';
         ctx.font = '10.5px "JetBrains Mono", monospace';
         ctx.textAlign = 'right';
-        ctx.fillText(curWatermark, cx + cardW - 24, cy + cardH - 36);
+        ctx.fillText(wmText, cx + cardW - 24, cy + cardH - 36);
       } else if (curTheme === 'newspaper') {
         drawRichBody(cx + contentRel.x, cy + contentRel.y + fontSize, contentRel.w, bodyColor, true);
       } else {
         const endY = drawRichBody(cx + contentRel.x, cy + contentRel.y + fontSize, contentRel.w, bodyColor, false);
         if (curTheme === 'coffee') {
-          const pills = ['JASMINE', 'BERGAMOT', 'PEACH', 'WILD HONEY'];
+          const pillEls = card.querySelectorAll('.flavor-pills .pill');
+          const pills = pillEls.length ? Array.from(pillEls).map(el => el.innerText.trim()) : ['JASMINE', 'BERGAMOT', 'PEACH', 'WILD HONEY'];
           let px = cx + 34;
           for (const p of pills) {
             ctx.fillStyle = 'rgba(140, 120, 81, 0.12)';
@@ -4718,7 +4786,7 @@
         ctx.textAlign = 'left';
         if (leftFootText) ctx.fillText(leftFootText, leftX, footY + 4);
         ctx.textAlign = 'right';
-        ctx.fillText(curWatermark, rightX, footY + 4);
+        ctx.fillText(wmText, rightX, footY + 4);
       }
 
       // Restore DOM state
@@ -4734,13 +4802,27 @@
     // Download PNG
     document.getElementById('btn-download').addEventListener('click', async () => {
       try {
-        showToast('正在生成 2x 高清图片...');
+        showToast(`正在生成 ${exportScale || 2}x 高清图片...`);
         const canvas = await renderToCanvas();
-        const a = document.createElement('a');
-        a.download = `typecard-${curTheme}-${curRatio}-${Date.now()}.png`;
-        a.href = canvas.toDataURL('image/png');
-        a.click();
-        showToast(`🎉 高清无损 PNG 已保存 (${canvas.width}×${canvas.height} px)！`);
+        const fileName = `typecard-${curTheme}-${curRatio}-${Date.now()}.png`;
+        canvas.toBlob((blob) => {
+          if (blob) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.download = fileName;
+            a.href = url;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            setTimeout(() => URL.revokeObjectURL(url), 5000);
+          } else {
+            const a = document.createElement('a');
+            a.download = fileName;
+            a.href = canvas.toDataURL('image/png');
+            a.click();
+          }
+          showToast(`🎉 高清无损 PNG 已保存 (${canvas.width}×${canvas.height} px)！`);
+        }, 'image/png');
       } catch (err) {
         console.error(err);
         showToast('导出出错，请重试');
