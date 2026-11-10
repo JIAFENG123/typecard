@@ -3611,95 +3611,99 @@
         return paras;
       }
 
-      // Draw rich body lines with <mark> highlight bars, alignment & optional Drop Cap
+      // Draw rich body lines using exact DOM Range character coordinates (100% WYSIWYG with DOM editor!)
       function drawRichBody(startX, startY, maxWidth, textColor, enableDropCap) {
         const baseFont = `${cs && cs.fontStyle === 'italic' ? 'italic ' : ''}${cs ? cs.fontWeight : '400'} ${fontSize}px ${fontFam}`;
         ctx.font = baseFont;
-        const paras = extractRichParagraphs(contentEl);
-        let curY = startY;
-        let dropCapChar = null;
-        let dropCapW = 0;
+        if (!contentEl) return startY;
 
-        if (enableDropCap && paras.length > 0 && paras[0].length > 0 && curAlign !== 'center') {
-          dropCapChar = paras[0].shift();
+        // Collect all character rects directly from the live DOM via Range API
+        const range = document.createRange();
+        const rawChars = [];
+        function collectChars(node, isMarked) {
+          if (node.nodeType === 3) {
+            const text = node.nodeValue || '';
+            for (let i = 0; i < text.length; i++) {
+              const ch = text[i];
+              if (ch === '\r' || ch === '\n') continue;
+              range.setStart(node, i);
+              range.setEnd(node, i + 1);
+              const r = range.getBoundingClientRect();
+              if (r.width === 0 && r.height === 0) continue;
+              rawChars.push({
+                ch,
+                mark: isMarked,
+                relX: r.left - cardRect.left,
+                relY: r.top - cardRect.top,
+                relW: r.width,
+                relH: r.height
+              });
+            }
+          } else if (node.nodeType === 1) {
+            const tag = node.tagName.toUpperCase();
+            if (tag === 'BR') return;
+            const nextMark = isMarked || tag === 'MARK' || node.classList.contains('tc-mark');
+            for (const child of node.childNodes) {
+              collectChars(child, nextMark);
+            }
+          }
+        }
+        collectChars(contentEl, false);
+        if (rawChars.length === 0) return startY;
+
+        // Handle Newspaper Drop Cap (::first-letter)
+        if (enableDropCap && rawChars.length > 0 && curAlign !== 'center') {
+          const dropCapChar = rawChars.shift();
           ctx.save();
           ctx.font = `bold 38px "Playfair Display", Georgia, serif`;
-          dropCapW = ctx.measureText(dropCapChar.ch).width + 8;
           ctx.fillStyle = curPantone;
           ctx.textAlign = 'left';
-          ctx.fillText(dropCapChar.ch, startX, startY + 26);
+          ctx.fillText(dropCapChar.ch, cx + dropCapChar.relX, cy + dropCapChar.relY + 32);
           ctx.restore();
           ctx.font = baseFont;
         }
 
-        let globalLineIdx = 0;
-        for (const para of paras) {
-          if (para.length === 0) {
-            curY += lineHeight;
-            globalLineIdx++;
-            continue;
-          }
-          let lineItems = [];
-          let lineStr = '';
-          for (let i = 0; i < para.length; i++) {
-            const item = para[i];
-            const availW = (dropCapChar && globalLineIdx < 2) ? (maxWidth - dropCapW) : maxWidth;
-            const testStr = lineStr + item.ch;
-            if (ctx.measureText(testStr).width > availW && lineItems.length > 0) {
-              renderRichLine(lineItems, globalLineIdx, false, curY);
-              curY += lineHeight;
-              globalLineIdx++;
-              lineItems = [item];
-              lineStr = item.ch;
-            } else {
-              lineItems.push(item);
-              lineStr = testStr;
-            }
-          }
-          if (lineItems.length > 0) {
-            renderRichLine(lineItems, globalLineIdx, true, curY);
-            curY += lineHeight;
-            globalLineIdx++;
+        // Group characters into visual lines by vertical coordinate (relY)
+        const vLines = [];
+        for (const item of rawChars) {
+          const lastLine = vLines[vLines.length - 1];
+          if (!lastLine || Math.abs(item.relY - lastLine.relY) > fontSize * 0.55) {
+            vLines.push({ relY: item.relY, relH: item.relH, items: [item] });
+          } else {
+            lastLine.items.push(item);
           }
         }
 
-        function renderRichLine(items, lIdx, isLastInPara, yPos) {
-          const lineOffsetX = (dropCapChar && lIdx < 2) ? (startX + dropCapW) : startX;
-          const availW = (dropCapChar && lIdx < 2) ? (maxWidth - dropCapW) : maxWidth;
-          const str = items.map(it => it.ch).join('');
-          const lineW = ctx.measureText(str).width;
+        // Render each visual line at its exact DOM coordinates
+        let lastBottomY = startY;
+        for (const line of vLines) {
+          const baselineY = cy + line.relY + fontSize * 0.84;
+          lastBottomY = cy + line.relY + line.relH;
 
-          let drawX = lineOffsetX;
-          let extraSpace = 0;
-          if (curAlign === 'center') {
-            drawX = lineOffsetX + (availW - lineW) / 2;
-          } else if (curAlign === 'justify' && !isLastInPara && items.length > 1 && lineW > availW * 0.72) {
-            extraSpace = (availW - lineW) / (items.length - 1);
+          // Pass 1: Draw seamless highlight marker bars for marked spans on this line
+          let i = 0;
+          while (i < line.items.length) {
+            if (!line.items[i].mark) { i++; continue; }
+            let j = i;
+            while (j + 1 < line.items.length && line.items[j + 1].mark) j++;
+            const spanX = cx + line.items[i].relX;
+            const spanW = (line.items[j].relX + line.items[j].relW) - line.items[i].relX;
+            ctx.save();
+            ctx.fillStyle = hexToRgba(curPantone, 0.32);
+            ctx.fillRect(spanX, baselineY - fontSize * 0.46, spanW, fontSize * 0.62);
+            ctx.restore();
+            i = j + 1;
           }
 
-          // Pass 1: Draw seamless highlight marker bars
-          let cxPos = drawX;
-          for (let i = 0; i < items.length; i++) {
-            const chW = ctx.measureText(items[i].ch).width + (i < items.length - 1 ? extraSpace : 0);
-            if (items[i].mark) {
-              ctx.save();
-              ctx.fillStyle = hexToRgba(curPantone, 0.32);
-              ctx.fillRect(cxPos, yPos - fontSize * 0.46, chW, fontSize * 0.62);
-              ctx.restore();
-            }
-            cxPos += chW;
-          }
-
-          // Pass 2: Draw characters
+          // Pass 2: Draw each character at its exact DOM horizontal & vertical position
           ctx.fillStyle = textColor;
           ctx.textAlign = 'left';
-          cxPos = drawX;
-          for (let i = 0; i < items.length; i++) {
-            ctx.fillText(items[i].ch, cxPos, yPos);
-            cxPos += ctx.measureText(items[i].ch).width + (i < items.length - 1 ? extraSpace : 0);
+          for (const item of line.items) {
+            ctx.fillText(item.ch, cx + item.relX, baselineY);
           }
         }
-        return curY;
+
+        return lastBottomY + 8;
       }
 
       // =======================================================================
@@ -4577,10 +4581,13 @@
         ctx.textAlign = 'right';
         ctx.fillText(toCode, cx + cardW - 28, routeBaseY);
 
+        ctx.save();
         ctx.fillStyle = curPantone;
         ctx.font = 'bold 15px "JetBrains Mono", monospace';
         ctx.textAlign = 'center';
+        if ('letterSpacing' in ctx) ctx.letterSpacing = '3px';
         ctx.fillText(getTxt('.bp-plane', '─── ✈ ───'), cx + cardW / 2, routeBaseY - 4);
+        ctx.restore();
 
         // Full-width dashed route divider matching .bp-route-row border-bottom
         ctx.strokeStyle = '#d4d4d8';
@@ -4748,31 +4755,25 @@
       }
 
       // =======================================================================
-      // 6. DRAW FOOTER
+      // 6. DRAW FOOTER (EXACT DOM COORDINATES)
       // =======================================================================
       const footEl = card.querySelector('.paper-foot, .mag-footer, .coffee-foot, .washi-foot, .rx-foot, .cal-foot, .cinema-foot, .bento-foot, .cargo-foot, .margiela-foot, .airmail-foot, .polaroid-foot, .receipt-foot, .ticket-footer, .eink-footer, .vinyl-foot, .cassette-label-box + div, .bau-foot, .bp-foot, .bp-Bottom, .mu-foot, .mac-foot, .vg-foot');
       const footRel = getRel(footEl);
-      const footY = footRel ? (cy + footRel.y + footRel.h / 2) : (cy + cardH - 24);
 
       if (curTheme !== 'pantone' && curTheme !== 'polaroid') {
-        let leftX = cx + 30;
-        let rightX = cx + cardW - 30;
-        let lineLeft = cx + 30;
-        let lineRight = cx + cardW - 30;
+        const leftX = footRel ? (cx + footRel.x) : (curTheme === 'ticket' ? cx + 148 : cx + 30);
+        const rightX = footRel ? (cx + footRel.x + footRel.w) : (curTheme === 'ticket' ? cx + cardW - 28 : cx + cardW - 30);
+        const lineY = footRel ? (cy + footRel.y) : (cy + cardH - 36);
+        const textY = footRel ? (cy + footRel.y + footRel.h - 3) : (cy + cardH - 20);
 
-        if (curTheme === 'ticket') {
-          leftX = cx + 148;
-          lineLeft = cx + 148;
-          rightX = cx + cardW - 28;
-          lineRight = cx + cardW - 28;
+        if (curTheme !== 'cassette') {
+          ctx.strokeStyle = (curTheme === 'vogue') ? 'rgba(212,175,55,0.28)' : (curTheme === 'boarding' ? '#f4f4f5' : (isDarkTheme ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.1)'));
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(leftX, lineY);
+          ctx.lineTo(rightX, lineY);
+          ctx.stroke();
         }
-
-        ctx.strokeStyle = (curTheme === 'vogue') ? 'rgba(212,175,55,0.28)' : (isDarkTheme ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)');
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(lineLeft, footY - 12);
-        ctx.lineTo(lineRight, footY - 12);
-        ctx.stroke();
 
         let leftFootText = curTheme.toUpperCase() + ' // PRO';
         if (curTheme === 'receipt') {
@@ -4784,9 +4785,9 @@
         ctx.fillStyle = (curTheme === 'vogue') ? '#d4af37' : ((curTheme === 'blueprint') ? '#bae6fd' : (isDarkTheme ? '#71717a' : '#78716c'));
         ctx.font = '10px "JetBrains Mono", monospace';
         ctx.textAlign = 'left';
-        if (leftFootText) ctx.fillText(leftFootText, leftX, footY + 4);
+        if (leftFootText) ctx.fillText(leftFootText, leftX, textY);
         ctx.textAlign = 'right';
-        ctx.fillText(wmText, rightX, footY + 4);
+        ctx.fillText(wmText, rightX, textY);
       }
 
       // Restore DOM state
