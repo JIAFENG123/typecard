@@ -3695,11 +3695,27 @@
             i = j + 1;
           }
 
-          // Pass 2: Draw each character at its exact DOM horizontal & vertical position
+          // Pass 2: Draw the visual line as a complete text run so OpenType contextual punctuation (chws) and kerning match the DOM 100%
           ctx.fillStyle = textColor;
           ctx.textAlign = 'left';
-          for (const item of line.items) {
-            ctx.fillText(item.ch, cx + item.relX, baselineY);
+          if (curAlign === 'justify' && line.items.length > 1) {
+            // Check if DOM actually stretched this line (justify)
+            const domLineW = (line.items[line.items.length - 1].relX + line.items[line.items.length - 1].relW) - line.items[0].relX;
+            const naturalW = ctx.measureText(line.items.map(it => it.ch).join('')).width;
+            if (domLineW - naturalW > 4) {
+              const extra = (domLineW - naturalW) / (line.items.length - 1);
+              let curX = cx + line.items[0].relX;
+              for (let k = 0; k < line.items.length; k++) {
+                ctx.fillText(line.items[k].ch, curX, baselineY);
+                curX += ctx.measureText(line.items[k].ch).width + (k < line.items.length - 1 ? extra : 0);
+              }
+            } else {
+              const lineStr = line.items.map(it => it.ch).join('');
+              ctx.fillText(lineStr, cx + line.items[0].relX, baselineY);
+            }
+          } else {
+            const lineStr = line.items.map(it => it.ch).join('');
+            ctx.fillText(lineStr, cx + line.items[0].relX, baselineY);
           }
         }
 
@@ -4761,16 +4777,30 @@
       const footRel = getRel(footEl);
 
       if (curTheme !== 'pantone' && curTheme !== 'polaroid') {
-        const leftX = footRel ? (cx + footRel.x) : (curTheme === 'ticket' ? cx + 148 : cx + 30);
-        const rightX = footRel ? (cx + footRel.x + footRel.w) : (curTheme === 'ticket' ? cx + cardW - 28 : cx + cardW - 30);
-        const lineY = footRel ? (cy + footRel.y) : (cy + cardH - 36);
-        const textY = footRel ? (cy + footRel.y + footRel.h - 3) : (cy + cardH - 20);
+        const leftSpanEl = footEl ? footEl.firstElementChild : null;
+        const rightSpanEl = card.querySelector('.card-watermark');
+        const leftSpanRel = getRel(leftSpanEl);
+        const rightSpanRel = getRel(rightSpanEl);
 
-        if (curTheme !== 'cassette') {
+        const lineLeft = footRel ? (cx + footRel.x) : (curTheme === 'ticket' ? cx + 148 : cx + 30);
+        const lineRight = footRel ? (cx + footRel.x + footRel.w) : (curTheme === 'ticket' ? cx + cardW - 28 : cx + cardW - 30);
+        const lineY = footRel ? (cy + footRel.y) : (cy + cardH - 36);
+
+        const leftX = leftSpanRel ? (cx + leftSpanRel.x) : lineLeft;
+        const rightX = rightSpanRel ? (cx + rightSpanRel.x + rightSpanRel.w) : lineRight;
+        const textY = rightSpanRel ? (cy + rightSpanRel.y + rightSpanRel.h * 0.78) : (footRel ? (cy + footRel.y + footRel.h - 4) : (cy + cardH - 20));
+
+        if (curTheme === 'blueprint' && footRel) {
+          ctx.fillStyle = 'rgba(8, 33, 66, 0.75)';
+          ctx.fillRect(cx + footRel.x, cy + footRel.y, footRel.w, footRel.h);
+          ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
+          ctx.lineWidth = 1;
+          ctx.strokeRect(cx + footRel.x + 0.5, cy + footRel.y + 0.5, footRel.w - 1, footRel.h - 1);
+        } else if (curTheme !== 'cassette') {
           ctx.strokeStyle = (curTheme === 'vogue') ? 'rgba(212,175,55,0.28)' : (curTheme === 'boarding' ? '#f4f4f5' : (isDarkTheme ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.1)'));
           ctx.lineWidth = 1;
           ctx.beginPath();
-          ctx.moveTo(leftX, lineY);
+          ctx.moveTo(lineLeft, lineY);
           ctx.lineTo(rightX, lineY);
           ctx.stroke();
         }
@@ -4778,8 +4808,8 @@
         let leftFootText = curTheme.toUpperCase() + ' // PRO';
         if (curTheme === 'receipt') {
           leftFootText = '';
-        } else if (footEl && footEl.firstElementChild) {
-          leftFootText = footEl.firstElementChild.innerText.trim();
+        } else if (leftSpanEl) {
+          leftFootText = leftSpanEl.innerText.trim();
         }
 
         ctx.fillStyle = (curTheme === 'vogue') ? '#d4af37' : ((curTheme === 'blueprint') ? '#bae6fd' : (isDarkTheme ? '#71717a' : '#78716c'));
