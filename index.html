@@ -240,6 +240,12 @@
     .theme-cassette .editable:focus,
     .theme-cinema .editable:focus,
     .theme-bento .editable:focus,
+    .theme-blueprint .editable:focus,
+    .theme-vogue .editable:focus,
+    .theme-aurora .editable:focus,
+    .theme-brutalist .editable:focus,
+    .theme-podcast .editable:focus,
+    .theme-klein .editable:focus,
     .theme-pantone .card-content.editable:focus {
       background: rgba(255, 255, 255, 0.08);
     }
@@ -249,17 +255,118 @@
       min-height: unset;
       display: block;
     }
-    #the-card[data-ratio="3:4"] {
-      min-height: 613px;
+    #the-card[data-ratio="3:4"],
+    #the-card[data-ratio="1:1"] {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: flex-start;
+    }
+    #the-card[data-ratio="3:4"] {
+      min-height: 613px;
     }
     #the-card[data-ratio="1:1"] {
       min-height: 460px;
+    }
+    #the-card[data-ratio="3:4"] > .paper-foot,
+    #the-card[data-ratio="3:4"] > .mag-footer,
+    #the-card[data-ratio="3:4"] > .coffee-foot,
+    #the-card[data-ratio="3:4"] > .washi-foot,
+    #the-card[data-ratio="3:4"] > .rx-foot,
+    #the-card[data-ratio="3:4"] > .cal-foot,
+    #the-card[data-ratio="3:4"] > .cinema-foot,
+    #the-card[data-ratio="3:4"] > .bento-foot,
+    #the-card[data-ratio="3:4"] > .cargo-foot,
+    #the-card[data-ratio="3:4"] > .margiela-foot,
+    #the-card[data-ratio="3:4"] > .airmail-foot,
+    #the-card[data-ratio="3:4"] > .polaroid-foot,
+    #the-card[data-ratio="3:4"] > .receipt-foot,
+    #the-card[data-ratio="3:4"] > .eink-footer,
+    #the-card[data-ratio="3:4"] > .vinyl-foot,
+    #the-card[data-ratio="3:4"] > .bau-foot,
+    #the-card[data-ratio="3:4"] > .bp-foot,
+    #the-card[data-ratio="3:4"] > .bp-Bottom,
+    #the-card[data-ratio="3:4"] > .mu-foot,
+    #the-card[data-ratio="3:4"] > .vg-foot,
+    #the-card[data-ratio="3:4"] > .aurora-foot,
+    #the-card[data-ratio="3:4"] > .zen-foot,
+    #the-card[data-ratio="3:4"] > .brut-foot,
+    #the-card[data-ratio="3:4"] > .pod-foot,
+    #the-card[data-ratio="3:4"] > .ate-foot,
+    #the-card[data-ratio="3:4"] > .herb-foot,
+    #the-card[data-ratio="3:4"] > .silk-foot,
+    #the-card[data-ratio="3:4"] > .kin-foot,
+    #the-card[data-ratio="3:4"] > .duo-foot,
+    #the-card[data-ratio="3:4"] > .let-foot,
+    #the-card[data-ratio="3:4"] > .klein-foot,
+    #the-card[data-ratio="3:4"] > .poem-foot,
+    #the-card[data-ratio="1:1"] > .paper-foot,
+    #the-card[data-ratio="1:1"] > .mag-footer,
+    #the-card[data-ratio="1:1"] > .coffee-foot,
+    #the-card[data-ratio="1:1"] > .washi-foot,
+    #the-card[data-ratio="1:1"] > .rx-foot,
+    #the-card[data-ratio="1:1"] > .cal-foot,
+    #the-card[data-ratio="1:1"] > .cinema-foot,
+    #the-card[data-ratio="1:1"] > .bento-foot,
+    #the-card[data-ratio="1:1"] > .cargo-foot,
+    #the-card[data-ratio="1:1"] > .margiela-foot,
+    #the-card[data-ratio="1:1"] > .airmail-foot,
+    #the-card[data-ratio="1:1"] > .polaroid-foot,
+    #the-card[data-ratio="1:1"] > .receipt-foot,
+    #the-card[data-ratio="1:1"] > .eink-footer,
+    #the-card[data-ratio="1:1"] > .vinyl-foot,
+    #the-card[data-ratio="1:1"] > .bau-foot,
+    #the-card[data-ratio="1:1"] > .bp-foot,
+    #the-card[data-ratio="1:1"] > .bp-Bottom,
+    #the-card[data-ratio="1:1"] > .mu-foot,
+    #the-card[data-ratio="1:1"] > .vg-foot,
+    #the-card[data-ratio="1:1"] > .aurora-foot,
+    #the-card[data-ratio="1:1"] > .zen-foot,
+    #the-card[data-ratio="1:1"] > .brut-foot,
+    #the-card[data-ratio="1:1"] > .pod-foot,
+    #the-card[data-ratio="1:1"] > .ate-foot,
+    #the-card[data-ratio="1:1"] > .herb-foot,
+    #the-card[data-ratio="1:1"] > .silk-foot,
+    #the-card[data-ratio="1:1"] > .kin-foot,
+    #the-card[data-ratio="1:1"] > .duo-foot,
+    #the-card[data-ratio="1:1"] > .let-foot,
+    #the-card[data-ratio="1:1"] > .klein-foot,
+    #the-card[data-ratio="1:1"] > .poem-foot {
+      margin-top: auto;
+    }
+    #the-card[data-ratio="3:4"].theme-pantone .pantone-swatch,
+    #the-card[data-ratio="1:1"].theme-pantone .pantone-swatch {
+      flex: 1;
+    }
+    #the-card[data-ratio="3:4"].theme-polaroid .film-window,
+    #the-card[data-ratio="1:1"].theme-polaroid .film-window {
+      flex: 1;
+    }
+    #the-card[data-ratio="3:4"].theme-macos .mac-body,
+    #the-card[data-ratio="1:1"].theme-macos .mac-body {
+      flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+    }
+    #the-card[data-ratio="3:4"].theme-macos .mac-foot,
+    #the-card[data-ratio="1:1"].theme-macos .mac-foot {
+      margin-top: auto;
+    }
+    #the-card[data-ratio="3:4"].theme-cinema .cinema-screen,
+    #the-card[data-ratio="1:1"].theme-cinema .cinema-screen {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    #the-card[data-ratio="3:4"].theme-cassette .cassette-label-box,
+    #the-card[data-ratio="1:1"].theme-cassette .cassette-label-box {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    #the-card[data-ratio="3:4"].theme-cassette .cassette-spool-window,
+    #the-card[data-ratio="1:1"].theme-cassette .cassette-spool-window {
+      margin-top: auto;
     }
 
     /* Typography Flavors */
@@ -2232,6 +2339,313 @@
       color: #588157;
     }
 
+    /* 31. MONET SILK MIST (XHS HEALING AESTHETIC) */
+    .theme-silk {
+      background: #f8f6f2;
+      background-image:
+        radial-gradient(circle at 88% 12%, rgba(216, 180, 254, 0.38) 0%, transparent 48%),
+        radial-gradient(circle at 12% 88%, rgba(167, 243, 208, 0.36) 0%, transparent 48%),
+        radial-gradient(circle at 50% 50%, rgba(254, 215, 170, 0.22) 0%, transparent 60%);
+      color: #27272a;
+      font-family: var(--font-serif);
+      padding: 40px 36px 30px 36px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      position: relative;
+    }
+    .theme-silk .silk-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: #71717a;
+      letter-spacing: 0.1em;
+    }
+    .theme-silk .silk-pill {
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.65);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      color: #3f3f46;
+      font-weight: 600;
+    }
+    .theme-silk .silk-title {
+      font-family: var(--font-serif);
+      font-size: 19px;
+      font-weight: 700;
+      color: #18181b;
+      margin-bottom: 16px;
+      line-height: 1.4;
+    }
+    .theme-silk .card-content {
+      font-size: 15px;
+      line-height: 1.95;
+      color: #3f3f46;
+      margin-bottom: 28px;
+      white-space: pre-wrap;
+    }
+    .theme-silk .silk-foot {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid rgba(0, 0, 0, 0.07);
+      padding-top: 12px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: #71717a;
+    }
+
+    /* 32. KINFOLK NORDIC MINIMALIST */
+    .theme-kinfolk {
+      background: #f9f8f6;
+      color: #1c1917;
+      font-family: var(--font-serif);
+      padding: 46px 40px 32px 40px;
+      border: 1px solid #eceae4;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.16);
+      position: relative;
+    }
+    .theme-kinfolk .kin-arch {
+      text-align: center;
+      font-size: 16px;
+      color: var(--accent, #c2593f);
+      letter-spacing: 0.25em;
+      margin-bottom: 10px;
+    }
+    .theme-kinfolk .kin-kicker {
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      letter-spacing: 0.22em;
+      color: #78716c;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #e7e5e0;
+    }
+    .theme-kinfolk .card-content {
+      font-size: 15px;
+      line-height: 2.05;
+      color: #292524;
+      margin-bottom: 32px;
+      white-space: pre-wrap;
+    }
+    .theme-kinfolk .kin-foot {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid #e7e5e0;
+      padding-top: 12px;
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      color: #a8a29e;
+      letter-spacing: 0.08em;
+    }
+
+    /* 33. SWISS EDITORIAL DUOTONE */
+    .theme-duotone {
+      background: #ffffff;
+      color: #09090b;
+      font-family: var(--font-sans);
+      padding: 36px 34px 28px 38px;
+      border-left: 6px solid var(--accent, #c2593f);
+      box-shadow: 0 22px 54px rgba(0, 0, 0, 0.24);
+      position: relative;
+    }
+    .theme-duotone .duo-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+    .theme-duotone .duo-num {
+      font-family: var(--font-mono);
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 0.9;
+      color: var(--accent, #c2593f);
+      letter-spacing: -0.04em;
+    }
+    .theme-duotone .duo-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #71717a;
+      text-transform: uppercase;
+      border: 1px solid #e4e4e7;
+      padding: 3px 8px;
+      border-radius: 3px;
+    }
+    .theme-duotone .duo-headline {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #09090b;
+      margin-bottom: 16px;
+      line-height: 1.35;
+    }
+    .theme-duotone .card-content {
+      font-size: 14.5px;
+      line-height: 1.85;
+      color: #27272a;
+      margin-bottom: 26px;
+      white-space: pre-wrap;
+    }
+    .theme-duotone .duo-foot {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid #e4e4e7;
+      padding-top: 12px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: #71717a;
+    }
+
+    /* 34. TACTILE COTTON LETTERPRESS */
+    .theme-letter {
+      background: #fcfaf5;
+      color: #292524;
+      font-family: var(--font-serif);
+      padding: 40px 36px 28px 36px;
+      border: 1px solid #e6e0d4;
+      outline: 1px solid rgba(168, 162, 158, 0.25);
+      outline-offset: -10px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+    .theme-letter .let-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+    .theme-letter .let-salutation {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 17px;
+      font-weight: 600;
+      color: #1c1917;
+    }
+    .theme-letter .let-wax {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent, #c2593f);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-serif);
+      font-size: 12px;
+      font-style: italic;
+      font-weight: 700;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+    }
+    .theme-letter .card-content {
+      font-size: 14.5px;
+      line-height: 2.0;
+      color: #44403c;
+      margin-bottom: 28px;
+      white-space: pre-wrap;
+    }
+    .theme-letter .let-foot {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px dashed #d6d3cd;
+      padding-top: 12px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: #78716c;
+    }
+
+    /* 35. INTERNATIONAL KLEIN BLUE (IKB 191) */
+    .theme-klein {
+      background: #002fa7;
+      color: #ffffff;
+      font-family: var(--font-sans);
+      padding: 40px 36px 30px 36px;
+      border: 1px solid rgba(255, 255, 255, 0.26);
+      outline: 1px solid rgba(255, 255, 255, 0.18);
+      outline-offset: -8px;
+      box-shadow: 0 24px 60px rgba(0, 20, 80, 0.55);
+      position: relative;
+    }
+    .theme-klein .klein-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      color: rgba(255, 255, 255, 0.78);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+      padding-bottom: 12px;
+      margin-bottom: 24px;
+    }
+    .theme-klein .card-content {
+      font-size: 15.5px;
+      font-weight: 500;
+      line-height: 1.95;
+      color: #ffffff;
+      margin-bottom: 30px;
+      white-space: pre-wrap;
+    }
+    .theme-klein .klein-foot {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.25);
+      padding-top: 12px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    /* 36. MODERN VERSE CHAPBOOK (POEM) */
+    .theme-poem {
+      background: #f6f4ef;
+      color: #1f2937;
+      font-family: var(--font-serif);
+      padding: 42px 38px 30px 44px;
+      border: 1px solid #e5e0d5;
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.18);
+      position: relative;
+    }
+    .theme-poem .poem-margin-line {
+      position: absolute;
+      left: 26px;
+      top: 28px;
+      bottom: 28px;
+      width: 1px;
+      background: rgba(0, 0, 0, 0.08);
+    }
+    .theme-poem .poem-title {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--accent, #c2593f);
+      margin-bottom: 20px;
+      letter-spacing: 0.04em;
+    }
+    .theme-poem .card-content {
+      font-size: 15px;
+      line-height: 2.1;
+      color: #1f2937;
+      margin-bottom: 32px;
+      white-space: pre-wrap;
+    }
+    .theme-poem .poem-foot {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      padding-top: 12px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: #6b7280;
+    }
+
     /* =========================================================================
        SIDEBAR & CONTROLS
        ========================================================================= */
@@ -2647,10 +3061,10 @@
             <line x1="3" y1="9" x2="21" y2="9"></line>
             <line x1="9" y1="21" x2="9" y2="9"></line>
           </svg>
-          <span>美学格式 (30 种实体介质与流派)</span>
+          <span>美学格式 (36 种实体介质与流派)</span>
         </div>
         <div class="filter-tabs" id="format-filters">
-          <button class="filter-pill active" data-cat="all">全部 (30)</button>
+          <button class="filter-pill active" data-cat="all">全部 (36)</button>
           <button class="filter-pill" data-cat="print">纸质刊物</button>
           <button class="filter-pill" data-cat="retro">复古拟物</button>
           <button class="filter-pill" data-cat="avant">先锋艺术</button>
@@ -2660,6 +3074,30 @@
           <button class="style-card active" data-theme="newspaper" data-cat="print">
             <span class="style-name">📰 纽时大报</span>
             <span class="style-meta">Broadsheet Drop Cap</span>
+          </button>
+          <button class="style-card" data-theme="silk" data-cat="avant">
+            <span class="style-name">🎨 莫奈丝缎</span>
+            <span class="style-meta">Monet Silk Mist</span>
+          </button>
+          <button class="style-card" data-theme="kinfolk" data-cat="print">
+            <span class="style-name">🕯️ 极简留白</span>
+            <span class="style-meta">Kinfolk Nordic</span>
+          </button>
+          <button class="style-card" data-theme="duotone" data-cat="avant">
+            <span class="style-name">🔴 双色构成</span>
+            <span class="style-meta">Swiss Duotone</span>
+          </button>
+          <button class="style-card" data-theme="letter" data-cat="retro">
+            <span class="style-name">✉️ 见字如面</span>
+            <span class="style-meta">Cotton Letterpress</span>
+          </button>
+          <button class="style-card" data-theme="klein" data-cat="avant">
+            <span class="style-name">💙 克莱因蓝</span>
+            <span class="style-meta">IKB 191 Monochrome</span>
+          </button>
+          <button class="style-card" data-theme="poem" data-cat="print">
+            <span class="style-name">📜 现代诗行</span>
+            <span class="style-meta">Verse Chapbook</span>
           </button>
           <button class="style-card" data-theme="aurora" data-cat="avant">
             <span class="style-name">🌌 空间琉璃</span>
@@ -3502,6 +3940,73 @@
           <span class="editable" contenteditable="true">LOCUS: ALPINE VALLEY // ELEV. 2,400M</span>
           <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
         </div>
+      `,
+      silk: `
+        <div class="silk-head">
+          <span class="silk-pill editable" contenteditable="true">LIGHT STUDY // 01</span>
+          <span class="silk-date editable" contenteditable="true">SOFT MORNING</span>
+        </div>
+        <div class="silk-title editable" contenteditable="true">把生活调成柔和的慢门</div>
+        <div class="card-content editable" contenteditable="true" spellcheck="false">不必追赶所有人的时钟。允许自己慢下来，像清晨的薄雾漫过树梢，只与真正让你心安的事物发生共鸣。</div>
+        <div class="silk-foot">
+          <span class="editable" contenteditable="true">MONET SILK // SERIES</span>
+          <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
+        </div>
+      `,
+      kinfolk: `
+        <div class="kin-arch">⌒</div>
+        <div class="kin-kicker editable" contenteditable="true">VOLUME XII  ·  ON SOLITUDE</div>
+        <div class="card-content editable" contenteditable="true" spellcheck="false">真正的松弛感，不是拥有多少昂贵之物，而是你终于学会了对不需要的喧嚣说不，把珍贵的留白留给窗边的阳光与自己。</div>
+        <div class="kin-foot">
+          <span class="editable" contenteditable="true">NORDIC SLOW LIVING</span>
+          <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
+        </div>
+      `,
+      duotone: `
+        <div class="duo-top">
+          <div class="duo-num editable" contenteditable="true">01</div>
+          <div class="duo-label editable" contenteditable="true">ESSENTIALISM</div>
+        </div>
+        <div class="duo-headline editable" contenteditable="true">少即是多，慢即是快</div>
+        <div class="card-content editable" contenteditable="true" spellcheck="false">所有真正高级的表达，往往都在做减法。剥离掉多余的修饰和讨好，剩下的骨架才是你最不可替代的锋芒。</div>
+        <div class="duo-foot">
+          <span class="editable" contenteditable="true">SWISS GRID // 2026</span>
+          <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
+        </div>
+      `,
+      letter: `
+        <div class="let-head">
+          <div class="let-salutation editable" contenteditable="true">Dear Reader,</div>
+          <div class="let-wax editable" contenteditable="true">L</div>
+        </div>
+        <div class="card-content editable" contenteditable="true" spellcheck="false">见字如面。如果今天的风有点大，那就早点把心门掩上，泡一杯热茶。那些走得慢一点的日子，其实都在悄悄为你蓄力。</div>
+        <div class="let-foot">
+          <span class="editable" contenteditable="true">WRITTEN IN QUIET HOURS</span>
+          <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
+        </div>
+      `,
+      klein: `
+        <div class="klein-top">
+          <span class="editable" contenteditable="true">IKB 191 // MONOCHROME</span>
+          <span class="editable" contenteditable="true">PARIS · 1960</span>
+        </div>
+        <div class="card-content editable" contenteditable="true" spellcheck="false">蓝色没有维度，它超越了一切维度之外。当你凝视一片纯粹的深蓝时，所有的世俗杂音都会瞬间退散，只留下无限的寂静与自由。</div>
+        <div class="klein-foot">
+          <span class="editable" contenteditable="true">YVES KLEIN ARCHIVE</span>
+          <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
+        </div>
+      `,
+      poem: `
+        <div class="poem-margin-line"></div>
+        <div class="poem-title editable" contenteditable="true">§ 致未曾谋面的春风</div>
+        <div class="card-content editable" contenteditable="true" spellcheck="false">我从不怀疑光会再来，
+就像云朵总会穿过漫长的夜，
+在某一个不起眼的清晨，
+轻轻落在你翻开的书页上。</div>
+        <div class="poem-foot">
+          <span class="editable" contenteditable="true">— PAGE 17 —</span>
+          <span class="card-watermark editable" contenteditable="true">${curWatermark}</span>
+        </div>
       `
     };
 
@@ -3985,12 +4490,13 @@
     }
 
     function roundRect(ctx, x, y, w, h, r) {
+      const rr = Math.max(0, Math.min(r, w / 2, h / 2));
       ctx.beginPath();
-      ctx.moveTo(x + r, y);
-      ctx.arcTo(x + w, y, x + w, y + h, r);
-      ctx.arcTo(x + w, y + h, x, y + h, r);
-      ctx.arcTo(x, y + h, x, y, r);
-      ctx.arcTo(x, y, x + w, y, r);
+      ctx.moveTo(x + rr, y);
+      ctx.arcTo(x + w, y, x + w, y + h, rr);
+      ctx.arcTo(x + w, y + h, x, y + h, rr);
+      ctx.arcTo(x, y + h, x, y, rr);
+      ctx.arcTo(x, y, x + w, y, rr);
       ctx.closePath();
     }
 
@@ -4046,7 +4552,7 @@
       const fontSize = cs ? (parseFloat(cs.fontSize) || 14) : 14;
       const lineHeight = cs ? (parseFloat(cs.lineHeight) || (fontSize * 1.75)) : 25;
       const fontFam = cs ? cs.fontFamily : '-apple-system, BlinkMacSystemFont, sans-serif';
-      const isDark = (curTheme === 'cinema' || curTheme === 'bento' || curTheme === 'cargo' || curTheme === 'vinyl' || curTheme === 'cassette' || curTheme === 'aurora' || curTheme === 'brutalist' || curTheme === 'podcast');
+      const isDark = (curTheme === 'cinema' || curTheme === 'bento' || curTheme === 'cargo' || curTheme === 'vinyl' || curTheme === 'cassette' || curTheme === 'aurora' || curTheme === 'brutalist' || curTheme === 'podcast' || curTheme === 'klein');
 
       const canvasW = (cardW + pad * 2) * scale;
       const canvasH = (cardH + pad * 2) * scale;
@@ -4289,7 +4795,8 @@
       ctx.shadowOffsetY = 18;
 
       if (curTheme === 'pantone') {
-        const swatchH = Math.round(cardH * 0.72);
+        const labelRel = getRel(card.querySelector('.pantone-label'));
+        const swatchH = labelRel ? Math.round(labelRel.y) : Math.round(cardH * 0.72);
         // Swatch color block
         ctx.fillStyle = curPantone;
         roundRect(ctx, cx, cy, cardW, cardH, 4);
@@ -4297,24 +4804,44 @@
         ctx.shadowColor = 'transparent';
 
         // Bottom white banner
+        ctx.save();
+        roundRect(ctx, cx, cy, cardW, cardH, 4);
+        ctx.clip();
         ctx.fillStyle = '#ffffff';
-        roundRect(ctx, cx, cy + swatchH, cardW, cardH - swatchH, 4);
-        ctx.fill();
+        ctx.fillRect(cx, cy + swatchH, cardW, cardH - swatchH);
+        ctx.restore();
 
         // Pantone text
         drawRichBody(cx + 34, cy + 46, cardW - 68, '#ffffff', false);
 
-        ctx.fillStyle = curPantone;
-        ctx.font = 'bold 16px -apple-system, sans-serif';
-        ctx.textAlign = 'left';
-        ctx.fillText(getTxt('.pantone-code', SWATCH_META[curPantone]?.code || 'PANTONE 18-1442 TCX'), cx + 34, cy + swatchH + 34);
-        ctx.fillStyle = '#71717a';
-        ctx.font = '600 12px -apple-system, sans-serif';
-        ctx.fillText(getTxt('.pantone-name', SWATCH_META[curPantone]?.name || 'ROASTED TERRACOTTA'), cx + 34, cy + swatchH + 54);
+        const codeRel = getRel(card.querySelector('.pantone-code'));
+        const nameRel = getRel(card.querySelector('.pantone-name'));
+        const metaRel = getRel(card.querySelector('.pantone-meta'));
+        const wmRel = getRel(card.querySelector('.card-watermark'));
 
+        ctx.fillStyle = curPantone;
+        ctx.font = 'bold 17px -apple-system, sans-serif';
+        ctx.textAlign = 'left';
+        ctx.fillText(getTxt('.pantone-code', SWATCH_META[curPantone]?.code || 'PANTONE 18-1442 TCX'), cx + (codeRel ? codeRel.x : 34), cy + (codeRel ? codeRel.y + 15 : swatchH + 34));
+        ctx.fillStyle = '#52525b';
+        ctx.font = '600 13px -apple-system, sans-serif';
+        ctx.fillText(getTxt('.pantone-name', SWATCH_META[curPantone]?.name || 'ROASTED TERRACOTTA'), cx + (nameRel ? nameRel.x : 34), cy + (nameRel ? nameRel.y + 12 : swatchH + 54));
+
+        if (metaRel) {
+          ctx.strokeStyle = '#f4f4f5';
+          ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(cx + metaRel.x, cy + metaRel.y); ctx.lineTo(cx + metaRel.x + metaRel.w, cy + metaRel.y); ctx.stroke();
+          const leftMeta = getTxt('.pantone-meta span:first-child', 'COLOR OF THE YEAR');
+          ctx.fillStyle = '#a1a1aa';
+          ctx.font = '10px "JetBrains Mono", monospace';
+          ctx.textAlign = 'left';
+          ctx.fillText(leftMeta, cx + metaRel.x, cy + metaRel.y + 20);
+        }
+
+        ctx.fillStyle = '#a1a1aa';
         ctx.textAlign = 'right';
         ctx.font = '10px "JetBrains Mono", monospace';
-        ctx.fillText(wmText, cx + cardW - 34, cy + swatchH + 54);
+        ctx.fillText(wmText, cx + (wmRel ? wmRel.x + wmRel.w : cardW - 34), cy + (wmRel ? wmRel.y + 10 : swatchH + 54));
 
         card.style.transform = prevTransform;
         card.style.transition = prevTransition;
@@ -4518,25 +5045,35 @@
         ctx.setLineDash([]);
 
       } else if (curTheme === 'polaroid') {
+        const fwRel = getRel(card.querySelector('.film-window')) || { x: 20, y: 20, w: cardW - 40, h: Math.max(160, cardH - 100) };
         ctx.fillStyle = '#fdfdfd';
-        roundRect(ctx, cx, cy, cardW, cardH, 4);
+        roundRect(ctx, cx, cy, cardW, cardH, 3);
         ctx.fill();
         ctx.shadowColor = 'transparent';
 
-        // Dark square film window
-        const filmH = Math.max(160, cardH - 100);
-        ctx.fillStyle = '#18181b';
-        ctx.fillRect(cx + 20, cy + 20, cardW - 40, filmH);
+        // Dark film window matching live DOM
+        ctx.fillStyle = '#141416';
+        roundRect(ctx, cx + fwRel.x, cy + fwRel.y, fwRel.w, fwRel.h, 2);
+        ctx.fill();
 
         // Film label
-        ctx.fillStyle = '#eab308';
-        ctx.font = 'bold 9px "JetBrains Mono", monospace';
+        const fTopRel = getRel(card.querySelector('.film-top')) || { x: fwRel.x + 24, y: fwRel.y + 26, w: fwRel.w - 48, h: 12 };
+        ctx.fillStyle = '#71717a';
+        ctx.font = '10px "JetBrains Mono", monospace';
         ctx.textAlign = 'left';
-        ctx.fillText(getTxt('.film-stock', 'KODAK TRI-X 400'), cx + 28, cy + 34);
+        ctx.fillText(getTxt('.film-top span:first-child', 'FRAME 024 // ISO 400'), cx + fTopRel.x, cy + fTopRel.y + 10);
         ctx.textAlign = 'right';
-        ctx.fillText(getTxt('.film-exp', 'EXP 24'), cx + cardW - 28, cy + 34);
+        ctx.fillText(getTxt('.film-top span:last-child', '50MM F/1.4'), cx + fTopRel.x + fTopRel.w, cy + fTopRel.y + 10);
 
-      } else if (curTheme === 'bauhaus' || curTheme === 'blueprint' || curTheme === 'boarding' || curTheme === 'museum' || curTheme === 'macos' || curTheme === 'vogue' || curTheme === 'aurora' || curTheme === 'zen' || curTheme === 'brutalist' || curTheme === 'podcast' || curTheme === 'atelier' || curTheme === 'herbarium') {
+        const fBotRel = getRel(card.querySelector('.film-bottom-code'));
+        if (fBotRel) {
+          ctx.fillStyle = '#71717a';
+          ctx.font = '10px "JetBrains Mono", monospace';
+          ctx.textAlign = 'right';
+          ctx.fillText(getTxt('.film-bottom-code', 'KODAK TRI-X 400 · DX'), cx + fBotRel.x + fBotRel.w, cy + fBotRel.y + 10);
+        }
+
+      } else if (curTheme === 'bauhaus' || curTheme === 'blueprint' || curTheme === 'boarding' || curTheme === 'museum' || curTheme === 'macos' || curTheme === 'vogue' || curTheme === 'aurora' || curTheme === 'zen' || curTheme === 'brutalist' || curTheme === 'podcast' || curTheme === 'atelier' || curTheme === 'herbarium' || curTheme === 'silk' || curTheme === 'kinfolk' || curTheme === 'duotone' || curTheme === 'letter' || curTheme === 'klein' || curTheme === 'poem') {
         // Handled with exact corner radius & shell geometry in Step 4 below
       } else {
         const shellR = (curTheme === 'cassette') ? 8 : ((curTheme === 'bento' || curTheme === 'vinyl') ? 6 : 4);
@@ -5238,62 +5775,70 @@
         ctx.beginPath(); ctx.moveTo(cx + 36, cy + 80); ctx.lineTo(cx + cardW - 36, cy + 80); ctx.stroke();
 
       } else if (curTheme === 'aurora') {
-        // Deep space obsidian background
+        const headRel = getRel(card.querySelector('.aurora-header')) || { x: 32, y: 36, w: cardW - 64, h: 24 };
+        const badgeRel = getRel(card.querySelector('.aurora-pulse-badge')) || { x: 32, y: 36, w: 134, h: 24 };
+        const titleRel = getRel(card.querySelector('.aurora-headline')) || { x: 32, y: 80, w: cardW - 64, h: 24 };
+
         ctx.fillStyle = '#090a14';
         roundRect(ctx, cx, cy, cardW, cardH, 12);
         ctx.fill();
         ctx.shadowColor = 'transparent';
 
-        // Glowing ambient orbs
         const grad1 = ctx.createRadialGradient(cx + cardW * 0.85, cy + cardH * 0.15, 0, cx + cardW * 0.85, cy + cardH * 0.15, cardW * 0.6);
-        grad1.addColorStop(0, 'rgba(168, 85, 247, 0.32)');
+        grad1.addColorStop(0, 'rgba(168, 85, 247, 0.28)');
         grad1.addColorStop(1, 'transparent');
         ctx.fillStyle = grad1;
         roundRect(ctx, cx, cy, cardW, cardH, 12);
         ctx.fill();
 
         const grad2 = ctx.createRadialGradient(cx + cardW * 0.15, cy + cardH * 0.85, 0, cx + cardW * 0.15, cy + cardH * 0.85, cardW * 0.55);
-        grad2.addColorStop(0, 'rgba(56, 189, 248, 0.25)');
+        grad2.addColorStop(0, 'rgba(56, 189, 248, 0.22)');
         grad2.addColorStop(1, 'transparent');
         ctx.fillStyle = grad2;
         roundRect(ctx, cx, cy, cardW, cardH, 12);
         ctx.fill();
 
-        // 1px Frosted glass outline
         ctx.strokeStyle = 'rgba(255, 255, 255, 0.16)';
         ctx.lineWidth = 1;
         roundRect(ctx, cx + 0.5, cy + 0.5, cardW - 1, cardH - 1, 12);
         ctx.stroke();
 
-        // Pulse badge pill
+        // Top inset specular edge
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.22)';
+        ctx.beginPath(); ctx.moveTo(cx + 12, cy + 1); ctx.lineTo(cx + cardW - 12, cy + 1); ctx.stroke();
+
         ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-        roundRect(ctx, cx + 32, cy + 32, 134, 24, 12);
+        roundRect(ctx, cx + badgeRel.x, cy + badgeRel.y, badgeRel.w, badgeRel.h, 12);
         ctx.fill();
         ctx.strokeStyle = 'rgba(255, 255, 255, 0.14)';
-        roundRect(ctx, cx + 32, cy + 32, 134, 24, 12);
+        roundRect(ctx, cx + badgeRel.x, cy + badgeRel.y, badgeRel.w, badgeRel.h, 12);
         ctx.stroke();
 
-        // Glowing cyan dot
         ctx.fillStyle = '#38bdf8';
-        ctx.beginPath(); ctx.arc(cx + 44, cy + 44, 3.5, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.arc(cx + badgeRel.x + 15, cy + badgeRel.y + badgeRel.h / 2, 3.5, 0, Math.PI * 2); ctx.fill();
 
-        ctx.font = 'bold 9.5px "JetBrains Mono", monospace';
+        ctx.font = 'bold 10px "JetBrains Mono", monospace';
         ctx.textAlign = 'left';
-        ctx.fillText(getTxt('.aurora-pulse-badge .editable', 'PULSE // 48.2 Hz'), cx + 54, cy + 48);
+        ctx.fillText(getTxt('.aurora-pulse-badge .editable', 'PULSE // 48.2 Hz'), cx + badgeRel.x + 25, cy + badgeRel.y + badgeRel.h * 0.65);
 
-        // Coordinates
         ctx.fillStyle = '#a1a1aa';
         ctx.font = '10.5px "JetBrains Mono", monospace';
         ctx.textAlign = 'right';
-        ctx.fillText(getTxt('.aurora-coords', 'SYS 0x4F · ORBITAL'), cx + cardW - 32, cy + 48);
+        ctx.fillText(getTxt('.aurora-coords', 'SYS 0x4F · ORBITAL'), cx + headRel.x + headRel.w, cy + badgeRel.y + badgeRel.h * 0.65);
 
-        // Headline
-        ctx.fillStyle = '#ffffff';
+        const hlGrad = ctx.createLinearGradient(cx + titleRel.x, cy + titleRel.y, cx + titleRel.x + Math.min(titleRel.w, 280), cy + titleRel.y + 24);
+        hlGrad.addColorStop(0, '#ffffff');
+        hlGrad.addColorStop(1, '#a855f7');
+        ctx.fillStyle = hlGrad;
         ctx.font = 'bold 18px -apple-system, sans-serif';
         ctx.textAlign = 'left';
-        ctx.fillText(getTxt('.aurora-headline', 'DEEP SPACE CONTEMPLATION'), cx + 32, cy + 86);
+        ctx.fillText(getTxt('.aurora-headline', 'DEEP SPACE CONTEMPLATION'), cx + titleRel.x, cy + titleRel.y + 18);
 
       } else if (curTheme === 'zen') {
+        const topRel = getRel(card.querySelector('.zen-top-row')) || { x: 36, y: 38, w: cardW - 72, h: 32 };
+        const sealRel = getRel(card.querySelector('.zen-seal')) || { x: cardW - 68, y: 38, w: 32, h: 32 };
+        const divRel = getRel(card.querySelector('.zen-divider')) || { x: 36, y: 82, w: cardW - 72, h: 1 };
+
         ctx.fillStyle = '#f7f4ed';
         ctx.fillRect(cx, cy, cardW, cardH);
         ctx.shadowColor = 'transparent';
@@ -5301,66 +5846,74 @@
         ctx.lineWidth = 1;
         ctx.strokeRect(cx + 0.5, cy + 0.5, cardW - 1, cardH - 1);
 
-        // Season title
         ctx.fillStyle = '#5c554e';
         ctx.font = '14px "Playfair Display", Georgia, serif';
         ctx.textAlign = 'left';
-        ctx.fillText(getTxt('.zen-season', '「 暮春 · 听雨 」'), cx + 36, cy + 54);
+        ctx.fillText(getTxt('.zen-season', '「 暮春 · 听雨 」'), cx + topRel.x, cy + topRel.y + topRel.h * 0.66);
 
-        // Vermilion Seal (朱砂方印)
-        const sealX = cx + cardW - 68;
-        const sealY = cy + 32;
+        const sealX = cx + sealRel.x;
+        const sealY = cy + sealRel.y;
         ctx.strokeStyle = curPantone;
-        ctx.fillStyle = 'rgba(192, 57, 43, 0.08)';
+        ctx.fillStyle = 'rgba(192, 57, 43, 0.06)';
         ctx.lineWidth = 2;
-        roundRect(ctx, sealX, sealY, 32, 32, 4);
+        roundRect(ctx, sealX, sealY, sealRel.w, sealRel.h, 4);
         ctx.fill();
         ctx.stroke();
         ctx.lineWidth = 1;
 
+        // Vertical seal text matching CSS writing-mode: vertical-rl
+        const sealChars = Array.from(getTxt('.zen-seal .editable', '闲云'));
         ctx.fillStyle = curPantone;
-        ctx.font = 'bold 11px -apple-system, sans-serif';
+        ctx.font = 'bold 10.5px "Playfair Display", Georgia, serif';
         ctx.textAlign = 'center';
-        ctx.fillText(getTxt('.zen-seal .editable', '闲云'), sealX + 16, sealY + 20);
+        if (sealChars.length >= 2) {
+          ctx.fillText(sealChars[0], sealX + sealRel.w / 2, sealY + 13);
+          ctx.fillText(sealChars[1], sealX + sealRel.w / 2, sealY + 25);
+        } else {
+          ctx.fillText(sealChars.join(''), sealX + sealRel.w / 2, sealY + 20);
+        }
 
-        // Fine ink divider
         ctx.strokeStyle = 'rgba(44, 42, 41, 0.12)';
-        ctx.beginPath(); ctx.moveTo(cx + 36, cy + 76); ctx.lineTo(cx + cardW - 36, cy + 76); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(cx + divRel.x, cy + divRel.y); ctx.lineTo(cx + divRel.x + divRel.w, cy + divRel.y); ctx.stroke();
 
       } else if (curTheme === 'brutalist') {
+        const bannerRel = getRel(card.querySelector('.brut-banner')) || { x: 28, y: 30, w: cardW - 56, h: 27 };
+        const titleRel = getRel(card.querySelector('.brut-title')) || { x: 28, y: 73, w: cardW - 56, h: 36 };
+
+        ctx.shadowColor = 'transparent';
+        ctx.fillStyle = '#ccff00';
+        ctx.fillRect(cx + 6, cy + 6, cardW, cardH);
+
         ctx.fillStyle = '#09090b';
         ctx.fillRect(cx, cy, cardW, cardH);
-        ctx.shadowColor = 'transparent';
-
-        // 6px offset hard acid shadow
         ctx.strokeStyle = '#ccff00';
         ctx.lineWidth = 3;
         ctx.strokeRect(cx + 1.5, cy + 1.5, cardW - 3, cardH - 3);
 
-        // Solid acid lime banner
         ctx.fillStyle = '#ccff00';
-        ctx.fillRect(cx + 28, cy + 28, cardW - 56, 26);
+        ctx.fillRect(cx + bannerRel.x, cy + bannerRel.y, bannerRel.w, bannerRel.h);
 
         ctx.fillStyle = '#09090b';
         ctx.font = '900 11px "JetBrains Mono", monospace';
         ctx.textAlign = 'left';
-        ctx.fillText(getTxt('.brut-badge', 'CRITICAL THOUGHT // 09'), cx + 38, cy + 45);
+        ctx.fillText(getTxt('.brut-badge', 'CRITICAL THOUGHT // 09'), cx + bannerRel.x + 12, cy + bannerRel.y + bannerRel.h * 0.66);
         ctx.textAlign = 'right';
-        ctx.fillText('+++', cx + cardW - 38, cy + 45);
+        ctx.fillText('+++', cx + bannerRel.x + bannerRel.w - 12, cy + bannerRel.y + bannerRel.h * 0.66);
 
-        // Bold title
         ctx.fillStyle = '#ffffff';
         ctx.font = '900 18px "JetBrains Mono", monospace';
         ctx.textAlign = 'left';
-        ctx.fillText(getTxt('.brut-title', "DON'T CONSUME PASSIVELY."), cx + 28, cy + 82);
+        ctx.fillText(getTxt('.brut-title', "DON'T CONSUME PASSIVELY."), cx + titleRel.x, cy + titleRel.y + 19);
 
-        // Title underline
         ctx.strokeStyle = '#27272a';
         ctx.lineWidth = 2;
-        ctx.beginPath(); ctx.moveTo(cx + 28, cy + 96); ctx.lineTo(cx + cardW - 28, cy + 96); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(cx + titleRel.x, cy + titleRel.y + titleRel.h); ctx.lineTo(cx + titleRel.x + titleRel.w, cy + titleRel.y + titleRel.h); ctx.stroke();
         ctx.lineWidth = 1;
 
       } else if (curTheme === 'podcast') {
+        const headRel = getRel(card.querySelector('.pod-header')) || { x: 30, y: 34, w: cardW - 60, h: 20 };
+        const waveRel = getRel(card.querySelector('.pod-wave-row')) || { x: 30, y: 70, w: cardW - 60, h: 46 };
+
         ctx.fillStyle = '#111215';
         roundRect(ctx, cx, cy, cardW, cardH, 8);
         ctx.fill();
@@ -5370,45 +5923,43 @@
         roundRect(ctx, cx + 0.5, cy + 0.5, cardW - 1, cardH - 1, 8);
         ctx.stroke();
 
-        // Live ON AIR tag
         ctx.fillStyle = curPantone;
-        ctx.beginPath(); ctx.arc(cx + 36, cy + 42, 3.5, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.arc(cx + headRel.x + 4, cy + headRel.y + headRel.h / 2, 3.5, 0, Math.PI * 2); ctx.fill();
         ctx.font = 'bold 10px "JetBrains Mono", monospace';
         ctx.textAlign = 'left';
-        ctx.fillText(getTxt('.pod-live-tag .editable', 'ON AIR // BROADCAST'), cx + 46, cy + 46);
+        ctx.fillText(getTxt('.pod-live-tag .editable', 'ON AIR // BROADCAST'), cx + headRel.x + 14, cy + headRel.y + headRel.h * 0.68);
 
-        // Lossless FLAC badge
         ctx.fillStyle = '#71717a';
-        ctx.font = '9px "JetBrains Mono", monospace';
+        ctx.font = '9.5px "JetBrains Mono", monospace';
         ctx.textAlign = 'right';
-        ctx.fillText(getTxt('.pod-bitrate', 'FLAC 96kHz / 24-bit'), cx + cardW - 30, cy + 46);
+        ctx.fillText(getTxt('.pod-bitrate', 'FLAC 96kHz / 24-bit'), cx + headRel.x + headRel.w - 6, cy + headRel.y + headRel.h * 0.68);
 
-        // Waveform box
         ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
-        roundRect(ctx, cx + 30, cy + 60, cardW - 60, 40, 6);
+        roundRect(ctx, cx + waveRel.x, cy + waveRel.y, waveRel.w, waveRel.h, 6);
         ctx.fill();
         ctx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
-        roundRect(ctx, cx + 30, cy + 60, cardW - 60, 40, 6);
+        roundRect(ctx, cx + waveRel.x, cy + waveRel.y, waveRel.w, waveRel.h, 6);
         ctx.stroke();
 
-        // Audio waveform bars
         const barHeights = [8, 14, 22, 10, 18, 24, 13, 20, 9, 16, 23, 17, 12, 21, 7, 18, 23, 14, 10, 19, 12];
-        const barStartX = cx + 44;
-        const barCenterY = cy + 80;
+        const barStartX = cx + waveRel.x + 14;
+        const barCenterY = cy + waveRel.y + waveRel.h / 2;
         ctx.fillStyle = curPantone;
         for (let i = 0; i < barHeights.length; i++) {
           const bh = barHeights[i];
-          roundRect(ctx, barStartX + i * 7, barCenterY - bh / 2, 3, bh, 1.5);
+          roundRect(ctx, barStartX + i * 6.5, barCenterY - bh / 2, 3, bh, 1.5);
           ctx.fill();
         }
 
-        // Time
         ctx.fillStyle = '#a1a1aa';
         ctx.font = 'bold 10.5px "JetBrains Mono", monospace';
         ctx.textAlign = 'right';
-        ctx.fillText(getTxt('.pod-time', '02:18 / 05:40'), cx + cardW - 44, cy + 84);
+        ctx.fillText(getTxt('.pod-time', '02:18 / 05:40'), cx + waveRel.x + waveRel.w - 14, cy + waveRel.y + waveRel.h * 0.58);
 
       } else if (curTheme === 'atelier') {
+        const mastRel = getRel(card.querySelector('.ate-mast')) || { x: 36, y: 38, w: cardW - 72, h: 36 };
+        const lineRel = getRel(card.querySelector('.ate-line')) || { x: 36, y: 88, w: cardW - 72, h: 1 };
+
         ctx.fillStyle = '#fcfbf9';
         ctx.fillRect(cx, cy, cardW, cardH);
         ctx.shadowColor = 'transparent';
@@ -5416,32 +5967,31 @@
         ctx.lineWidth = 1;
         ctx.strokeRect(cx + 0.5, cy + 0.5, cardW - 1, cardH - 1);
 
-        // Giant Roman Numeral
         ctx.fillStyle = curPantone;
         ctx.font = 'bold 38px "Playfair Display", Georgia, serif';
         ctx.textAlign = 'left';
-        ctx.fillText(getTxt('.ate-num', 'VIII'), cx + 36, cy + 62);
+        ctx.fillText(getTxt('.ate-num', 'VIII'), cx + mastRel.x, cy + mastRel.y + mastRel.h - 4);
 
-        // Curatorial text
         ctx.fillStyle = '#18181b';
         ctx.font = 'bold 9.5px "JetBrains Mono", monospace';
         ctx.textAlign = 'right';
-        ctx.fillText(getTxt('.ate-tag', 'CURATORIAL MONOGRAPH'), cx + cardW - 36, cy + 46);
+        ctx.fillText(getTxt('.ate-tag', 'CURATORIAL MONOGRAPH'), cx + mastRel.x + mastRel.w, cy + mastRel.y + 12);
         ctx.fillStyle = '#78716c';
         ctx.font = '9px "JetBrains Mono", monospace';
-        ctx.fillText(getTxt('.ate-biennale', "2026 BIENNALE D'ARTE"), cx + cardW - 36, cy + 60);
+        ctx.fillText(getTxt('.ate-biennale', "2026 BIENNALE D'ARTE"), cx + mastRel.x + mastRel.w, cy + mastRel.y + 27);
 
-        // Clean Hairline divider
         ctx.strokeStyle = '#18181b';
         ctx.lineWidth = 1;
-        ctx.beginPath(); ctx.moveTo(cx + 36, cy + 74); ctx.lineTo(cx + cardW - 36, cy + 74); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(cx + lineRel.x, cy + lineRel.y); ctx.lineTo(cx + lineRel.x + lineRel.w, cy + lineRel.y); ctx.stroke();
 
       } else if (curTheme === 'herbarium') {
+        const headRel = getRel(card.querySelector('.herb-header')) || { x: 32, y: 36, w: cardW - 64, h: 24 };
+        const titleRel = getRel(card.querySelector('.herb-title')) || { x: 32, y: 74, w: cardW - 64, h: 20 };
+
         ctx.fillStyle = '#f5f0e4';
         ctx.fillRect(cx, cy, cardW, cardH);
         ctx.shadowColor = 'transparent';
 
-        // Double botanical border
         ctx.strokeStyle = '#3a5a40';
         ctx.lineWidth = 2;
         ctx.strokeRect(cx + 1, cy + 1, cardW - 2, cardH - 2);
@@ -5449,66 +5999,250 @@
         ctx.lineWidth = 1;
         ctx.strokeRect(cx + 7, cy + 7, cardW - 14, cardH - 14);
 
-        // Header Archive
         ctx.fillStyle = '#3a5a40';
         ctx.font = 'bold 10px "JetBrains Mono", monospace';
         ctx.textAlign = 'left';
-        ctx.fillText(getTxt('.herb-archive', 'HERBARIUM ARCHIVUM · NO. 189'), cx + 32, cy + 42);
+        ctx.fillText(getTxt('.herb-archive', 'HERBARIUM ARCHIVUM · NO. 189'), cx + headRel.x, cy + headRel.y + 12);
 
         ctx.fillStyle = '#588157';
         ctx.font = 'italic 10px "Playfair Display", Georgia, serif';
         ctx.textAlign = 'right';
-        ctx.fillText(getTxt('.herb-binomial', '[ Plantae · Silvestris ]'), cx + cardW - 32, cy + 42);
+        ctx.fillText(getTxt('.herb-binomial', '[ Plantae · Silvestris ]'), cx + headRel.x + headRel.w, cy + headRel.y + 12);
 
-        // Dashed line
         ctx.strokeStyle = '#3a5a40';
         ctx.setLineDash([3, 3]);
-        ctx.beginPath(); ctx.moveTo(cx + 32, cy + 52); ctx.lineTo(cx + cardW - 32, cy + 52); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(cx + headRel.x, cy + headRel.y + headRel.h); ctx.lineTo(cx + headRel.x + headRel.w, cy + headRel.y + headRel.h); ctx.stroke();
         ctx.setLineDash([]);
 
-        // Field Title
         ctx.fillStyle = '#1c352d';
         ctx.font = 'bold 13px -apple-system, sans-serif';
         ctx.textAlign = 'left';
-        ctx.fillText(getTxt('.herb-title', 'FIELD OBSERVATION NOTE / 标本札记'), cx + 32, cy + 76);
+        ctx.fillText(getTxt('.herb-title', 'FIELD OBSERVATION NOTE / 标本札记'), cx + titleRel.x, cy + titleRel.y + 13);
+
+      } else if (curTheme === 'silk') {
+        const headRel = getRel(card.querySelector('.silk-head')) || { x: 36, y: 40, w: cardW - 72, h: 24 };
+        const pillRel = getRel(card.querySelector('.silk-pill')) || { x: 36, y: 40, w: 120, h: 22 };
+        const titleRel = getRel(card.querySelector('.silk-title')) || { x: 36, y: 88, w: cardW - 72, h: 26 };
+
+        ctx.fillStyle = '#f8f6f2';
+        roundRect(ctx, cx, cy, cardW, cardH, 14);
+        ctx.fill();
+        ctx.shadowColor = 'transparent';
+
+        ctx.save();
+        roundRect(ctx, cx, cy, cardW, cardH, 14);
+        ctx.clip();
+
+        const diag = Math.hypot(cardW, cardH);
+        const sg1 = ctx.createRadialGradient(cx + cardW * 0.88, cy + cardH * 0.12, 0, cx + cardW * 0.88, cy + cardH * 0.12, diag * 0.48);
+        sg1.addColorStop(0, 'rgba(216, 180, 254, 0.38)');
+        sg1.addColorStop(1, 'rgba(216, 180, 254, 0)');
+        ctx.fillStyle = sg1;
+        ctx.fillRect(cx, cy, cardW, cardH);
+
+        const sg2 = ctx.createRadialGradient(cx + cardW * 0.12, cy + cardH * 0.88, 0, cx + cardW * 0.12, cy + cardH * 0.88, diag * 0.48);
+        sg2.addColorStop(0, 'rgba(167, 243, 208, 0.36)');
+        sg2.addColorStop(1, 'rgba(167, 243, 208, 0)');
+        ctx.fillStyle = sg2;
+        ctx.fillRect(cx, cy, cardW, cardH);
+
+        const sg3 = ctx.createRadialGradient(cx + cardW * 0.5, cy + cardH * 0.5, 0, cx + cardW * 0.5, cy + cardH * 0.5, diag * 0.6);
+        sg3.addColorStop(0, 'rgba(254, 215, 170, 0.22)');
+        sg3.addColorStop(1, 'rgba(254, 215, 170, 0)');
+        ctx.fillStyle = sg3;
+        ctx.fillRect(cx, cy, cardW, cardH);
+        ctx.restore();
+
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
+        ctx.lineWidth = 1;
+        roundRect(ctx, cx + 0.5, cy + 0.5, cardW - 1, cardH - 1, 14);
+        ctx.stroke();
+
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.65)';
+        roundRect(ctx, cx + pillRel.x, cy + pillRel.y, pillRel.w, pillRel.h, 999);
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(0, 0, 0, 0.06)';
+        roundRect(ctx, cx + pillRel.x, cy + pillRel.y, pillRel.w, pillRel.h, 999);
+        ctx.stroke();
+
+        ctx.fillStyle = '#3f3f46';
+        ctx.font = '600 10px "JetBrains Mono", monospace';
+        ctx.textAlign = 'left';
+        ctx.fillText(getTxt('.silk-pill', 'LIGHT STUDY // 01'), cx + pillRel.x + 10, cy + pillRel.y + pillRel.h * 0.68);
+
+        ctx.fillStyle = '#71717a';
+        ctx.font = '10px "JetBrains Mono", monospace';
+        ctx.textAlign = 'right';
+        ctx.fillText(getTxt('.silk-date', 'SOFT MORNING'), cx + headRel.x + headRel.w, cy + pillRel.y + pillRel.h * 0.68);
+
+        ctx.fillStyle = '#18181b';
+        ctx.font = 'bold 19px "Playfair Display", Georgia, serif';
+        ctx.textAlign = 'left';
+        ctx.fillText(getTxt('.silk-title', '把生活调成柔和的慢门'), cx + titleRel.x, cy + titleRel.y + 20);
+
+      } else if (curTheme === 'kinfolk') {
+        const archRel = getRel(card.querySelector('.kin-arch')) || { x: 40, y: 46, w: cardW - 80, h: 20 };
+        const kickRel = getRel(card.querySelector('.kin-kicker')) || { x: 40, y: 76, w: cardW - 80, h: 28 };
+
+        ctx.fillStyle = '#f9f8f6';
+        ctx.fillRect(cx, cy, cardW, cardH);
+        ctx.shadowColor = 'transparent';
+        ctx.strokeStyle = '#eceae4';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(cx + 0.5, cy + 0.5, cardW - 1, cardH - 1);
+
+        ctx.fillStyle = curPantone;
+        ctx.font = '16px "Playfair Display", Georgia, serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('⌒', cx + cardW / 2, cy + archRel.y + 16);
+
+        ctx.fillStyle = '#78716c';
+        ctx.font = '9.5px "JetBrains Mono", monospace';
+        ctx.fillText(getTxt('.kin-kicker', 'VOLUME XII  ·  ON SOLITUDE'), cx + cardW / 2, cy + kickRel.y + 10);
+
+        ctx.strokeStyle = '#e7e5e0';
+        ctx.beginPath(); ctx.moveTo(cx + kickRel.x, cy + kickRel.y + kickRel.h); ctx.lineTo(cx + kickRel.x + kickRel.w, cy + kickRel.y + kickRel.h); ctx.stroke();
+
+      } else if (curTheme === 'duotone') {
+        const topRel = getRel(card.querySelector('.duo-top')) || { x: 38, y: 36, w: cardW - 72, h: 32 };
+        const lblRel = getRel(card.querySelector('.duo-label')) || { x: cardW - 120, y: 36, w: 86, h: 22 };
+        const hlRel = getRel(card.querySelector('.duo-headline')) || { x: 38, y: 86, w: cardW - 72, h: 28 };
+
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(cx, cy, cardW, cardH);
+        ctx.shadowColor = 'transparent';
+
+        // Bold 6px left accent bar
+        ctx.fillStyle = curPantone;
+        ctx.fillRect(cx, cy, 6, cardH);
+
+        ctx.fillStyle = curPantone;
+        ctx.font = '800 32px "JetBrains Mono", monospace';
+        ctx.textAlign = 'left';
+        ctx.fillText(getTxt('.duo-num', '01'), cx + topRel.x, cy + topRel.y + 26);
+
+        ctx.strokeStyle = '#e4e4e7';
+        ctx.lineWidth = 1;
+        roundRect(ctx, cx + lblRel.x, cy + lblRel.y, lblRel.w, lblRel.h, 3);
+        ctx.stroke();
+        ctx.fillStyle = '#71717a';
+        ctx.font = 'bold 10px "JetBrains Mono", monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText(getTxt('.duo-label', 'ESSENTIALISM'), cx + lblRel.x + lblRel.w / 2, cy + lblRel.y + lblRel.h * 0.68);
+
+        ctx.fillStyle = '#09090b';
+        ctx.font = '800 20px -apple-system, sans-serif';
+        ctx.textAlign = 'left';
+        ctx.fillText(getTxt('.duo-headline', '少即是多，慢即是快'), cx + hlRel.x, cy + hlRel.y + 20);
+
+      } else if (curTheme === 'letter') {
+        const headRel = getRel(card.querySelector('.let-head')) || { x: 36, y: 40, w: cardW - 72, h: 28 };
+        const waxRel = getRel(card.querySelector('.let-wax')) || { x: cardW - 64, y: 40, w: 28, h: 28 };
+
+        ctx.fillStyle = '#fcfaf5';
+        ctx.fillRect(cx, cy, cardW, cardH);
+        ctx.shadowColor = 'transparent';
+
+        ctx.strokeStyle = '#e6e0d4';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(cx + 0.5, cy + 0.5, cardW - 1, cardH - 1);
+        ctx.strokeStyle = 'rgba(168, 162, 158, 0.25)';
+        ctx.strokeRect(cx + 10, cy + 10, cardW - 20, cardH - 20);
+
+        ctx.fillStyle = '#1c1917';
+        ctx.font = 'italic 600 17px "Playfair Display", Georgia, serif';
+        ctx.textAlign = 'left';
+        ctx.fillText(getTxt('.let-salutation', 'Dear Reader,'), cx + headRel.x, cy + headRel.y + 20);
+
+        // Wax seal circle
+        ctx.fillStyle = curPantone;
+        ctx.beginPath(); ctx.arc(cx + waxRel.x + waxRel.w / 2, cy + waxRel.y + waxRel.h / 2, waxRel.w / 2, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'italic bold 12px "Playfair Display", Georgia, serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(getTxt('.let-wax', 'L'), cx + waxRel.x + waxRel.w / 2, cy + waxRel.y + waxRel.h / 2 + 4);
+
+      } else if (curTheme === 'klein') {
+        const topRel = getRel(card.querySelector('.klein-top')) || { x: 36, y: 40, w: cardW - 72, h: 24 };
+
+        ctx.fillStyle = '#002fa7';
+        ctx.fillRect(cx, cy, cardW, cardH);
+        ctx.shadowColor = 'transparent';
+
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.26)';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(cx + 0.5, cy + 0.5, cardW - 1, cardH - 1);
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.18)';
+        ctx.strokeRect(cx + 8, cy + 8, cardW - 16, cardH - 16);
+
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.78)';
+        ctx.font = '10px "JetBrains Mono", monospace';
+        ctx.textAlign = 'left';
+        ctx.fillText(getTxt('.klein-top span:first-child', 'IKB 191 // MONOCHROME'), cx + topRel.x, cy + topRel.y + 11);
+        ctx.textAlign = 'right';
+        ctx.fillText(getTxt('.klein-top span:last-child', 'PARIS · 1960'), cx + topRel.x + topRel.w, cy + topRel.y + 11);
+
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+        ctx.beginPath(); ctx.moveTo(cx + topRel.x, cy + topRel.y + topRel.h); ctx.lineTo(cx + topRel.x + topRel.w, cy + topRel.y + topRel.h); ctx.stroke();
+
+      } else if (curTheme === 'poem') {
+        const lineRel = getRel(card.querySelector('.poem-margin-line')) || { x: 26, y: 28, w: 1, h: cardH - 56 };
+        const titleRel = getRel(card.querySelector('.poem-title')) || { x: 44, y: 42, w: cardW - 82, h: 22 };
+
+        ctx.fillStyle = '#f6f4ef';
+        ctx.fillRect(cx, cy, cardW, cardH);
+        ctx.shadowColor = 'transparent';
+        ctx.strokeStyle = '#e5e0d5';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(cx + 0.5, cy + 0.5, cardW - 1, cardH - 1);
+
+        ctx.strokeStyle = 'rgba(0, 0, 0, 0.08)';
+        ctx.beginPath(); ctx.moveTo(cx + lineRel.x, cy + lineRel.y); ctx.lineTo(cx + lineRel.x, cy + lineRel.y + lineRel.h); ctx.stroke();
+
+        ctx.fillStyle = curPantone;
+        ctx.font = 'italic 600 15px "Playfair Display", Georgia, serif';
+        ctx.textAlign = 'left';
+        ctx.fillText(getTxt('.poem-title', '§ 致未曾谋面的春风'), cx + titleRel.x, cy + titleRel.y + 16);
       }
 
       // =======================================================================
       // 5. DRAW MAIN BODY CONTENT (WITH HIGHLIGHT MARKERS, ALIGNMENT & DROP CAP)
       // =======================================================================
-      const isDarkTheme = (isDark || curTheme === 'blueprint' || curTheme === 'vogue' || curTheme === 'aurora' || curTheme === 'brutalist' || curTheme === 'podcast');
-      const bodyColor = (curTheme === 'cinema') ? '#fde047' : ((curTheme === 'polaroid') ? '#f4f4f5' : ((curTheme === 'blueprint') ? '#f0f9ff' : ((curTheme === 'vogue') ? '#f5eedc' : ((curTheme === 'cassette') ? '#292524' : ((curTheme === 'brutalist' || curTheme === 'aurora' || curTheme === 'podcast') ? '#f4f4f5' : ((curTheme === 'herbarium') ? '#1c352d' : ((curTheme === 'zen') ? '#2c2a29' : (isDarkTheme ? '#e4e4e7' : '#27272a'))))))));
+      const isDarkTheme = (isDark || curTheme === 'blueprint' || curTheme === 'vogue' || curTheme === 'aurora' || curTheme === 'brutalist' || curTheme === 'podcast' || curTheme === 'klein');
+      const bodyColor = (curTheme === 'cinema') ? '#fde047' : ((curTheme === 'polaroid') ? '#f4f4f5' : ((curTheme === 'blueprint') ? '#f0f9ff' : ((curTheme === 'vogue') ? '#f5eedc' : ((curTheme === 'cassette') ? '#292524' : ((curTheme === 'klein') ? '#ffffff' : ((curTheme === 'brutalist' || curTheme === 'aurora' || curTheme === 'podcast') ? '#f4f4f5' : ((curTheme === 'herbarium') ? '#1c352d' : ((curTheme === 'zen') ? '#2c2a29' : ((curTheme === 'silk') ? '#3f3f46' : ((curTheme === 'letter') ? '#44403c' : ((curTheme === 'poem') ? '#1f2937' : ((curTheme === 'kinfolk') ? '#292524' : (isDarkTheme ? '#e4e4e7' : '#27272a')))))))))))));
 
       if (curTheme === 'ticket') {
         drawRichBody(cx + 148, cy + 74, cardW - 176, bodyColor, false);
       } else if (curTheme === 'polaroid') {
-        drawRichBody(cx + 34, cy + 62, cardW - 68, bodyColor, false);
-        // Bottom white Polaroid frame caption
-        ctx.fillStyle = '#18181b';
-        ctx.font = 'bold 12px "JetBrains Mono", monospace';
+        drawRichBody(cx + contentRel.x, cy + contentRel.y + fontSize, contentRel.w, bodyColor, false);
+        // Bottom white Polaroid frame caption matching live DOM
+        const pFootEl = card.querySelector('.polaroid-foot');
+        const pFootRel = getRel(pFootEl);
+        const pLeftRel = getRel(pFootEl ? pFootEl.firstElementChild : null);
+        const pRightRel = getRel(card.querySelector('.card-watermark'));
+        const pY = pFootRel ? (cy + pFootRel.y + pFootRel.h * 0.78) : (cy + cardH - 36);
+        ctx.fillStyle = '#52525b';
+        ctx.font = '11px "JetBrains Mono", monospace';
         ctx.textAlign = 'left';
-        ctx.fillText(getTxt('.polaroid-foot .editable:first-child', 'SHADOWS & MEMORY'), cx + 24, cy + cardH - 36);
-        ctx.fillStyle = '#71717a';
-        ctx.font = '10.5px "JetBrains Mono", monospace';
+        ctx.fillText(getTxt('.polaroid-foot .editable:first-child', 'SHADOWS & MEMORY'), cx + (pLeftRel ? pLeftRel.x : 24), pY);
         ctx.textAlign = 'right';
-        ctx.fillText(wmText, cx + cardW - 24, cy + cardH - 36);
+        ctx.fillText(wmText, cx + (pRightRel ? pRightRel.x + pRightRel.w : cardW - 24), pY);
       } else if (curTheme === 'newspaper') {
         drawRichBody(cx + contentRel.x, cy + contentRel.y + fontSize, contentRel.w, bodyColor, true);
       } else {
-        const endY = drawRichBody(cx + contentRel.x, cy + contentRel.y + fontSize, contentRel.w, bodyColor, false);
+        drawRichBody(cx + contentRel.x, cy + contentRel.y + fontSize, contentRel.w, bodyColor, false);
         if (curTheme === 'coffee') {
           const pillEls = card.querySelectorAll('.flavor-pills .pill');
-          const pills = pillEls.length ? Array.from(pillEls).map(el => el.innerText.trim()) : ['JASMINE', 'BERGAMOT', 'PEACH', 'WILD HONEY'];
-          let px = cx + 34;
-          for (const p of pills) {
-            ctx.fillStyle = 'rgba(140, 120, 81, 0.12)';
-            roundRect(ctx, px, endY + 4, 68, 18, 9);
+          for (const el of pillEls) {
+            const pr = getRel(el);
+            if (!pr) continue;
+            ctx.fillStyle = '#efe7d7';
+            roundRect(ctx, cx + pr.x, cy + pr.y, pr.w, pr.h, 999);
             ctx.fill();
-            ctx.fillStyle = '#8c7851';
-            ctx.font = 'bold 8.5px "JetBrains Mono", monospace';
+            ctx.fillStyle = '#786146';
+            ctx.font = '600 9.5px "JetBrains Mono", monospace';
             ctx.textAlign = 'center';
-            ctx.fillText(p, px + 34, endY + 16);
-            px += 76;
+            ctx.fillText(el.innerText.trim(), cx + pr.x + pr.w / 2, cy + pr.y + pr.h * 0.68);
           }
         }
       }
@@ -5516,18 +6250,19 @@
       // Cinema English Subtitle
       if (curTheme === 'cinema') {
         const subEnEl = card.querySelector('.cinema-sub-en');
+        const subEnRel = getRel(subEnEl);
         if (subEnEl) {
           ctx.fillStyle = '#a1a1aa';
           ctx.font = '11px "JetBrains Mono", monospace';
           ctx.textAlign = 'center';
-          ctx.fillText(subEnEl.innerText, cx + cardW / 2, cy + cardH - 74);
+          ctx.fillText(subEnEl.innerText, cx + cardW / 2, subEnRel ? (cy + subEnRel.y + 11) : (cy + cardH - 74));
         }
       }
 
       // =======================================================================
       // 6. DRAW FOOTER (EXACT DOM COORDINATES)
       // =======================================================================
-      const footEl = card.querySelector('.paper-foot, .mag-footer, .coffee-foot, .washi-foot, .rx-foot, .cal-foot, .cinema-foot, .bento-foot, .cargo-foot, .margiela-foot, .airmail-foot, .polaroid-foot, .receipt-foot, .ticket-footer, .eink-footer, .vinyl-foot, .cassette-label-box + div, .bau-foot, .bp-foot, .bp-Bottom, .mu-foot, .mac-foot, .vg-foot, .aurora-foot, .zen-foot, .brut-foot, .pod-foot, .ate-foot, .herb-foot');
+      const footEl = card.querySelector('.paper-foot, .mag-footer, .coffee-foot, .washi-foot, .rx-foot, .cal-foot, .cinema-foot, .bento-foot, .cargo-foot, .margiela-foot, .airmail-foot, .polaroid-foot, .receipt-foot, .ticket-footer, .eink-footer, .vinyl-foot, .cassette-label-box + div, .bau-foot, .bp-foot, .bp-Bottom, .mu-foot, .mac-foot, .vg-foot, .aurora-foot, .zen-foot, .brut-foot, .pod-foot, .ate-foot, .herb-foot, .silk-foot, .kin-foot, .duo-foot, .let-foot, .klein-foot, .poem-foot');
       const footRel = getRel(footEl);
 
       if (curTheme !== 'pantone' && curTheme !== 'polaroid') {
@@ -5551,12 +6286,15 @@
           ctx.lineWidth = 1;
           ctx.strokeRect(cx + footRel.x + 0.5, cy + footRel.y + 0.5, footRel.w - 1, footRel.h - 1);
         } else if (curTheme !== 'cassette') {
-          ctx.strokeStyle = (curTheme === 'vogue') ? 'rgba(212,175,55,0.28)' : ((curTheme === 'boarding' || curTheme === 'atelier') ? '#e7e5e0' : ((curTheme === 'brutalist') ? '#27272a' : ((curTheme === 'herbarium') ? 'rgba(58, 90, 64, 0.3)' : ((curTheme === 'zen') ? 'rgba(44, 42, 41, 0.12)' : (isDarkTheme ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.1)')))));
-          ctx.lineWidth = 1;
+          if (curTheme === 'letter') ctx.setLineDash([4, 4]);
+          ctx.strokeStyle = (curTheme === 'vogue') ? 'rgba(212,175,55,0.28)' : ((curTheme === 'klein') ? 'rgba(255,255,255,0.25)' : ((curTheme === 'boarding' || curTheme === 'atelier' || curTheme === 'kinfolk') ? '#e7e5e0' : ((curTheme === 'duotone') ? '#e4e4e7' : ((curTheme === 'letter') ? '#d6d3cd' : ((curTheme === 'brutalist') ? '#27272a' : ((curTheme === 'herbarium') ? 'rgba(58, 90, 64, 0.3)' : ((curTheme === 'zen') ? 'rgba(44, 42, 41, 0.12)' : ((curTheme === 'silk' || curTheme === 'poem') ? 'rgba(0,0,0,0.08)' : (isDarkTheme ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.1)')))))))));
+          ctx.lineWidth = (curTheme === 'brutalist') ? 2 : 1;
           ctx.beginPath();
           ctx.moveTo(lineLeft, lineY);
           ctx.lineTo(rightX, lineY);
           ctx.stroke();
+          if (curTheme === 'letter') ctx.setLineDash([]);
+          ctx.lineWidth = 1;
         }
 
         let leftFootText = curTheme.toUpperCase() + ' // PRO';
@@ -5566,7 +6304,7 @@
           leftFootText = leftSpanEl.innerText.trim();
         }
 
-        ctx.fillStyle = (curTheme === 'vogue') ? '#d4af37' : ((curTheme === 'blueprint') ? '#bae6fd' : ((curTheme === 'brutalist') ? '#ccff00' : ((curTheme === 'herbarium') ? '#588157' : ((curTheme === 'zen') ? '#857b74' : ((curTheme === 'aurora') ? '#94a3b8' : ((curTheme === 'atelier' || curTheme === 'podcast') ? '#71717a' : (isDarkTheme ? '#71717a' : '#78716c')))))));
+        ctx.fillStyle = (curTheme === 'vogue') ? '#d4af37' : ((curTheme === 'blueprint') ? '#bae6fd' : ((curTheme === 'klein') ? 'rgba(255,255,255,0.75)' : ((curTheme === 'brutalist') ? '#ccff00' : ((curTheme === 'herbarium') ? '#588157' : ((curTheme === 'zen') ? '#857b74' : ((curTheme === 'aurora') ? '#94a3b8' : ((curTheme === 'kinfolk') ? '#a8a29e' : ((curTheme === 'poem') ? '#6b7280' : ((curTheme === 'atelier' || curTheme === 'podcast' || curTheme === 'silk' || curTheme === 'duotone') ? '#71717a' : (isDarkTheme ? '#71717a' : '#78716c'))))))))));
         ctx.font = '10px "JetBrains Mono", monospace';
         ctx.textAlign = 'left';
         if (leftFootText) ctx.fillText(leftFootText, leftX, textY);
